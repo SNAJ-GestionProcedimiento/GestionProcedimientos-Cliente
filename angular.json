@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "GestionProcedimientos-Cliente"
+    }
+  },
+  "defaultProject": "GestionProcedimientos-Cliente",
+  "cli": {
+    "analytics": false
+  }
 }

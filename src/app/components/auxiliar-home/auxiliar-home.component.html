@@ -1,0 +1,28 @@
+<app-auxiliar-navbar></app-auxiliar-navbar>
+<!-- Container for sidebar(s) + page content -->
+<ng-sidebar-container>
+ 
+    <!-- A sidebar -->
+    <ng-sidebar opened="true" mode="push">
+      <button>Boton dentro</button>
+      <button> Otro Boton</button>
+    </ng-sidebar>
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+        <div class="container">
+            <!-- datos del paciente -->
+            <app-paciente></app-paciente>
+            <hr>
+            <!-- datos del acudiente en caso de ser necesario -->
+            <!-- datos del procedimiento -->
+            <!-- Fecha hora procedimiento -->
+            <!-- documentacion -->
+            <!-- materiales -->
+            <!-- instrumentos y equipos -->
+            <!-- Especialistas -->
+            <!-- PROCEDIMIENTO ACCIONES -->
+        </div>
+    </div>
+
+  </ng-sidebar-container>
