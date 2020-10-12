@@ -4,24 +4,22 @@
  
     <!-- A sidebar -->
     <ng-sidebar opened="true" mode="push">
-      <button>Boton dentro</button>
-      <button> Otro Boton</button>
+      <button type="button" class="btn btn-info mr-auto" (click)="mostrarAgenda()">Gestion de programación</button>
     </ng-sidebar>
 
     <!-- Page content -->
     <div ng-sidebar-content>
         <div class="container">
-            <!-- datos del paciente -->
-            <app-paciente></app-paciente>
-            <hr>
-            <!-- datos del acudiente en caso de ser necesario -->
-            <!-- datos del procedimiento -->
-            <!-- Fecha hora procedimiento -->
-            <!-- documentacion -->
-            <!-- materiales -->
-            <!-- instrumentos y equipos -->
-            <!-- Especialistas -->
-            <!-- PROCEDIMIENTO ACCIONES -->
+            <!-- Agenda del auxiliar-->
+            <div id="agenda">
+              <app-auxiliar-agenda></app-auxiliar-agenda>
+            </div>
+            <div id="programacion">
+              <app-auxiliar-programacion></app-auxiliar-programacion>
+            </div>
+            <div class="ml-auto">
+              <button type="button" class="btn btn-info mr-auto" id="nuevoPro" (click)="nuevoProcedimiento()">Agendar procedimiento</button>
+            </div>
         </div>
     </div>
 

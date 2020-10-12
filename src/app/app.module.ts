@@ -8,7 +8,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { SidebarModule } from 'ng-sidebar';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { PacienteService } from './../_services/paciente.service';
 import { PacienteComponent } from './components/paciente/paciente.component';
+import { AuxiliarAgendaComponent } from './components/auxiliar-agenda/auxiliar-agenda.component';
+import { AuxiliarProgramacionComponent } from './components/auxiliar-programacion/auxiliar-programacion.component';
 
 @NgModule({
   declarations: [
@@ -16,15 +21,20 @@ import { PacienteComponent } from './components/paciente/paciente.component';
     AuxiliarHomeComponent,
     AuxiliarNavbarComponent,
     PacienteComponent,
+    AuxiliarAgendaComponent,
+    AuxiliarProgramacionComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    PacienteService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

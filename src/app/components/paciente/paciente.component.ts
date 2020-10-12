@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { Paciente } from 'src/_models/paciente.model';
+
+import { PacienteService } from '../../../_services/paciente.service';
 
 @Component({
   selector: 'app-paciente',
@@ -8,17 +11,18 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./paciente.component.css']
 })
 export class PacienteComponent implements OnInit {
-
+  public paciente: Paciente;
+  public pacienteId: string;
   form : FormGroup;
 
   constructor(
-    private formBuilder:FormBuilder
+    private formBuilder:FormBuilder,
+    private pacienteService: PacienteService
     ) {
       this.buildForm();
      }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {  }
 
   private buildForm(){
     this.form = this.formBuilder.group({
@@ -33,11 +37,31 @@ export class PacienteComponent implements OnInit {
 
     this.form.valueChanges
     .pipe(
-      debounceTime(500)
+      debounceTime(700)
     )
     .subscribe(value =>{
-      console.log(value);
+      /**Cuando escriba el id del paciente, si existe se actualizan los cambios */
+      this.pacienteId = value.id;
+      this.setPaciente();
+      if(this.paciente!=null){
+        this.completeForm();
+      }else{
+        this.deleteForm();
+      }
     });
   }
+
+  private completeForm():void{
+    this.form.setControl("name",new FormControl('nombre1',Validators.required));
+  }
+  private deleteForm():void{
+    this.form.setControl("name",new FormControl('',Validators.required))
+  }
+
+  async setPaciente(){
+    let res = await this.pacienteService.get(this.pacienteId).toPromise();
+    this.paciente = Paciente.fromJSON(res);
+  }
+
 
 }
