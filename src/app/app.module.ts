@@ -10,10 +10,14 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { PacienteService } from './../_services/paciente.service';
-import { PacienteComponent } from './components/paciente/paciente.component';
 import { AuxiliarAgendaComponent } from './components/auxiliar-agenda/auxiliar-agenda.component';
 import { AuxiliarProgramacionComponent } from './components/auxiliar-programacion/auxiliar-programacion.component';
+import { PacienteService } from './../_services/paciente.service';
+import { PacienteComponent } from './components/paciente/paciente.component';
+import { AcudienteComponent } from './components/acudiente/acudiente.component';
+import { AcudienteService } from '../_services/acudiente.service';
+import { ProcedimientoComponent } from './components/procedimiento/procedimiento.component';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +27,8 @@ import { AuxiliarProgramacionComponent } from './components/auxiliar-programacio
     PacienteComponent,
     AuxiliarAgendaComponent,
     AuxiliarProgramacionComponent,
+    AcudienteComponent,
+    ProcedimientoComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,8 @@ import { AuxiliarProgramacionComponent } from './components/auxiliar-programacio
     HttpClientModule
   ],
   providers: [
-    PacienteService
+    PacienteService,
+    AcudienteService
   ],
   bootstrap: [AppComponent]
 })

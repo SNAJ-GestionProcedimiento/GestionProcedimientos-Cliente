@@ -1,6 +1,6 @@
 export class Paciente{
     /**
-     * Identificador del objeto paciente
+     * Identificador del objeto Persona
      */
     public idPersona : string;
     /**

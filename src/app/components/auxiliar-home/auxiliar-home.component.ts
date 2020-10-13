@@ -17,7 +17,7 @@ export class AuxiliarHomeComponent implements OnInit {
     
   }
 
-  private mostrarAgenda():void {
+  public mostrarAgenda():void {
     let pagina = document.getElementById("agenda");
     pagina.style.display = "block";
     pagina = document.getElementById("programacion");
@@ -25,7 +25,7 @@ export class AuxiliarHomeComponent implements OnInit {
     let boton = document.getElementById("nuevoPro");
     boton.style.display = "block";
   }
-  private nuevoProcedimiento():void {
+  public nuevoProcedimiento():void {
     let pagina = document.getElementById("agenda");
     pagina.style.display = "none";
     pagina = document.getElementById("programacion");

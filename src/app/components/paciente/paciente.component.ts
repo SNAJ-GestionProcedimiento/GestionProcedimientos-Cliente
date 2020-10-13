@@ -13,55 +13,100 @@ import { PacienteService } from '../../../_services/paciente.service';
 export class PacienteComponent implements OnInit {
   public paciente: Paciente;
   public pacienteId: string;
-  form : FormGroup;
+  public pacienteForm : FormGroup;
 
   constructor(
     private formBuilder:FormBuilder,
     private pacienteService: PacienteService
     ) {
-      this.buildForm();
+      this.buildpacienteForm();
      }
 
   ngOnInit(): void {  }
 
-  private buildForm(){
-    this.form = this.formBuilder.group({
+  private buildpacienteForm(){
+    this.pacienteForm = this.formBuilder.group({
       documentType:['',[Validators.required]],
       id:['',[Validators.required]],
       birthdate:['',[Validators.required]],
+      age:['',[]],
+      email:['',[Validators.required,Validators.email]],
       name:['',[Validators.required]],
       homeAddress:['',[Validators.required]],
       phoneNumber:['',[Validators.required]],
       observation:['',[Validators.required]]
     });
 
-    this.form.valueChanges
+    this.pacienteForm.get("id").valueChanges
     .pipe(
       debounceTime(700)
     )
-    .subscribe(value =>{
+    .subscribe(value=>{
       /**Cuando escriba el id del paciente, si existe se actualizan los cambios */
       this.pacienteId = value.id;
       this.setPaciente();
       if(this.paciente!=null){
         this.completeForm();
-      }else{
-        this.deleteForm();
       }
+    });
+
+    this.pacienteForm.get("birthdate").valueChanges
+    .pipe(
+      debounceTime(700)
+    )
+    .subscribe(value =>{
+      this.pacienteForm.controls['age'].setValue(this.getAge(new Date(value)));
     });
   }
 
-  private completeForm():void{
-    this.form.setControl("name",new FormControl('nombre1',Validators.required));
-  }
-  private deleteForm():void{
-    this.form.setControl("name",new FormControl('',Validators.required))
+  private getAge(birthdate:Date):number{
+    let currentDate = new Date();
+    let age = currentDate.getFullYear() - birthdate.getFullYear();
+    let month = currentDate.getMonth() - birthdate.getMonth();
+    if(month < 0 || (month===0 && currentDate.getDate() < birthdate.getDate())){
+      age--;
+    }
+    return age;
   }
 
+  private completeForm():void{
+    this.pacienteForm.controls['birthday'].setValue(this.paciente.fechaNacimiento);
+    this.pacienteForm.controls['name'].setValue('holi');
+    this.pacienteForm.controls['homeAddress'].setValue('holi');
+    this.pacienteForm.controls['phoneNumber'].setValue('holi');
+  }
+  private deleteForm():void{
+    this.pacienteForm.setControl("name",new FormControl('',Validators.required))
+  }
+  /**Geters formulario */
+  get documentTypeField(){
+    return this.pacienteForm.get('documentType');
+  }
+  get idField(){
+    return this.pacienteForm.get('id');
+  }
+  get birthdate(){
+    return this.pacienteForm.get('birthdate');
+  }
+  get emailField(){
+    return this.pacienteForm.get('email');
+  }
+  get nameField(){
+    return this.pacienteForm.get('name');
+  }
+  get homeAddressField(){
+    return this.pacienteForm.get('homeAddress');
+  }
+  get phoneNomberField(){
+    return this.pacienteForm.get('phoneNumber');
+  }
+  get observationField(){
+    return this.pacienteForm.get('observation');
+  }
+
+  /**Peticiones */
   async setPaciente(){
     let res = await this.pacienteService.get(this.pacienteId).toPromise();
     this.paciente = Paciente.fromJSON(res);
   }
-
-
 }
