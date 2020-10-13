@@ -12,12 +12,22 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AuxiliarAgendaComponent } from './components/auxiliar-agenda/auxiliar-agenda.component';
 import { AuxiliarProgramacionComponent } from './components/auxiliar-programacion/auxiliar-programacion.component';
+<<<<<<< HEAD
 import { PacienteService } from './../_services/paciente.service';
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { AcudienteComponent } from './components/acudiente/acudiente.component';
 import { AcudienteService } from '../_services/acudiente.service';
 import { ProcedimientoComponent } from './components/procedimiento/procedimiento.component';
 
+=======
+import { MaterialModule } from './material/material.module';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuxiliarInstrumentosEquiposComponent } from './components/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
+import { VentanaAuxiliarInstrumentosEquiposComponent } from './components/ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
+import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialista/auxiliar-especialista.component';
+import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
+>>>>>>> b3ee494ac99a60be129b4fe9818063d37db6b1b5
 
 @NgModule({
   declarations: [
@@ -27,8 +37,15 @@ import { ProcedimientoComponent } from './components/procedimiento/procedimiento
     PacienteComponent,
     AuxiliarAgendaComponent,
     AuxiliarProgramacionComponent,
+<<<<<<< HEAD
     AcudienteComponent,
     ProcedimientoComponent,
+=======
+    AuxiliarInstrumentosEquiposComponent,
+    VentanaAuxiliarInstrumentosEquiposComponent,
+    AuxiliarEspecialistaComponent,
+    VentanaAuxiliarEspecialidadComponent,
+>>>>>>> b3ee494ac99a60be129b4fe9818063d37db6b1b5
   ],
   imports: [
     BrowserModule,
@@ -36,12 +53,15 @@ import { ProcedimientoComponent } from './components/procedimiento/procedimiento
     ReactiveFormsModule,
     FormsModule,
     SidebarModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     PacienteService,
     AcudienteService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent]
 })
 export class AppModule { }
