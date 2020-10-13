@@ -1,0 +1,59 @@
+<div class="mat-elevation-z8">
+    <h2>Instrumentos y equipos</h2>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8
+        table-bordered table-responsive-sm" #tabla1>
+
+        <!-- Columna de posicion -->
+        <ng-container matColumnDef="No">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.No}} </td>
+        </ng-container>
+
+        <!--Columna de código -->
+        <ng-container matColumnDef="codigo">
+            <th mat-header-cell *matHeaderCellDef> Código </th>
+            <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+        </ng-container>
+
+        <!-- Columna de nombre -->
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <!-- Columna de cantidad -->
+        <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
+        </ng-container>
+
+        <!-- Columna de descripción -->
+        <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.descripcion}}
+            </td>
+        </ng-container>
+
+        <!-- Columna de estado -->
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn
+                    btn-link
+                    btn-sm btn-just-icon">
+                    <i class="material-icons">edit</i>
+                </button>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+</div>
+<button type="button" class="btn btn-info" (click)="openAgregarIntru()">Añadir instrumento/Equipo</button>
+<br>
+<hr>

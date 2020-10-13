@@ -14,6 +14,13 @@ import { PacienteService } from './../_services/paciente.service';
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { AuxiliarAgendaComponent } from './components/auxiliar-agenda/auxiliar-agenda.component';
 import { AuxiliarProgramacionComponent } from './components/auxiliar-programacion/auxiliar-programacion.component';
+import { MaterialModule } from './material/material.module';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuxiliarInstrumentosEquiposComponent } from './components/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
+import { VentanaAuxiliarInstrumentosEquiposComponent } from './components/ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
+import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialista/auxiliar-especialista.component';
+import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +30,10 @@ import { AuxiliarProgramacionComponent } from './components/auxiliar-programacio
     PacienteComponent,
     AuxiliarAgendaComponent,
     AuxiliarProgramacionComponent,
+    AuxiliarInstrumentosEquiposComponent,
+    VentanaAuxiliarInstrumentosEquiposComponent,
+    AuxiliarEspecialistaComponent,
+    VentanaAuxiliarEspecialidadComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,11 +41,14 @@ import { AuxiliarProgramacionComponent } from './components/auxiliar-programacio
     ReactiveFormsModule,
     FormsModule,
     SidebarModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     PacienteService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent]
 })
 export class AppModule { }

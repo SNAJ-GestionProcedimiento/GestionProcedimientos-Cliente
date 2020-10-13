@@ -1,0 +1,66 @@
+<div class="mat-elevation-z8">
+    <h2>Especialistas</h2>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8
+        table-bordered table-responsive-sm" #tabla1>
+
+        <!-- Columna de posicion -->
+        <ng-container matColumnDef="No">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.No}} </td>
+        </ng-container>
+
+        <!--Columna de código -->
+        <ng-container matColumnDef="codigo">
+            <th mat-header-cell *matHeaderCellDef> Código </th>
+            <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+        </ng-container>
+
+        <!-- Columna de nombre de especialidad -->
+        <ng-container matColumnDef="nombreEspecialidad">
+            <th mat-header-cell *matHeaderCellDef> Nombre de especialidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombreEspecialidad}} </td>
+        </ng-container>
+
+        <!-- Columna de registro médico -->
+        <ng-container matColumnDef="registroMedico">
+            <th mat-header-cell *matHeaderCellDef> Registro médico </th>
+            <td mat-cell *matCellDef="let element"> {{element.registroMedico}} </td>
+        </ng-container>
+
+        <!-- Columna de identificación del especialista -->
+        <ng-container matColumnDef="identificacionEspecialista">
+            <th mat-header-cell *matHeaderCellDef> Identificación del especialista </th>
+            <td mat-cell *matCellDef="let element"> {{element.identificacionEspecialista}}
+            </td>
+        </ng-container>
+
+        <!-- Columna de nombre del especialista -->
+        <ng-container matColumnDef="nombreEspecialistar">
+            <th mat-header-cell *matHeaderCellDef> Nombre del especialista </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombreEspecialistar}}
+            </td>
+        </ng-container>
+
+        <!-- Columna de estado -->
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn
+                    btn-link
+                    btn-sm btn-just-icon">
+                    <i class="material-icons">edit</i>
+                </button>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+</div>
+<button type="button" class="btn btn-info" (click)="openAgregarEspecialidad()">Añadir especialidad</button>
+<br>
+<hr>
