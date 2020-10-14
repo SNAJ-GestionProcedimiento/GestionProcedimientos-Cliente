@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { async } from '@angular/core/testing';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class AcudienteComponent implements OnInit {
   public acudienteForm : FormGroup;
   public acudiente:Acudiente;
   public acudienteId:string;
-  public activo:boolean = false;
+  @Input() public activo:boolean = false;
 
   constructor(
     private formBuilder:FormBuilder,
