@@ -26,6 +26,8 @@ import { VentanaAuxiliarInstrumentosEquiposComponent } from './components/ventan
 import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialista/auxiliar-especialista.component';
 import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { ProcedimientoModalComponent } from './components/procedimiento/procedimiento-modal/procedimiento-modal.component';
+import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
+import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { ProcedimientoModalComponent } from './components/procedimiento/procedim
     AuxiliarEspecialistaComponent,
     VentanaAuxiliarEspecialidadComponent,
     ProcedimientoModalComponent,
+    AuxiliarDocumentacionComponent,
+    AuxiliarMaterialesComponent,
   ],
   imports: [
     BrowserModule,

@@ -44,7 +44,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   }
 }
 export class instrument {
-  constructor(public No: number, public codigo: number, public nombre: string, public cantidad: number, public descripcion: string, public estado: string, public acciones: string) {
+  constructor(private No: number, private codigo: number, private nombre: string, private cantidad: number, private descripcion: string, private estado: string, private acciones: string) {
   }
 }
 
