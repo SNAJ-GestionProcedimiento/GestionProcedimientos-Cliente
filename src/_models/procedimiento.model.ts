@@ -18,8 +18,14 @@ export class Procedimiento{
         return JSON.parse(JSON.stringify(this));
     }
 
-    public static fromJSON(json):JSON{
-        if (json.procedimientos.length == 0) { return null;}
+    public static fromJSON(json):Procedimiento{
+        if (json==null) { return null;}
         var procedimiento  =new Procedimiento();
+
+        procedimiento.codigoProcedimiento = json.procedimiento.codigoProcedimiento;
+        procedimiento.nombre = json.procedimiento.nombre;
+        procedimiento.tipo = json.procedimiento.tipo;
+
+        return procedimiento;
     }
 }
