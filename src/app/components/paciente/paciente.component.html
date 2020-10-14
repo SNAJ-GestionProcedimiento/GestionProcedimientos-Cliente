@@ -17,7 +17,7 @@
             <!--Numero de identificacion-->
             <div class="col-auto mr-3 mt-1">
                 Identificación:
-                <input class="form-control" type="text" formControlName='id'>
+                <input class="form-control" type="number" formControlName='id'>
                 <div *ngIf="pacienteForm.get('id').errors && this.pacienteForm.get('id').touched">
                     <p>Ingrese el numero de documento</p>
                 </div>
@@ -29,11 +29,6 @@
                 <div *ngIf="pacienteForm.get('birthdate').errors && this.pacienteForm.get('birthdate').touched">
                     <p>Ingrese una fecha de nacimiento</p>
                 </div>
-            </div>
-            <!--Edad del paciente-->
-            <div class="col-auto mr-3 mt-1">
-                Edad:
-                <input class="form-control" type="text" formControlName="age" placeholder="Edad del paciente" readonly>
             </div>
         </div>
         <div class="form-row align-items-center mt-1">
@@ -48,6 +43,13 @@
                 Dirección:
                 <input type="text" class="form-control" formControlName="homeAddress">
             </div>
+            <!--Edad del paciente-->
+            <div class="col-auto mr-3 mt-1">
+                Edad:
+                <input class="form-control" type="text" formControlName="age" placeholder="Edad del paciente" readonly>
+            </div>
+        </div>
+        <div class="form-row align-items-center mt-1">
             <!--Telefono-->
             <div class="col-auto mr-3 mt-1">
                 Teléfono:

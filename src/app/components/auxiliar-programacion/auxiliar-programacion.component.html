@@ -1,7 +1,7 @@
 <!-- Programacion de un procedimiento -->
 <div class="container">
     <!-- datos del paciente -->
-    <app-paciente></app-paciente>
+    <app-paciente (messageEvent)="receiveMessage($event)"></app-paciente>
     <hr>
     <!-- datos del acudiente si es necesario-->
     <app-acudiente></app-acudiente>

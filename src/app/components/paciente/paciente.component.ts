@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { Paciente } from 'src/_models/paciente.model';
@@ -14,6 +14,8 @@ export class PacienteComponent implements OnInit {
   public paciente: Paciente;
   public pacienteId: string;
   public pacienteForm : FormGroup;
+  public mayorEdad:boolean;
+  @Output() messageEvent =new EventEmitter<boolean>();
 
   constructor(
     private formBuilder:FormBuilder,
@@ -21,6 +23,9 @@ export class PacienteComponent implements OnInit {
     ) {
       this.buildpacienteForm();
      }
+  sendMenssage(){
+    this.messageEvent.emit(this.mayorEdad);
+  }
 
   ngOnInit(): void {  }
 
@@ -43,11 +48,8 @@ export class PacienteComponent implements OnInit {
     )
     .subscribe(value=>{
       /**Cuando escriba el id del paciente, si existe se actualizan los cambios */
-      this.pacienteId = value.id;
+      this.pacienteId = value;
       this.setPaciente();
-      if(this.paciente!=null){
-        this.completeForm();
-      }
     });
 
     this.pacienteForm.get("birthdate").valueChanges
@@ -57,6 +59,17 @@ export class PacienteComponent implements OnInit {
     .subscribe(value =>{
       this.pacienteForm.controls['age'].setValue(this.getAge(new Date(value)));
     });
+
+    this.pacienteForm.get('birthdate').valueChanges
+    .subscribe(value=>{
+      if(value<18){
+        this.mayorEdad=false;
+      }
+      if(value>18){
+        this.mayorEdad=true;
+      }
+      this.sendMenssage();
+    })
   }
 
   private getAge(birthdate:Date):number{
@@ -69,15 +82,40 @@ export class PacienteComponent implements OnInit {
     return age;
   }
 
-  private completeForm():void{
-    this.pacienteForm.controls['birthday'].setValue(this.paciente.fechaNacimiento);
-    this.pacienteForm.controls['name'].setValue('holi');
-    this.pacienteForm.controls['homeAddress'].setValue('holi');
-    this.pacienteForm.controls['phoneNumber'].setValue('holi');
+  private completeForm(){
+    this.pacienteForm.get('documentType').setValue(this.getTipoId(this.paciente.tipoIdentificacion));
+    this.pacienteForm.get('name').setValue(this.paciente.nombre);
+    this.pacienteForm.get('homeAddress').setValue(this.paciente.direccion);
+    this.pacienteForm.get('birthdate').setValue(this.convertDateFormat(this.paciente.fechaNacimiento));
+    this.pacienteForm.get('phoneNumber').setValue(this.paciente.telefono);
   }
   private deleteForm():void{
-    this.pacienteForm.setControl("name",new FormControl('',Validators.required))
+    this.pacienteForm.get('name').setValue('');
+    this.pacienteForm.get('homeAddress').setValue('');
+    this.pacienteForm.get('birthdate').setValue('');
+    this.pacienteForm.get('phoneNumber').setValue('');
   }
+
+  private convertDateFormat(date:Date){
+    let oldDate = date;
+    let year = oldDate.getFullYear().toString();
+    let month = oldDate.getMonth().toString().length<2?'0'+oldDate.getMonth().toString():oldDate.getMonth().toString();
+    let day = oldDate.getDate().toString().length<2?'0'+oldDate.getDate().toString():oldDate.getDate().toString();
+    let stringDate = year+'-'+month+'-'+day;
+    console.log(stringDate);
+    return stringDate;
+  }
+  private getTipoId(tipo:string){
+    switch (tipo){
+      case 'CC':
+        return 1;
+      case 'TI':
+        return 2;
+      default:
+        break;
+    }
+  }
+  
   /**Geters formulario */
   get documentTypeField(){
     return this.pacienteForm.get('documentType');
@@ -108,5 +146,11 @@ export class PacienteComponent implements OnInit {
   async setPaciente(){
     let res = await this.pacienteService.get(this.pacienteId).toPromise();
     this.paciente = Paciente.fromJSON(res);
+    if (this.paciente != null){
+      this.completeForm();
+    }else{
+      this.deleteForm();
+    }
+    
   }
 }

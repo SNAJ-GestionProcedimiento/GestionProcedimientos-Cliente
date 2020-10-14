@@ -16,6 +16,7 @@ export class PacienteService  extends HttpService{
     * @param id identificador de la persona
     */
    get(id: string){
+     console.log(id);
      return this.http.get(
        `${this.apiURL}/${id}`,
        {
