@@ -16,6 +16,7 @@ export class AcudienteComponent implements OnInit {
   public acudienteForm : FormGroup;
   public acudiente:Acudiente;
   public acudienteId:string;
+  public activo:boolean = false;
 
   constructor(
     private formBuilder:FormBuilder,

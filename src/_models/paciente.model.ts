@@ -49,13 +49,13 @@ export class Paciente{
         paciente.idPersona = json.personas[0].idPersona;
         paciente.identificacion = json.personas[0].identificacion;
         paciente.tipoIdentificacion = json.personas[0].tipoIdentificacion;
-        paciente.fechaNacimiento = new Date(json.personas[0].fechaNacimiento);
+        paciente.fechaNacimiento = new Date(json.personas[0].fechaNacimiento+"T00:00:00");
         paciente.correo = json.personas[0].correo;
         paciente.telefono = json.personas[0].telefono;
         paciente.direccion = json.personas[0].direccion;
         paciente.nombre = json.personas[0].nombre;
         paciente.genero = json.personas[0].genero;
-
+        
         return paciente;
     }
 }

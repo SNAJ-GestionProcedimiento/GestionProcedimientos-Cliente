@@ -1,30 +1,33 @@
 <!--Datos del acudiente en caso de ser necesario-->
-<div class="container">
-    <h6>Datos del acudiante</h6>
-    <br>
-    <form [formGroup]="acudienteForm">
-        <div class="form-row align-items-center">
-            <!--Numero de identificacion-->
-            <div class="col-auto mr-3 mt-1">
-                Identificación:
-                <input class="form-control" type="text" formControlName='id'>
+<div id="acudienteActivo" >
+    <div class="container">
+        <h6>Datos del acudiante</h6>
+        <br>
+        <form [formGroup]="acudienteForm">
+            <div class="form-row align-items-center">
+                <!--Numero de identificacion-->
+                <div class="col-auto mr-3 mt-1">
+                    Identificación:
+                    <input class="form-control" type="text" formControlName='id'>
+                </div>
+                <!--Nombre-->
+                <div class="col-auto mr-3 mt-1">
+                    Nombre:
+                    <input type="text" class="form-control" formControlName="name">
+                </div>
+                <!--Dirección-->
+                <div class="col-auto mr-3 mt-1">
+                    Dirección:
+                    <input type="text" class="form-control" formControlName="homeAddress">
+                </div>
             </div>
-            <!--Nombre-->
-            <div class="col-auto mr-3 mt-1">
-                Nombre:
-                <input type="text" class="form-control" formControlName="name">
+            <div class="form-row align-items-center mt-1">
+                <!--Telefono-->
+                <div class="col-auto mr-3 mt-1">
+                    Teléfono:
+                    <input type="text" class="form-control" formControlName="phoneNumber">
+                </div>
             </div>
-            <!--Dirección-->
-            <div class="col-auto mr-3 mt-1">
-                Dirección:
-                <input type="text" class="form-control" formControlName="homeAddress">
-            </div>
-        </div>
-        <div class="form-row align-items-center mt-1">
-            <!--Telefono-->
-            <div class="col-auto mr-3 mt-1">
-                Teléfono:
-                <input type="text" class="form-control" formControlName="phoneNumber">
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+</div>
