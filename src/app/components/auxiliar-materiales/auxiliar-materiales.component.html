@@ -1,7 +1,8 @@
 <div class="tabla-materiales">
     <h2>Materiales</h2>
     <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSourceMat">
+        <table mat-table [dataSource]="dataSourceMat" class="mat-elevation-z8
+        table-bordered table-responsive-sm">
 
             <!-- posición Column -->
             <ng-container matColumnDef="posicion">
@@ -70,5 +71,7 @@
 
 
     </div>
-
+    <button type="button" class="btn btn-info">Añadir material</button>
+    <br>
+    <hr>
 </div>
