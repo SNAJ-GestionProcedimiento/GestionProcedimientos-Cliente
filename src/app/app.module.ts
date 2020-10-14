@@ -17,6 +17,7 @@ import { PacienteComponent } from './components/paciente/paciente.component';
 import { AcudienteComponent } from './components/acudiente/acudiente.component';
 import { AcudienteService } from '../_services/acudiente.service';
 import { ProcedimientoComponent } from './components/procedimiento/procedimiento.component';
+import { InstrumentosEquiposService } from '../_services/instrumentos-equipos.service';
 
 import { MaterialModule } from './material/material.module';
 
@@ -25,7 +26,6 @@ import { AuxiliarInstrumentosEquiposComponent } from './components/auxiliar-inst
 import { VentanaAuxiliarInstrumentosEquiposComponent } from './components/ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
 import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialista/auxiliar-especialista.component';
 import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
-import { ProcedimientoModalComponent } from './components/procedimiento/procedimiento-modal/procedimiento-modal.component';
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 
@@ -43,7 +43,6 @@ import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/au
     VentanaAuxiliarInstrumentosEquiposComponent,
     AuxiliarEspecialistaComponent,
     VentanaAuxiliarEspecialidadComponent,
-    ProcedimientoModalComponent,
     AuxiliarDocumentacionComponent,
     AuxiliarMaterialesComponent,
   ],
@@ -59,7 +58,8 @@ import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/au
   ],
   providers: [
     PacienteService,
-    AcudienteService
+    AcudienteService,
+    InstrumentosEquiposService
   ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent]

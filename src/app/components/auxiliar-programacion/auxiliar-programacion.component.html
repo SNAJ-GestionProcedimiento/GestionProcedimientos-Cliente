@@ -1,13 +1,15 @@
 <!-- Programacion de un procedimiento -->
 <div class="container">
     <!-- datos del paciente -->
-    <app-paciente></app-paciente>
+    <app-paciente (messageEvent)="receiveMessage($event)"></app-paciente>
     <hr>
     <!-- datos del acudiente si es necesario-->
     <app-acudiente></app-acudiente>
     <hr>
     <!-- datos del procedimiento -->
     <app-procedimiento></app-procedimiento>
+    <hr>
+    <button type="button" class="btn btn-info">Crear agenda de procedimiento</button>
     <hr>
     <!-- Fecha hora procedimiento -->
     <!-- documentacion -->
