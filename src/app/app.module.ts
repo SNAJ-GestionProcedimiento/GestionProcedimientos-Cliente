@@ -17,6 +17,7 @@ import { PacienteComponent } from './components/paciente/paciente.component';
 import { AcudienteComponent } from './components/acudiente/acudiente.component';
 import { AcudienteService } from '../_services/acudiente.service';
 import { ProcedimientoComponent } from './components/procedimiento/procedimiento.component';
+import { InstrumentosEquiposService } from '../_services/instrumentos-equipos.service';
 
 import { MaterialModule } from './material/material.module';
 
@@ -53,7 +54,8 @@ import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxil
   ],
   providers: [
     PacienteService,
-    AcudienteService
+    AcudienteService,
+    InstrumentosEquiposService
   ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent]
