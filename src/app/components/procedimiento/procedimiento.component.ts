@@ -19,6 +19,7 @@ export class ProcedimientoComponent implements OnInit {
   public procedimiento:Procedimiento;
   public camaUci:boolean;
   public bancoSangre:boolean;
+  public codigoProc: number;
 
   constructor(
     private formBuilder:FormBuilder,
@@ -29,6 +30,7 @@ export class ProcedimientoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.codigoProc=0;
   }
 
   private buildbusquedaForm(){
@@ -72,6 +74,12 @@ export class ProcedimientoComponent implements OnInit {
     if(this.procedimiento!=null){
       this.updateResultadoForm();
     }
+  }
+
+  public getCodigoProcedimiento(): number{
+    this.codigoProc= parseInt(this.procedimiento.codigoProcedimiento)
+    console.log("cod: "+this.codigoProc);
+    return this.codigoProc;
   }
 
   /**Peticiones */
