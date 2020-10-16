@@ -55,6 +55,17 @@
                 Teléfono:
                 <input type="text" class="form-control" formControlName="phoneNumber">
             </div>
+            <!--tipo de documento-->
+            <div class="col-auto mr-3 mt-1">
+                Genero:
+                <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="gender">
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                </select>
+                <div *ngIf="pacienteForm.get('gender').errors && this.pacienteForm.get('gender').touched">
+                    <p>Seleccione el genero del paciente</p>
+                </div>
+            </div>
             <!--Observación-->
             <div class="col-auto mr-3 mt-1">
                 Observación: <br/>

@@ -10,22 +10,21 @@ import { ProcedimientoService } from '../../../_services/procedimiento.service';
   styleUrls: ['./procedimiento.component.css']
 })
 export class ProcedimientoComponent implements OnInit {
+  keyword = 'name';
+  data :any;
 
   public busquedaForm:FormGroup;
-  public resultadoForm:FormGroup;
-
-  public tipoProcedimiento:string;
   public valorBusqueda:string;
+
   public procedimiento:Procedimiento;
-  public camaUci:boolean;
-  public bancoSangre:boolean;
+  public procedimientos:Array<Procedimiento>;
 
   constructor(
     private formBuilder:FormBuilder,
     private procedimientoService:ProcedimientoService
   ) { 
     this.buildbusquedaForm();
-    this.buildResultadoForm();
+    console.log(this.data);
   }
 
   ngOnInit(): void {
@@ -34,54 +33,48 @@ export class ProcedimientoComponent implements OnInit {
   private buildbusquedaForm(){
     this.busquedaForm = this.formBuilder.group({
       searchType:['',[Validators.required]],
-      searchId:['',[Validators.required]]
-    });
-    this.busquedaForm.get('searchType').valueChanges
-    .subscribe(value=>{
-      console.log(value);
-    });
-    this.busquedaForm.get('searchId').valueChanges
-    .subscribe(value=>{
-      this.valorBusqueda = value;
-    });
-  } 
-  private buildResultadoForm(){
-    this.resultadoForm = this.formBuilder.group({
       code:['',[]],
       name:['',[]],
       uciBed:['',[]],
       bloodBank:['',[]]
     });
-    this.resultadoForm.get('uciBed').valueChanges
-    .subscribe(value=>{
-      this.camaUci=value;
-    });
-    this.resultadoForm.get('bloodBank').valueChanges
-    .subscribe(value=>{
-      this.bancoSangre=value;
-    });
+  } 
+
+  private updateBusquedaForm(){
+    this.busquedaForm.get('code').setValue(this.procedimiento.codigoProcedimiento);
+    this.busquedaForm.get('name').setValue(this.procedimiento.nombre);
   }
-  private updateResultadoForm(){
-    console.log(this.procedimiento.nombre);
-    this.resultadoForm.get('code').setValue(this.procedimiento.codigoProcedimiento);
-    this.resultadoForm.get('name').setValue(this.procedimiento.nombre);
+  selectEvent(item) {
+    console.log(item);
+  }
+  onChangeSearch($event){
+    this.valorBusqueda = $event;
+    console.log(this.valorBusqueda);
   }
 
   public buscarClick(){
     this.setProcedimiento();
     if(this.procedimiento!=null){
-      this.updateResultadoForm();
+      this.updateBusquedaForm();
     }
   }
 
   /**Peticiones */
   async setProcedimiento(){
-    let res;
     if(this.busquedaForm.get('searchType').value==='1'){
-      res = await this.procedimientoService.getCodigo(this.valorBusqueda).toPromise();
+      let res:any = await this.procedimientoService.getCodigo(this.valorBusqueda).toPromise();
+      this.procedimiento = Procedimiento.fromJSON(res.procedimiento);
+      this.procedimientos=new Array<Procedimiento>();
     }else{
-      res = await this.procedimientoService.getNombre(this.valorBusqueda).toPromise();
+      let res:any = await this.procedimientoService.getNombre(this.valorBusqueda).toPromise();
+      this.procedimientos = new Array<Procedimiento>();
+      res.procedimientos.forEach(procedimiento => {
+        this.procedimientos.push(procedimiento);
+      });
+      this.procedimiento = null;
+      this.data = this.procedimientos;
     }
-    this.procedimiento = Procedimiento.fromJSON(res);
+    console.log(this.procedimiento);
+    console.log(this.procedimientos);
   }
 }

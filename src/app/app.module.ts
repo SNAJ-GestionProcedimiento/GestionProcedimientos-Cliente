@@ -9,6 +9,7 @@ import { SidebarModule } from 'ng-sidebar';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { AuxiliarAgendaComponent } from './components/auxiliar-agenda/auxiliar-agenda.component';
 import { AuxiliarProgramacionComponent } from './components/auxiliar-programacion/auxiliar-programacion.component';
@@ -50,6 +51,7 @@ import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxil
     HttpClientModule,
     MaterialModule,
     BrowserAnimationsModule,
+    AutocompleteLibModule,
   ],
   providers: [
     PacienteService,

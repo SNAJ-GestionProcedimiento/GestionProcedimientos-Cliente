@@ -9,12 +9,30 @@
             </select>
         </div>
         <div class="form-group mx-sm-3 mb-2">
-            <input type="text" class="form-control" placeholder="Ingrese el valor" formControlName="searchId">
+            <!-- Buscador autocompletado-->
+            <div class="ng-autocomplete">
+                <ng-autocomplete 
+                  [data]="data"
+                  [searchKeyword]="keyword"
+                  (selected)='selectEvent($event)'
+                  (inputChanged)='onChangeSearch($event)'
+                  [itemTemplate]="itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate">                                 
+                </ng-autocomplete>
+                 
+                <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.name"></a>
+                </ng-template>
+                 
+                <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]=""></div>
+                </ng-template>
+                </div>
         </div>
         <button type="button" class="btn btn-info" (click)="buscarClick()">Buscar</button>
     </form>
 
-    <form class="mt-2" [formGroup]="resultadoForm">
+    <form class="mt-2" [formGroup]="busquedaForm">
         <div class="form-row align-items-center">
             <div class="form-group col-auto row mr-2">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Codigo</label>

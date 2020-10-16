@@ -1,33 +1,76 @@
-<!--Datos del acudiente en caso de ser necesario-->
-<div id="acudienteActivo" >
-    <div class="container">
-        <h6>Datos del acudiante</h6>
-        <br>
-        <form [formGroup]="acudienteForm">
-            <div class="form-row align-items-center">
-                <!--Numero de identificacion-->
-                <div class="col-auto mr-3 mt-1">
-                    Identificación:
-                    <input class="form-control" type="text" formControlName='id'>
-                </div>
-                <!--Nombre-->
-                <div class="col-auto mr-3 mt-1">
-                    Nombre:
-                    <input type="text" class="form-control" formControlName="name">
-                </div>
-                <!--Dirección-->
-                <div class="col-auto mr-3 mt-1">
-                    Dirección:
-                    <input type="text" class="form-control" formControlName="homeAddress">
-                </div>
+<div class="container">
+    <h6>Datos del paciente</h6>
+    <form [formGroup]="acudienteForm">
+        <div class="form-row align-items-center">
+        <!--tipo de documento-->
+        <div class="col-auto mr-3 mt-1">
+            Tipo de documento:
+            <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="documentType">
+                <option value="1">Cedula</option>
+                <option value="2">Tarjeta de indentidad</option>
+                <option value="3">Cedula extranjeria</option>
+            </select>
+            <div *ngIf="acudienteForm.get('documentType').errors && this.acudienteForm.get('documentType').touched">
+                <p>Seleccione el tipo de documento</p>
             </div>
-            <div class="form-row align-items-center mt-1">
-                <!--Telefono-->
-                <div class="col-auto mr-3 mt-1">
-                    Teléfono:
-                    <input type="text" class="form-control" formControlName="phoneNumber">
-                </div>
+        </div>
+        <!--Numero de identificacion-->
+        <div class="col-auto mr-3 mt-1">
+            Identificación:
+            <input class="form-control" type="number" formControlName='id'>
+            <div *ngIf="acudienteForm.get('id').errors && this.acudienteForm.get('id').touched">
+                <p>Ingrese el numero de documento</p>
             </div>
-        </form>
+        </div>
+        <!--Fecha de nacimiento-->
+        <div class="col-auto mr-3 mt-1">
+            Fecha de nacimiento
+            <input class="form-control" type="date" formControlName="birthdate">
+            <div *ngIf="acudienteForm.get('birthdate').errors && this.acudienteForm.get('birthdate').touched">
+                <p>Ingrese una fecha de nacimiento</p>
+            </div>
+        </div>
     </div>
+    <div class="form-row align-items-center mt-1">
+        <!--Nombre-->
+        <div class="col-auto mr-3 mt-1">
+            Nombre:
+            <input type="text" class="form-control" formControlName="name">
+            
+        </div>
+        <!--Dirección-->
+        <div class="col-auto mr-3 mt-1">
+            Dirección:
+            <input type="text" class="form-control" formControlName="homeAddress">
+        </div>
+        <!--Edad del paciente-->
+        <div class="col-auto mr-3 mt-1">
+            Edad:
+            <input class="form-control" type="text" formControlName="age" placeholder="Edad del paciente" readonly>
+        </div>
+    </div>
+    <div class="form-row align-items-center mt-1">
+        <!--Telefono-->
+        <div class="col-auto mr-3 mt-1">
+            Teléfono:
+            <input type="text" class="form-control" formControlName="phoneNumber">
+        </div>
+        <!--tipo de documento-->
+        <div class="col-auto mr-3 mt-1">
+            Genero:
+            <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="gender">
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+            </select>
+            <div *ngIf="acudienteForm.get('gender').errors && this.acudienteForm.get('gender').touched">
+                <p>Seleccione el genero del paciente</p>
+            </div>
+        </div>
+        <!--Observación-->
+        <div class="col-auto mr-3 mt-1">
+            Observación: <br/>
+            <textarea class="form-control" cols="30" rows="3" formControlName="observation"></textarea>
+        </div>
+    </div>
+</form>
 </div>

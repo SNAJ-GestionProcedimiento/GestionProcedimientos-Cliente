@@ -8,24 +8,37 @@ export class Acudiente{
      */
     public identificacion : string;
     /**
-     * Número de telefono del paciente
+     * Tipo de identificacion del acudiente
+     */
+    public tipoIdentificacion : string;
+    /**
+     * Fecha naciemiento del acudiente
+     */
+    public fechaNacimiento : Date;
+    /**
+     * Correo electronico del acudiente
+     */
+    public correo : string;
+    /**
+     * Número de telefono del acudiente
      */
     public telefono : string;
     /**
-     * Direccion de residencia del paciente
+     * Direccion de residencia del acudiente
      */
     public direccion : string;
     /**
-     * Nombre del paciente
+     * Nombre del acudiente
      */
     public nombre : string;
     /**
-     * Genero del paciente
+     * Genero del acudiente
      */
+    public genero : string;
 
-     constructor(){ }
+    constructor(){  }
 
-     public parseToJSON():JSON{
+    public parseToJSON():JSON{
         return JSON.parse(JSON.stringify(this));
     }
 
@@ -35,9 +48,13 @@ export class Acudiente{
 
         acudiente.idPersona = json.personas[0].idPersona;
         acudiente.identificacion = json.personas[0].identificacion;
+        acudiente.tipoIdentificacion = json.personas[0].tipoIdentificacion;
+        acudiente.fechaNacimiento = new Date(json.personas[0].fechaNacimiento+"T00:00:00");
+        acudiente.correo = json.personas[0].correo;
         acudiente.telefono = json.personas[0].telefono;
         acudiente.direccion = json.personas[0].direccion;
         acudiente.nombre = json.personas[0].nombre;
+        acudiente.genero = json.personas[0].genero;
         
         return acudiente;
     }

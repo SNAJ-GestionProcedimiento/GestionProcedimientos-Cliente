@@ -14,7 +14,6 @@ export class PacienteComponent implements OnInit {
   public paciente: Paciente;
   public pacienteId: string;
   public pacienteForm : FormGroup;
-  public mayorEdad:boolean;
   @Output() messageEvent =new EventEmitter<boolean>();
 
   constructor(
@@ -22,9 +21,6 @@ export class PacienteComponent implements OnInit {
     private pacienteService: PacienteService
     ) {
       this.buildpacienteForm();
-     }
-  sendMenssage(){
-    this.messageEvent.emit(this.mayorEdad);
   }
 
   ngOnInit(): void {  }
@@ -39,6 +35,7 @@ export class PacienteComponent implements OnInit {
       name:['',[Validators.required]],
       homeAddress:['',[Validators.required]],
       phoneNumber:['',[Validators.required]],
+      gender:['',[Validators.required]],
       observation:['',[Validators.required]]
     });
 
@@ -59,17 +56,6 @@ export class PacienteComponent implements OnInit {
     .subscribe(value =>{
       this.pacienteForm.controls['age'].setValue(this.getAge(new Date(value)));
     });
-
-    this.pacienteForm.get('birthdate').valueChanges
-    .subscribe(value=>{
-      if(value<18){
-        this.mayorEdad=false;
-      }
-      if(value>18){
-        this.mayorEdad=true;
-      }
-      this.sendMenssage();
-    })
   }
 
   private getAge(birthdate:Date):number{
@@ -88,6 +74,7 @@ export class PacienteComponent implements OnInit {
     this.pacienteForm.get('homeAddress').setValue(this.paciente.direccion);
     this.pacienteForm.get('birthdate').setValue(this.convertDateFormat(this.paciente.fechaNacimiento));
     this.pacienteForm.get('phoneNumber').setValue(this.paciente.telefono);
+    this.pacienteForm.get('gender').setValue(this.getTipoGenero(this.paciente.genero));
   }
   private deleteForm():void{
     this.pacienteForm.get('name').setValue('');
@@ -104,6 +91,14 @@ export class PacienteComponent implements OnInit {
     let stringDate = year+'-'+month+'-'+day;
     console.log(stringDate);
     return stringDate;
+  }
+  private getTipoGenero(tipo:string){
+    switch (tipo){
+      case 'masculino':
+        return 1;
+      case 'femenino':
+          return 2;
+    }
   }
   private getTipoId(tipo:string){
     switch (tipo){

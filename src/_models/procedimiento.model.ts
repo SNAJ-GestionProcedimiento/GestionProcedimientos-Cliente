@@ -1,3 +1,4 @@
+import { ModalidadProcedimiento } from './modalidad-procedimiento.model';
 export class Procedimiento{
     /**
      * Identificador del objeto procedimiento
@@ -12,6 +13,8 @@ export class Procedimiento{
      */
     public tipo : string;
 
+    public modalidad:ModalidadProcedimiento[];
+
     constructor(){  }
 
     public parseToJSON():JSON{
@@ -22,9 +25,10 @@ export class Procedimiento{
         if (json==null) { return null;}
         var procedimiento  =new Procedimiento();
 
-        procedimiento.codigoProcedimiento = json.procedimiento.codigoProcedimiento;
-        procedimiento.nombre = json.procedimiento.nombre;
-        procedimiento.tipo = json.procedimiento.tipo;
+        procedimiento.codigoProcedimiento = json.codigoProcedimiento;
+        procedimiento.nombre = json.nombre;
+        procedimiento.tipo = json.tipo;
+        procedimiento.modalidad = json.modalidadesProc;
 
         return procedimiento;
     }
