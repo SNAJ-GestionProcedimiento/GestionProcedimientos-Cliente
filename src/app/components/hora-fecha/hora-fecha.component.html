@@ -1,0 +1,43 @@
+<div class="container">
+    <h5>Fecha y hora del procedimiento</h5>
+    <form [formGroup]="horafechaForm">
+        <div class="form-row align-items-center">
+            <!--Fecha del procedimiento-->
+            <div class="col-auto mr-3 mt-1">
+                Fecha
+                <input class="form-control" type="date" formControlName="date">
+            </div>
+            <!--Hora del procedimiento-->
+            <div class="col-auto mr-3 mt-1">
+                Hora:
+                <input [ngxTimepicker]="picker" class="form-control" type="text" formControlName='hour'>
+                <ngx-material-timepicker #picker></ngx-material-timepicker>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <!--Estado del procedimiento-->
+            <div class="col-auto mr-3 mt-3">
+                Estado:
+                <input class="form-control" type="text" value="PENDIENTE" readonly formControlName="state">
+            </div>
+            <!--sala-->
+            <div class="col-auto mr-3 mt-3">
+                Sala:
+                <select class="form-control" formControlName="room">
+                    <option value="1">Cedula</option>
+                    <option value="2">Tarjeta de indentidad</option>
+                    <option value="3">Cedula extranjeria</option>
+                </select>
+            </div>
+            <!--Estado sala-->
+            <div class="col-auto mr-3 mt-3">
+                Estado:
+                <select class="form-control" formControlName="stateromm">
+                    <option value="1">Cedula</option>
+                    <option value="2">Tarjeta de indentidad</option>
+                    <option value="3">Cedula extranjeria</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>

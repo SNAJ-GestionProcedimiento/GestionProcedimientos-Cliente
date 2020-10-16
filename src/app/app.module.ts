@@ -21,6 +21,7 @@ import { ProcedimientoComponent } from './components/procedimiento/procedimiento
 import { InstrumentosEquiposService } from '../_services/instrumentos-equipos.service';
 
 import { MaterialModule } from './material/material.module';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuxiliarInstrumentosEquiposComponent } from './components/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
@@ -29,6 +30,7 @@ import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialist
 import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
+import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/au
     VentanaAuxiliarEspecialidadComponent,
     AuxiliarDocumentacionComponent,
     AuxiliarMaterialesComponent,
+    HoraFechaComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/au
     MaterialModule,
     BrowserAnimationsModule,
     AutocompleteLibModule,
+    NgxMaterialTimepickerModule,
   ],
   providers: [
     PacienteService,

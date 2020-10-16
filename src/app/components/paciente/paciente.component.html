@@ -1,33 +1,31 @@
 <div class="container">
-        <h6>Datos del paciente</h6>
+        <h5>Datos del paciente</h5>
         <form [formGroup]="pacienteForm">
             <div class="form-row align-items-center">
             <!--tipo de documento-->
             <div class="col-auto mr-3 mt-1">
                 Tipo de documento:
-                <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="documentType">
-                    <option value="1">Cedula</option>
-                    <option value="2">Tarjeta de indentidad</option>
-                    <option value="3">Cedula extranjeria</option>
+                <select class="form-control" formControlName="documentType">
+                    <option value="{{tipo.id}}" *ngFor="let tipo of tiposIdentidicacion">{{tipo.nombre}}</option>
                 </select>
-                <div *ngIf="pacienteForm.get('documentType').errors && this.pacienteForm.get('documentType').touched">
-                    <p>Seleccione el tipo de documento</p>
+                <div class="error" *ngIf="pacienteForm.get('documentType').errors && this.pacienteForm.get('documentType').touched">
+                    <p>*Seleccione el tipo de documento</p>
                 </div>
             </div>
             <!--Numero de identificacion-->
             <div class="col-auto mr-3 mt-1">
                 Identificación:
                 <input class="form-control" type="number" formControlName='id'>
-                <div *ngIf="pacienteForm.get('id').errors && this.pacienteForm.get('id').touched">
-                    <p>Ingrese el numero de documento</p>
+                <div class="error" *ngIf="pacienteForm.get('id').errors && this.pacienteForm.get('id').touched">
+                    <p>*Ingrese el numero de documento</p>
                 </div>
             </div>
             <!--Fecha de nacimiento-->
             <div class="col-auto mr-3 mt-1">
                 Fecha de nacimiento
                 <input class="form-control" type="date" formControlName="birthdate">
-                <div *ngIf="pacienteForm.get('birthdate').errors && this.pacienteForm.get('birthdate').touched">
-                    <p>Ingrese una fecha de nacimiento</p>
+                <div class="error" *ngIf="pacienteForm.get('birthdate').errors && this.pacienteForm.get('birthdate').touched">
+                    <p>*Ingrese una fecha de nacimiento</p>
                 </div>
             </div>
         </div>
@@ -36,12 +34,17 @@
             <div class="col-auto mr-3 mt-1">
                 Nombre:
                 <input type="text" class="form-control" formControlName="name">
-                
+                <div class="error" *ngIf="pacienteForm.get('name').errors && this.pacienteForm.get('name').touched">
+                    <p>*Ingrese el nombre del paciente</p>
+                </div>
             </div>
             <!--Dirección-->
             <div class="col-auto mr-3 mt-1">
                 Dirección:
                 <input type="text" class="form-control" formControlName="homeAddress">
+                <div class="error" *ngIf="pacienteForm.get('homeAddress').errors && this.pacienteForm.get('homeAddress').touched">
+                    <p>*Ingrese la dirección del paciente</p>
+                </div>
             </div>
             <!--Edad del paciente-->
             <div class="col-auto mr-3 mt-1">
@@ -54,22 +57,28 @@
             <div class="col-auto mr-3 mt-1">
                 Teléfono:
                 <input type="text" class="form-control" formControlName="phoneNumber">
+                <div class="error" *ngIf="pacienteForm.get('phoneNumber').errors && this.pacienteForm.get('phoneNumber').touched">
+                    <p>*Ingrese el número de teléfono del paciente</p>
+                </div>
             </div>
-            <!--tipo de documento-->
+            <!--Genero-->
             <div class="col-auto mr-3 mt-1">
                 Genero:
-                <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="gender">
+                <select class="form-control" formControlName="gender">
                     <option value="1">Masculino</option>
                     <option value="2">Femenino</option>
                 </select>
-                <div *ngIf="pacienteForm.get('gender').errors && this.pacienteForm.get('gender').touched">
-                    <p>Seleccione el genero del paciente</p>
+                <div class="error" *ngIf="pacienteForm.get('gender').errors && this.pacienteForm.get('gender').touched">
+                    <p>*Seleccione el genero del paciente</p>
                 </div>
             </div>
             <!--Observación-->
             <div class="col-auto mr-3 mt-1">
                 Observación: <br/>
                 <textarea class="form-control" cols="30" rows="3" formControlName="observation"></textarea>
+                <div class="error" *ngIf="pacienteForm.get('observation').errors && this.pacienteForm.get('observation').touched">
+                    <p>*Escriba la observación del paciente</p>
+                </div>
             </div>
         </div>
     </form>

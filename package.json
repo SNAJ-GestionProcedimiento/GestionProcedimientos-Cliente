@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "gestion-procedimientos-cliente",
   "version": "0.0.0",
   "scripts": {
@@ -25,6 +24,7 @@
     "angular-ng-autocomplete": "^2.0.1",
     "ng-sidebar": "^9.4.2",
     "ng2-opd-popup": "^1.1.21",
+    "ngx-material-timepicker": "^5.5.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
@@ -50,56 +50,3 @@
     "typescript": "~4.0.2"
   }
 }
-=======
-    "name": "gestion-procedimientos-cliente",
-    "version": "0.0.0",
-    "proxy": "http://localhost:8000",
-    "scripts": {
-        "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build",
-        "test": "ng test",
-        "lint": "ng lint",
-        "e2e": "ng e2e"
-    },
-    "private": true,
-    "dependencies": {
-        "@angular/animations": "^10.1.5",
-        "@angular/cdk": "^10.2.4",
-        "@angular/common": "~10.1.4",
-        "@angular/compiler": "~10.1.4",
-        "@angular/core": "~10.1.4",
-        "@angular/forms": "~10.1.4",
-        "@angular/material": "^10.2.4",
-        "@angular/platform-browser": "~10.1.4",
-        "@angular/platform-browser-dynamic": "~10.1.4",
-        "@angular/router": "~10.1.4",
-        "cors": "^2.8.5",
-        "ng-sidebar": "^9.4.2",
-        "ng2-opd-popup": "^1.1.21",
-        "rxjs": "~6.6.0",
-        "tslib": "^2.0.0",
-        "zone.js": "~0.10.2"
-    },
-    "devDependencies": {
-        "@angular-devkit/build-angular": "~0.1001.4",
-        "@angular/cli": "~10.1.4",
-        "@angular/compiler-cli": "~10.1.4",
-        "@types/node": "^12.11.1",
-        "@types/jasmine": "~3.5.0",
-        "@types/jasminewd2": "~2.0.3",
-        "codelyzer": "^6.0.0",
-        "jasmine-core": "~3.6.0",
-        "jasmine-spec-reporter": "~5.0.0",
-        "karma": "~5.0.0",
-        "karma-chrome-launcher": "~3.1.0",
-        "karma-coverage-istanbul-reporter": "~3.0.2",
-        "karma-jasmine": "~4.0.0",
-        "karma-jasmine-html-reporter": "^1.5.0",
-        "protractor": "~7.0.0",
-        "ts-node": "~8.3.0",
-        "tslint": "~6.1.0",
-        "typescript": "~4.0.2"
-    }
-}
->>>>>>> 230276da4744a38f3866a414937829448567c6a3

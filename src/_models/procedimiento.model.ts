@@ -1,4 +1,4 @@
-import { ModalidadProcedimiento } from './modalidad-procedimiento.model';
+import { ProcedimientoModalidad } from './procedimientoModalidad.model';
 export class Procedimiento{
     /**
      * Identificador del objeto procedimiento
@@ -13,7 +13,7 @@ export class Procedimiento{
      */
     public tipo : string;
 
-    public modalidad:ModalidadProcedimiento[];
+    public modalidad:ProcedimientoModalidad[];
 
     constructor(){  }
 

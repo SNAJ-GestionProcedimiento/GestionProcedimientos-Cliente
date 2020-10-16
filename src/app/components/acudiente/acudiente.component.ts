@@ -30,14 +30,13 @@ export class AcudienteComponent implements OnInit {
     this.acudienteForm = this.formBuilder.group({
       documentType:['',[Validators.required]],
       id:['',[Validators.required]],
-      birthdate:['',[Validators.required]],
       age:['',[]],
+      birthdate:['',[Validators.required]],
       email:['',[Validators.required,Validators.email]],
       name:['',[Validators.required]],
       homeAddress:['',[Validators.required]],
       phoneNumber:['',[Validators.required]],
       gender:['',[Validators.required]],
-      observation:['',[Validators.required]]
     });
 
     this.acudienteForm.get("id").valueChanges
@@ -113,8 +112,14 @@ export class AcudienteComponent implements OnInit {
 
   async setAcudiente(){
     let res = await this.acudienteService.get(this.acudienteId).toPromise();
+    console.log(res);
     this.acudiente = Acudiente.fromJSON(res);
     console.log(this.acudiente);
+    if (this.acudiente!= null){
+      this.completeForm();
+    }else{
+      this.deleteForm();
+    }
   }
 
 }

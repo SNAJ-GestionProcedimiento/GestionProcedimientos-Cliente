@@ -1,6 +1,4 @@
-import { Procedimiento } from './procedimiento.model';
-
-export class ModalidadProcedimiento{
+export class Modalidad{
     /**
      * Identificador del objeto modalidad
      */
@@ -16,9 +14,9 @@ export class ModalidadProcedimiento{
         return JSON.parse(JSON.stringify(this));
     }
 
-    public static fromJSON(json):ModalidadProcedimiento{
+    public static fromJSON(json):Modalidad{
         if(json==null){ return null}
-        var modalidad = new ModalidadProcedimiento;
+        var modalidad = new Modalidad;
 
         modalidad.idModalidad = json.idModalidad;
         modalidad.nombre = json.nombre;

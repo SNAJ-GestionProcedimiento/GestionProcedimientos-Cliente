@@ -21,4 +21,8 @@ export class AuxiliarProgramacionComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  crearAgendaonClick(){
+    
+  }
+
 }

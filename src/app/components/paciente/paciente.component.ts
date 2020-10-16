@@ -1,9 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { Paciente } from 'src/_models/paciente.model';
+import { TipoId } from 'src/_models/tipoId.model';
 
 import { PacienteService } from '../../../_services/paciente.service';
+import { TipoIdService } from '../../../_services/tipo-id.service';
 
 @Component({
   selector: 'app-paciente',
@@ -11,6 +13,7 @@ import { PacienteService } from '../../../_services/paciente.service';
   styleUrls: ['./paciente.component.css']
 })
 export class PacienteComponent implements OnInit {
+  public tiposIdentidicacion:Array<TipoId>;
   public paciente: Paciente;
   public pacienteId: string;
   public pacienteForm : FormGroup;
@@ -18,12 +21,15 @@ export class PacienteComponent implements OnInit {
 
   constructor(
     private formBuilder:FormBuilder,
-    private pacienteService: PacienteService
+    private pacienteService: PacienteService,
+    private tipoIdService: TipoIdService
     ) {
       this.buildpacienteForm();
   }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {  
+    this.setTiposID();
+  }
 
   private buildpacienteForm(){
     this.pacienteForm = this.formBuilder.group({
@@ -37,6 +43,11 @@ export class PacienteComponent implements OnInit {
       phoneNumber:['',[Validators.required]],
       gender:['',[Validators.required]],
       observation:['',[Validators.required]]
+    });
+
+    this.pacienteForm.get("documentType").valueChanges
+    .subscribe(value =>{
+      console.log(value)
     });
 
     this.pacienteForm.get("id").valueChanges
@@ -69,7 +80,7 @@ export class PacienteComponent implements OnInit {
   }
 
   private completeForm(){
-    this.pacienteForm.get('documentType').setValue(this.getTipoId(this.paciente.tipoIdentificacion));
+    this.pacienteForm.get('documentType').setValue(this.paciente.tipoIdentificacion);
     this.pacienteForm.get('name').setValue(this.paciente.nombre);
     this.pacienteForm.get('homeAddress').setValue(this.paciente.direccion);
     this.pacienteForm.get('birthdate').setValue(this.convertDateFormat(this.paciente.fechaNacimiento));
@@ -98,16 +109,6 @@ export class PacienteComponent implements OnInit {
         return 1;
       case 'femenino':
           return 2;
-    }
-  }
-  private getTipoId(tipo:string){
-    switch (tipo){
-      case 'CC':
-        return 1;
-      case 'TI':
-        return 2;
-      default:
-        break;
     }
   }
   
@@ -146,6 +147,12 @@ export class PacienteComponent implements OnInit {
     }else{
       this.deleteForm();
     }
-    
+  }
+
+  //Pendiente por cargar al servidor
+  async setTiposID(){
+    let res = await this.tipoIdService.get().toPromise();
+    this.tiposIdentidicacion = TipoId.fromJSON(res);
+    console.log(this.tiposIdentidicacion);
   }
 }
