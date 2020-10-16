@@ -28,5 +28,8 @@ export class AuxiliarProgramacionComponent implements OnInit {
     this.listarInstrumentos.listarIntrumentEquip();
     this.listarEspecialidad.listarEspecialidades();
   }
+  crearAgendaonClick(){
+    
+  }
 
 }

@@ -12,11 +12,10 @@ export class PacienteService  extends HttpService{
    }
 
    /**
-    * Obtiene una persona
+    * Obtiene una lista de personas
     * @param id identificador de la persona
     */
    get(id: string){
-     console.log(id);
      return this.http.get(
        `${this.apiURL}/${id}`,
        {

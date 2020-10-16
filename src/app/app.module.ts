@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { AuxiliarAgendaComponent } from './components/auxiliar-agenda/auxiliar-agenda.component';
 import { AuxiliarProgramacionComponent } from './components/auxiliar-programacion/auxiliar-programacion.component';
@@ -24,6 +25,7 @@ import { EspecilidadRequeridaService }  from '../_services/especilidad-requerida
 import { NotificationService } from 'src/_services/notification.service';
 
 import { MaterialModule } from './material/material.module';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuxiliarInstrumentosEquiposComponent } from './components/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
@@ -32,6 +34,7 @@ import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialist
 import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
+import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,7 @@ import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/au
     VentanaAuxiliarEspecialidadComponent,
     AuxiliarDocumentacionComponent,
     AuxiliarMaterialesComponent,
+    HoraFechaComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,8 @@ import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/au
     HttpClientModule,
     MaterialModule,
     BrowserAnimationsModule,
+    AutocompleteLibModule,
+    NgxMaterialTimepickerModule,
   ],
   providers: [
     PacienteService,
