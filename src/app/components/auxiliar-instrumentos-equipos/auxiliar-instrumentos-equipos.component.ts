@@ -3,6 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { VentanaAuxiliarInstrumentosEquiposComponent } from '../ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
+import { InstrumentosEquiposService } from 'src/_services/instrumentos-equipos.service';
+import { InstrumentosEquipos } from 'src/_models/instrumentos-equipos.model';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   dataSource = null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private serviceIntrumentosEquipos : InstrumentosEquiposService) { }
 
   ngOnInit(): void {
     for (let x = 1; x <= 100; x++)
@@ -25,6 +27,13 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
       this.datos.push(new instrument(x, Math.trunc(Math.random() * 1000), `artículo ${x}`, x, `artículo ${x}`, `artículo ${x}`, ``));
     this.dataSource = new MatTableDataSource<instrument>(this.datos);
     this.dataSource.paginator = this.paginator;
+  }
+
+  listarIntrumentEquip(){
+    this.serviceIntrumentosEquipos.getInstrumentoEquipo(3,1).subscribe((result: InstrumentosEquipos[])=>{
+      console.log(result);
+    });
+    //this.serviceIntrumentosEquipos.get(3,1).subscribe();
   }
 
   openAgregarIntru() {
@@ -44,7 +53,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   }
 }
 export class instrument {
-  constructor(public No: number, public codigo: number, public nombre: string, public cantidad: number, public descripcion: string, public estado: string, public acciones: string) {
+  constructor(private No: number, private codigo: number, private nombre: string, private cantidad: number, private descripcion: string, private estado: string, private acciones: string) {
   }
 }
 

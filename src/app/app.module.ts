@@ -18,6 +18,7 @@ import { PacienteComponent } from './components/paciente/paciente.component';
 import { AcudienteComponent } from './components/acudiente/acudiente.component';
 import { AcudienteService } from '../_services/acudiente.service';
 import { ProcedimientoComponent } from './components/procedimiento/procedimiento.component';
+import { InstrumentosEquiposService } from '../_services/instrumentos-equipos.service';
 
 import { MaterialModule } from './material/material.module';
 
@@ -26,6 +27,8 @@ import { AuxiliarInstrumentosEquiposComponent } from './components/auxiliar-inst
 import { VentanaAuxiliarInstrumentosEquiposComponent } from './components/ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
 import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialista/auxiliar-especialista.component';
 import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
+import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
+import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,8 @@ import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxil
     VentanaAuxiliarInstrumentosEquiposComponent,
     AuxiliarEspecialistaComponent,
     VentanaAuxiliarEspecialidadComponent,
+    AuxiliarDocumentacionComponent,
+    AuxiliarMaterialesComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +60,8 @@ import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxil
   ],
   providers: [
     PacienteService,
-    AcudienteService
+    AcudienteService,
+    InstrumentosEquiposService
   ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent]
