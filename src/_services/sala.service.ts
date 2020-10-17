@@ -11,6 +11,18 @@ export class SalaService extends HttpService{
     protected http: HttpClient
   ) { 
     super(http);
-    this.apiURL += 'getProcedimiento'
+    this.apiURL += 'getAllSalas';
   }
+
+  /**
+    * Obtiene todas las salas
+  */
+ list(){
+   return this.http.get(
+    `${this.apiURL}`,
+    {
+      headers:this.headers
+    }
+   );
+ }
 }

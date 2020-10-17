@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { Sala } from 'src/_models/sala.model';
+import { EstadoAgenda } from 'src/_models/estado-agenda.model';
+
+import { SalaService } from 'src/_services/sala.service';
+import { EstadoAgendaService } from 'src/_services/estado-agenda.service';
 
 @Component({
   selector: 'app-hora-fecha',
@@ -10,12 +14,21 @@ import { debounceTime } from 'rxjs/operators';
 export class HoraFechaComponent implements OnInit {
 
   public horafechaForm:FormGroup;
+  public estadosAgenda:Array<EstadoAgenda>;
+  public salas:Array<Sala>;
+  public sala:Sala;
 
-  constructor(private formBuilder:FormBuilder) { 
+  constructor(
+    private formBuilder:FormBuilder,
+    private salaService: SalaService,
+    private estadoAgendaService:EstadoAgendaService
+    ) { 
     this.buildHorafechaForm();
   }
 
   ngOnInit(): void {
+    this.setSalas();
+    this.setEstadosAgenda();
   }
 
   public buildHorafechaForm(){
@@ -24,12 +37,30 @@ export class HoraFechaComponent implements OnInit {
       hour:['',[Validators.required]],
       state:['',[]],
       room:['',[Validators.required]],
-      stateromm:['',[]]
+      stateSchedule:['PEND',[]]
     });
     this.horafechaForm.get('date').valueChanges
     .subscribe(value =>{
       console.log(value);
     });
+    this.horafechaForm.get('room').valueChanges
+    .subscribe(value=>{
+      console.log(value);
+    });
+  }
+
+  /**Peticiones */
+  public async setSalas(){
+    let res:any = await this.salaService.list().toPromise();
+    this.salas = new Array<Sala>();
+    res.forEach(sala => {
+      this.salas.push(Sala.fromJSON(sala));
+    });
+  }
+
+  public async setEstadosAgenda(){
+    let res:any = await this.estadoAgendaService.get().toPromise();
+    this.estadosAgenda = EstadoAgenda.fromJSON(res);
   }
 
 }

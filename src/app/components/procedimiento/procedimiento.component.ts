@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+
 import { Procedimiento } from 'src/_models/procedimiento.model';
-import { ProcedimientoService } from '../../../_services/procedimiento.service';
+import { EstadoCama } from 'src/_models/estado-cama.model';
+
+import { ProcedimientoService } from 'src/_services/procedimiento.service';
+import { EstadoCamaService } from 'src/_services/estado-cama.service';
+
+
 
 @Component({
   selector: 'app-procedimiento',
@@ -15,18 +20,21 @@ export class ProcedimientoComponent implements OnInit {
 
   public busquedaForm:FormGroup;
   public valorBusqueda:string;
+  public estadosCama:Array<EstadoCama>;
 
   public procedimiento:Procedimiento;
   public procedimientos:Array<Procedimiento>;
 
   constructor(
     private formBuilder:FormBuilder,
-    private procedimientoService:ProcedimientoService
+    private procedimientoService:ProcedimientoService,
+    private estadoCamaService:EstadoCamaService
   ) { 
     this.buildbusquedaForm();
   }
 
   ngOnInit(): void {
+    this.setEstadosCama();
   }
 
   private buildbusquedaForm(){
@@ -35,7 +43,8 @@ export class ProcedimientoComponent implements OnInit {
       code:['',[]],
       name:['',[]],
       uciBed:['',[]],
-      bloodBank:['',[]]
+      bloodBank:['',[]],
+      stateBed:['PEND',[]]
     });
     this.busquedaForm.get('uciBed').valueChanges
     .subscribe(value=>{
@@ -112,5 +121,10 @@ export class ProcedimientoComponent implements OnInit {
     }
     console.log(this.procedimiento);
     console.log(this.procedimientos);
+  }
+
+  async setEstadosCama(){
+    let res:any = await this.estadoCamaService.get().toPromise();
+    this.estadosCama = EstadoCama.fromJSON(res);
   }
 }

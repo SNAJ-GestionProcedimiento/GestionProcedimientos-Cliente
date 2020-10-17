@@ -1,11 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+
 import { Paciente } from 'src/_models/paciente.model';
 import { TipoId } from 'src/_models/tipoId.model';
 
-import { PacienteService } from '../../../_services/paciente.service';
-import { TipoIdService } from '../../../_services/tipo-id.service';
+import { PacienteService } from 'src/_services/paciente.service';
+import { TipoIdService } from 'src/_services/tipo-id.service';
 
 @Component({
   selector: 'app-paciente',
@@ -153,6 +154,5 @@ export class PacienteComponent implements OnInit {
   async setTiposID(){
     let res = await this.tipoIdService.get().toPromise();
     this.tiposIdentidicacion = TipoId.fromJSON(res);
-    console.log(this.tiposIdentidicacion);
   }
 }
