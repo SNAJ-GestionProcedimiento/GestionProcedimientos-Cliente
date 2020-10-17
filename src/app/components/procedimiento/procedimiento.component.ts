@@ -23,7 +23,7 @@ export class ProcedimientoComponent implements OnInit {
   public estadosCama:Array<EstadoCama>;
 
   public procedimiento:Procedimiento;
-  public codigoProc: number;
+  public codigoProc: string;
   public procedimientos:Array<Procedimiento>;
 
   constructor(
@@ -35,11 +35,7 @@ export class ProcedimientoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-<<<<<<< HEAD
     this.setEstadosCama();
-=======
-    this.codigoProc=0;
->>>>>>> 6d98c5e4db365f767a3030dea02adeab7f688979
   }
 
   private buildbusquedaForm(){
@@ -99,10 +95,10 @@ export class ProcedimientoComponent implements OnInit {
     }
   }
 
-  public getCodigoProcedimiento(): number{
-    this.codigoProc= parseInt(this.procedimiento.codigoProcedimiento)
-    console.log("cod: "+this.codigoProc);
-    return this.codigoProc;
+  public getCodigoProcedimiento(): string{
+    if(this.procedimiento!=null){
+      return this.procedimiento.codigoProcedimiento;
+    }
   }
   
   cargarNombres(){

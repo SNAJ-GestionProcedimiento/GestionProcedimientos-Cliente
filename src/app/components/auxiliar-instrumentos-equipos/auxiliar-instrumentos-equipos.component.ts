@@ -8,7 +8,7 @@ import { editInstrumentosEquipos, InstrumentosEquipos, intrumentoEstadoUnidos } 
 import { ProcedimientoComponent } from '../procedimiento/procedimiento.component';
 import { estadoClass, InstrumentosEquiposEstado } from 'src/_models/modelInstrumento/instrumentos-equipos-estado.model';
 import * as notificationService from 'src/_services/notification.service';
-
+ 
 
 
 @Component({
@@ -23,7 +23,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     estado: null
   }
 
-  idProcedimientoInstrumento: number;  //variable para obtener el id del procedimiento
+  public idProcedimientoInstrumento: string;  //variable para obtener el id del procedimiento
   instrumEstadoUnido: intrumentoEstadoUnidos[] = [];  //variable utilizada para unir getIstrumento y getEstado..... no sirvio jaja
 
   editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los instrumentos
@@ -34,14 +34,18 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   dataIntrumentEquip: MatTableDataSource<InstrumentosEquipos>; //variable que contiene los datos que irán en la tabla
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //utilizado para paginar la tabla
-  @ViewChild(ProcedimientoComponent) idProcedimiento: ProcedimientoComponent; //se llama al procedimiento como padre para obtener el código del procedimiento
+  @ViewChild(ProcedimientoComponent) procedimientoRef: ProcedimientoComponent; //se llama al procedimiento como padre para obtener el código del procedimiento
 
   constructor(private dialog: MatDialog, private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService) { }
 
   //la inicialización del componente
   ngOnInit(): void {
-    this.idProcedimientoInstrumento = 0;
+    this.setIdProcedimiento();
+    console.log(this.idProcedimientoInstrumento);
     this.getEstadoObtenido();
+  }
+  public setIdProcedimiento(){
+    this.idProcedimientoInstrumento = this.procedimientoRef.getCodigoProcedimiento()
   }
 
   result2: InstrumentosEquipos; //variable para probar el método fromJson de la clase instrumentoEquipo
