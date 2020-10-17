@@ -13,7 +13,7 @@ export class Procedimiento{
      */
     public tipo : string;
 
-    public modalidad:ProcedimientoModalidad[];
+    public modalidades:Array<ProcedimientoModalidad>;
 
     constructor(){  }
 
@@ -28,7 +28,11 @@ export class Procedimiento{
         procedimiento.codigoProcedimiento = json.codigoProcedimiento;
         procedimiento.nombre = json.nombre;
         procedimiento.tipo = json.tipo;
-        procedimiento.modalidad = json.modalidadesProc;
+        procedimiento.modalidades = new Array<ProcedimientoModalidad>();
+
+        json.modalidadesProc.forEach(element => {
+            procedimiento.modalidades.push(ProcedimientoModalidad.fromJSON(element));
+        });
 
         return procedimiento;
     }

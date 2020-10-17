@@ -1,10 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { async } from '@angular/core/testing';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { Acudiente } from 'src/_models/acudiente.model';
 
-import { AcudienteService } from '../../../_services/acudiente.service';  
+import { Acudiente } from 'src/_models/acudiente.model';
+import { TipoId } from 'src/_models/tipoId.model';
+
+import { AcudienteService } from '../../../_services/acudiente.service';
+import { TipoIdService } from 'src/_services/tipo-id.service'; 
+
+import { DateHelper } from 'src/_helpers/date.helper';
+import { GenderHelper } from 'src/_helpers/gender.helper';
 
 @Component({
   selector: 'app-acudiente',
@@ -12,18 +17,26 @@ import { AcudienteService } from '../../../_services/acudiente.service';
   styleUrls: ['./acudiente.component.css']
 })
 export class AcudienteComponent implements OnInit {
+  public tiposIdentidicacion:Array<TipoId>;
   public acudiente:Acudiente;
   public acudienteId:string;
+
   public acudienteForm : FormGroup;
 
   constructor(
     private formBuilder:FormBuilder,
-    private acudienteService: AcudienteService
+    private acudienteService: AcudienteService,
+    private tipoIdService: TipoIdService
     ) { 
     this.buildacudienteForm();
   }
 
   ngOnInit(): void {
+    this.setTiposID();
+  }
+
+  public getObjAcudiente(){
+    return this.acudiente;
   }
 
   private buildacudienteForm(){
@@ -39,87 +52,119 @@ export class AcudienteComponent implements OnInit {
       gender:['',[Validators.required]],
     });
 
+    /**Cuando escriba el id del acudiente lo busca*/
     this.acudienteForm.get("id").valueChanges
     .pipe(
       debounceTime(700)
     )
     .subscribe(value=>{
-      /**Cuando escriba el id del acudiente, si existe se actualizan los cambios */
-      this.acudienteId = value;
+      this.acudienteId=value;
       this.setAcudiente();
+    });
+    this.acudienteForm.get("documentType").valueChanges
+    .subscribe(value =>{
+      if(this.acudiente!=null){
+        this.acudiente.tipoIdentificacion = value;
+      }
     });
     this.acudienteForm.get("birthdate").valueChanges
     .pipe(
       debounceTime(700)
     )
     .subscribe(value =>{
-      this.acudienteForm.controls['age'].setValue(this.getAge(new Date(value)));
+      this.acudienteForm.controls['age'].setValue(DateHelper.getAge(new Date(value)));
+      if(this.acudiente!=null){
+        this.acudiente.fechaNacimiento = value;
+      }
+    });
+    this.acudienteForm.get("email").valueChanges
+    .subscribe(value =>{
+      if(this.acudiente!=null){
+        this.acudiente.correo = value;
+      }
+    });
+    this.acudienteForm.get("name").valueChanges
+    .subscribe(value =>{
+      if(this.acudiente!=null){
+        this.acudiente.nombre = value;
+      }
+    });
+    this.acudienteForm.get("homeAddress").valueChanges
+    .subscribe(value =>{
+      if(this.acudiente!=null){
+        this.acudiente.direccion = value;
+      }
+    });
+    this.acudienteForm.get("phoneNumber").valueChanges
+    .subscribe(value =>{
+      if(this.acudiente!=null){
+        this.acudiente.telefono = value;
+      }
+    });
+    this.acudienteForm.get("gender").valueChanges
+    .subscribe(value =>{
+      if(this.acudiente!=null){
+        this.acudiente.genero = value;
+      }
     });
   }
-
-  private getAge(birthdate:Date):number{
-    let currentDate = new Date();
-    let age = currentDate.getFullYear() - birthdate.getFullYear();
-    let month = currentDate.getMonth() - birthdate.getMonth();
-    if(month < 0 || (month===0 && currentDate.getDate() < birthdate.getDate())){
-      age--;
-    }
-    return age;
-  }
-
+  /**Completar el formulario*/
   private completeForm(){
-    this.acudienteForm.get('birthdate').setValue(this.convertDateFormat(this.acudiente.fechaNacimiento));
-    this.acudienteForm.get('phoneNumber').setValue(this.acudiente.telefono);
+    this.acudienteForm.get('documentType').setValue(this.acudiente.tipoIdentificacion);
     this.acudienteForm.get('name').setValue(this.acudiente.nombre);
     this.acudienteForm.get('homeAddress').setValue(this.acudiente.direccion);
-    this.acudienteForm.get('gender').setValue(this.getTipoGenero(this.acudiente.genero));
-    this.acudienteForm.get('documentType').setValue(this.getTipoId(this.acudiente.tipoIdentificacion));
+    this.acudienteForm.get('birthdate').setValue(DateHelper.dateToStr(this.acudiente.fechaNacimiento));
+    this.acudienteForm.get('phoneNumber').setValue(this.acudiente.telefono);
+    this.acudienteForm.get('gender').setValue(GenderHelper.genderValue(this.acudiente.genero));
+    this.acudienteForm.get('email').setValue(this.acudiente.correo);
   }
+  /**Deshabilita campos del formulario */
+  private disableForm(){
+    this.acudienteForm.get('documentType').disable();
+    this.acudienteForm.get('name').disable();
+    this.acudienteForm.get('birthdate').disable();
+    this.acudienteForm.get('gender').disable();
+    this.acudienteForm.get('email').disable();
+  }
+  /**Limpiar el formulario*/
   private deleteForm():void{
+    this.acudienteForm.get('documentType').setValue('');
     this.acudienteForm.get('name').setValue('');
     this.acudienteForm.get('homeAddress').setValue('');
     this.acudienteForm.get('birthdate').setValue('');
     this.acudienteForm.get('phoneNumber').setValue('');
+    this.acudienteForm.get('age').setValue('');
+    this.acudienteForm.get('gender').setValue('');
+    this.acudienteForm.get('email').setValue('');
+  }
+  /**Deshabilita campos del formulario */
+  private enableForm(){
+    this.acudienteForm.get('documentType').enable();
+    this.acudienteForm.get('name').enable();
+    this.acudienteForm.get('birthdate').enable();
+    this.acudienteForm.get('gender').enable();
+    this.acudienteForm.get('email').enable();
   }
 
-  private convertDateFormat(date:Date){
-    let oldDate = date;
-    let year = oldDate.getFullYear().toString();
-    let month = oldDate.getMonth().toString().length<2?'0'+oldDate.getMonth().toString():oldDate.getMonth().toString();
-    let day = oldDate.getDate().toString().length<2?'0'+oldDate.getDate().toString():oldDate.getDate().toString();
-    let stringDate = year+'-'+month+'-'+day;
-    console.log(stringDate);
-    return stringDate;
-  }
-  private getTipoGenero(tipo:string){
-    switch (tipo){
-      case 'masculino':
-        return 1;
-      case 'femenino':
-          return 2;
-    }
-  }
-  private getTipoId(tipo:string){
-    switch (tipo){
-      case 'CC':
-        return 1;
-      case 'TI':
-        return 2;
-      default:
-        break;
-    }
-  }
-
+  /**Peticiones */
   async setAcudiente(){
     let res = await this.acudienteService.get(this.acudienteId).toPromise();
-    console.log(res);
     this.acudiente = Acudiente.fromJSON(res);
-    console.log(this.acudiente);
-    if (this.acudiente!= null){
+    if (this.acudiente != null){
       this.completeForm();
+      this.disableForm();
     }else{
       this.deleteForm();
+      this.acudiente = new Acudiente();
+      this.acudiente.identificacion = this.acudienteId;
+      this.enableForm();
     }
+  }
+
+  //Pendiente por cargar al servidor
+  async setTiposID(){
+    let res = await this.tipoIdService.get().toPromise();
+    this.tiposIdentidicacion = TipoId.fromJSON(res);
   }
 
 }

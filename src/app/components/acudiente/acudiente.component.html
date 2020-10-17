@@ -2,28 +2,22 @@
     <h5>Datos del acudiente</h5>
     <form [formGroup]="acudienteForm">
         <div class="form-row align-items-center">
-        <!--tipo de documento-->
-        <div class="col-auto mr-3 mt-1">
-            Tipo de documento:
-            <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="documentType">
-                <option value="1">Cedula</option>
-                <option value="2">Tarjeta de indentidad</option>
-                <option value="3">Registro civil</option>
-                <option value="4">Cedula de extrangeria</option>
-                <option value="5">Pasaporte</option>
-                <option value="6">Menor sin identificación</option>
-                <option value="7">Adulto sin identidad</option>
-            </select>
-            <div class="error" *ngIf="acudienteForm.get('documentType').errors && this.acudienteForm.get('documentType').touched">
-                <p>*Seleccione el tipo de documento</p>
-            </div>
-        </div>
         <!--Numero de identificacion-->
         <div class="col-auto mr-3 mt-1">
             Identificación:
             <input class="form-control" type="number" formControlName='id'>
             <div class="error" *ngIf="acudienteForm.get('id').errors && this.acudienteForm.get('id').touched">
                 <p>*Ingrese el numero de documento</p>
+            </div>
+        </div>
+        <!--tipo de documento-->
+        <div class="col-auto mr-3 mt-1">
+            Tipo de documento:
+            <select class="form-control" id="exampleFormControlSelect1" formControlName="documentType">
+                <option value="{{tipo.id}}" *ngFor="let tipo of tiposIdentidicacion">{{tipo.nombre}}</option>
+            </select>
+            <div class="error" *ngIf="acudienteForm.get('documentType').errors && this.acudienteForm.get('documentType').touched">
+                <p>*Seleccione el tipo de documento</p>
             </div>
         </div>
         <!--Fecha de nacimiento-->
@@ -71,11 +65,19 @@
         <div class="col-auto mr-3 mt-1">
             Genero:
             <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="gender">
-                <option value="1">Masculino</option>
-                <option value="2">Femenino</option>
+                <option value="masculino">masculino</option>
+                <option value="femenino">femenino</option>
             </select>
             <div class="error" *ngIf="acudienteForm.get('gender').errors && this.acudienteForm.get('gender').touched">
                 <p>*Seleccione el genero del acudiente</p>
+            </div>
+        </div>
+        <!--Correo electronico-->
+        <div class="col-auto mr-3 mt-1">
+            Correo electronico:
+            <input class="form-control" type="text" formControlName='email'>
+            <div class="error" *ngIf="acudienteForm.get('email').errors && this.acudienteForm.get('email').touched">
+                <p>*Ingrese el email</p>
             </div>
         </div>
     </div>

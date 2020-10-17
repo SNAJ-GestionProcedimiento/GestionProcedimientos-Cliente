@@ -24,6 +24,7 @@ export class ProcedimientoComponent implements OnInit {
 
   public procedimiento:Procedimiento;
   public codigoProc: string;
+  public estadoCama:string;
   public procedimientos:Array<Procedimiento>;
 
   constructor(
@@ -36,10 +37,14 @@ export class ProcedimientoComponent implements OnInit {
 
   ngOnInit(): void {
     this.setEstadosCama();
-<<<<<<< HEAD
-=======
-    this.codigoProc=0;
->>>>>>> 1830a8737af91f867b23831bc4d3a0d77f913bd1
+    this.estadoCama = this.busquedaForm.get('stateBed').value;
+  }
+
+  public getObjProcedimientoModalidad(){
+    return this.procedimiento.modalidades[0];
+  }
+  public getestadoCama(){
+    return this.estadoCama;
   }
 
   private buildbusquedaForm(){
@@ -53,26 +58,28 @@ export class ProcedimientoComponent implements OnInit {
     });
     this.busquedaForm.get('uciBed').valueChanges
     .subscribe(value=>{
-      if(this.procedimiento!=null && this.procedimiento.modalidad.length>0){
-        this.procedimiento.modalidad[0].camaUCI = value;
-        console.log(this.procedimiento);
+      if(this.procedimiento!=null && this.procedimiento.modalidades.length>0){
+        this.procedimiento.modalidades[0].camaUCI = value;
       }
     });
     this.busquedaForm.get('bloodBank').valueChanges
     .subscribe(value=>{
-      if(this.procedimiento!=null && this.procedimiento.modalidad.length>0){
-        this.procedimiento.modalidad[0].bancoSangre = value;
-        console.log(this.procedimiento);
+      if(this.procedimiento!=null && this.procedimiento.modalidades.length>0){
+        this.procedimiento.modalidades[0].bancoSangre = value;
       }
+    });
+    this.busquedaForm.get('stateBed').valueChanges
+    .subscribe(value=>{
+      this.estadoCama=value;
     });
   } 
 
   private updateBusquedaForm(){
     this.busquedaForm.get('code').setValue(this.procedimiento.codigoProcedimiento);
     this.busquedaForm.get('name').setValue(this.procedimiento.nombre);
-    if(this.procedimiento.modalidad.length>0){
-      this.busquedaForm.get('uciBed').setValue(this.procedimiento.modalidad[0].camaUCI);
-      this.busquedaForm.get('bloodBank').setValue(this.procedimiento.modalidad[0].bancoSangre);
+    if(this.procedimiento.modalidades.length>0){
+      this.busquedaForm.get('uciBed').setValue(this.procedimiento.modalidades[0].camaUCI);
+      this.busquedaForm.get('bloodBank').setValue(this.procedimiento.modalidades[0].bancoSangre);
     }else{
       this.busquedaForm.get('uciBed').setValue(false);
       this.busquedaForm.get('bloodBank').setValue(false);
@@ -99,9 +106,11 @@ export class ProcedimientoComponent implements OnInit {
     }
   }
 
-  public getCodigoProcedimiento(): string{
+  public getCodigoProcedimiento(){
     if(this.procedimiento!=null){
       return this.procedimiento.codigoProcedimiento;
+    }else{
+      return "";
     }
   }
   
@@ -116,6 +125,7 @@ export class ProcedimientoComponent implements OnInit {
   async setProcedimiento(){
     if(this.busquedaForm.get('searchType').value==='1'){
       let res:any = await this.procedimientoService.getCodigo(this.valorBusqueda).toPromise();
+      console.log(res);
       this.procedimiento = Procedimiento.fromJSON(res.procedimiento);
       this.procedimientos=new Array<Procedimiento>();
     }else{
@@ -130,8 +140,6 @@ export class ProcedimientoComponent implements OnInit {
         this.cargarNombres();
       }
     }
-    console.log(this.procedimiento);
-    console.log(this.procedimientos);
   }
 
   async setEstadosCama(){

@@ -15,7 +15,7 @@
     <br>
     <!-- PROCEDIMIENTO ACCIONES -->
     <button type="button" class="btn btn-danger mr-3">Cancelar agendamiento</button>
-    <button type="button" class="btn btn-info" (click)="listarInstrumentosDesdeProgramacion()">Crear agenda de procedimiento</button>
+    <button type="button" class="btn btn-info" (click)="crearAgendaonClick()">Crear agenda de procedimiento</button>
     <hr>
     <br>
     <!-- documentacion -->
@@ -23,7 +23,7 @@
     <!-- materiales -->
     <app-auxiliar-materiales></app-auxiliar-materiales>
     <!-- instrumentos y equipos -->
-    <app-auxiliar-instrumentos-equipos></app-auxiliar-instrumentos-equipos>
+    <app-auxiliar-instrumentos-equipos [codigoProcedimiento]="codigoProcedimiento"></app-auxiliar-instrumentos-equipos>
     <!-- Especialistas -->
     <app-auxiliar-especialista></app-auxiliar-especialista>
 </div>

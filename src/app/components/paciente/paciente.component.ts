@@ -8,17 +8,25 @@ import { TipoId } from 'src/_models/tipoId.model';
 import { PacienteService } from 'src/_services/paciente.service';
 import { TipoIdService } from 'src/_services/tipo-id.service';
 
+import { DateHelper } from 'src/_helpers/date.helper';
+import { GenderHelper } from 'src/_helpers/gender.helper';
+
 @Component({
   selector: 'app-paciente',
   templateUrl: './paciente.component.html',
   styleUrls: ['./paciente.component.css']
 })
 export class PacienteComponent implements OnInit {
-  public tiposIdentidicacion:Array<TipoId>;
-  public paciente: Paciente;
-  public pacienteId: string;
-  public pacienteForm : FormGroup;
   @Output() messageEvent =new EventEmitter<boolean>();
+
+  public tiposIdentidicacion:Array<TipoId>;
+
+  public paciente: Paciente;
+  public pacienteId:string;
+  public observacionPaciente:string;
+
+  public pacienteForm : FormGroup;
+  
 
   constructor(
     private formBuilder:FormBuilder,
@@ -30,6 +38,14 @@ export class PacienteComponent implements OnInit {
 
   ngOnInit(): void {  
     this.setTiposID();
+  }
+
+  public getObjPaciente(){
+    return this.paciente;
+  }
+
+  public getObservacion(){
+    return this.observacionPaciente;
   }
 
   private buildpacienteForm(){
@@ -46,97 +62,105 @@ export class PacienteComponent implements OnInit {
       observation:['',[Validators.required]]
     });
 
-    this.pacienteForm.get("documentType").valueChanges
-    .subscribe(value =>{
-      console.log(value)
-    });
-
+    /**Cuando escriba el id del paciente lo busca*/
     this.pacienteForm.get("id").valueChanges
     .pipe(
       debounceTime(700)
     )
     .subscribe(value=>{
-      /**Cuando escriba el id del paciente, si existe se actualizan los cambios */
-      this.pacienteId = value;
+      this.pacienteId=value;
       this.setPaciente();
     });
-
+    this.pacienteForm.get("documentType").valueChanges
+    .subscribe(value =>{
+      if(this.paciente!=null){
+        this.paciente.tipoIdentificacion = value;
+      }
+    });
     this.pacienteForm.get("birthdate").valueChanges
     .pipe(
       debounceTime(700)
     )
     .subscribe(value =>{
-      this.pacienteForm.controls['age'].setValue(this.getAge(new Date(value)));
+      this.pacienteForm.controls['age'].setValue(DateHelper.getAge(new Date(value)));
+      if(this.paciente!=null){
+        this.paciente.fechaNacimiento = value;
+      }
+    });
+    this.pacienteForm.get("email").valueChanges
+    .subscribe(value =>{
+      if(this.paciente!=null){
+        this.paciente.correo = value;
+      }
+    });
+    this.pacienteForm.get("name").valueChanges
+    .subscribe(value =>{
+      if(this.paciente!=null){
+        this.paciente.nombre = value;
+      }
+    });
+    this.pacienteForm.get("homeAddress").valueChanges
+    .subscribe(value =>{
+      if(this.paciente!=null){
+        this.paciente.direccion = value;
+      }
+    });
+    this.pacienteForm.get("phoneNumber").valueChanges
+    .subscribe(value =>{
+      if(this.paciente!=null){
+        this.paciente.telefono = value;
+      }
+    });
+    this.pacienteForm.get("gender").valueChanges
+    .subscribe(value =>{
+      if(this.paciente!=null){
+        this.paciente.genero = value;
+      }
+    });
+    this.pacienteForm.get("observation").valueChanges
+    .subscribe(value =>{
+      if(this.paciente!=null){
+        this.observacionPaciente=value;
+      }
     });
   }
 
-  private getAge(birthdate:Date):number{
-    let currentDate = new Date();
-    let age = currentDate.getFullYear() - birthdate.getFullYear();
-    let month = currentDate.getMonth() - birthdate.getMonth();
-    if(month < 0 || (month===0 && currentDate.getDate() < birthdate.getDate())){
-      age--;
-    }
-    return age;
-  }
-
+  /**Completar el formulario*/
   private completeForm(){
     this.pacienteForm.get('documentType').setValue(this.paciente.tipoIdentificacion);
     this.pacienteForm.get('name').setValue(this.paciente.nombre);
     this.pacienteForm.get('homeAddress').setValue(this.paciente.direccion);
-    this.pacienteForm.get('birthdate').setValue(this.convertDateFormat(this.paciente.fechaNacimiento));
+    this.pacienteForm.get('birthdate').setValue(DateHelper.dateToStr(this.paciente.fechaNacimiento));
     this.pacienteForm.get('phoneNumber').setValue(this.paciente.telefono);
-    this.pacienteForm.get('gender').setValue(this.getTipoGenero(this.paciente.genero));
+    this.pacienteForm.get('gender').setValue(GenderHelper.genderValue(this.paciente.genero));
+    this.pacienteForm.get('email').setValue(this.paciente.correo);
   }
+  /**Deshabilita campos del formulario */
+  private disableForm(){
+    this.pacienteForm.get('documentType').disable();
+    this.pacienteForm.get('name').disable();
+    this.pacienteForm.get('birthdate').disable();
+    this.pacienteForm.get('gender').disable();
+    this.pacienteForm.get('email').disable();
+  }
+  /**Limpiar el formulario*/
   private deleteForm():void{
+    this.pacienteForm.get('documentType').setValue('');
     this.pacienteForm.get('name').setValue('');
     this.pacienteForm.get('homeAddress').setValue('');
     this.pacienteForm.get('birthdate').setValue('');
     this.pacienteForm.get('phoneNumber').setValue('');
+    this.pacienteForm.get('age').setValue('');
+    this.pacienteForm.get('gender').setValue('');
+    this.pacienteForm.get('email').setValue('');
   }
-
-  private convertDateFormat(date:Date){
-    let oldDate = date;
-    let year = oldDate.getFullYear().toString();
-    let month = oldDate.getMonth().toString().length<2?'0'+oldDate.getMonth().toString():oldDate.getMonth().toString();
-    let day = oldDate.getDate().toString().length<2?'0'+oldDate.getDate().toString():oldDate.getDate().toString();
-    let stringDate = year+'-'+month+'-'+day;
-    console.log(stringDate);
-    return stringDate;
-  }
-  private getTipoGenero(tipo:string){
-    switch (tipo){
-      case 'masculino':
-        return 1;
-      case 'femenino':
-          return 2;
-    }
-  }
-  
-  /**Geters formulario */
-  get documentTypeField(){
-    return this.pacienteForm.get('documentType');
-  }
-  get idField(){
-    return this.pacienteForm.get('id');
-  }
-  get birthdate(){
-    return this.pacienteForm.get('birthdate');
-  }
-  get emailField(){
-    return this.pacienteForm.get('email');
-  }
-  get nameField(){
-    return this.pacienteForm.get('name');
-  }
-  get homeAddressField(){
-    return this.pacienteForm.get('homeAddress');
-  }
-  get phoneNomberField(){
-    return this.pacienteForm.get('phoneNumber');
-  }
-  get observationField(){
-    return this.pacienteForm.get('observation');
+  /**Deshabilita campos del formulario */
+  private enableForm(){
+    this.pacienteForm.get('documentType').enable();
+    this.pacienteForm.get('name').enable();
+    this.pacienteForm.get('birthdate').enable();
+    this.pacienteForm.get('gender').enable();
+    this.pacienteForm.get('email').enable();
   }
 
   /**Peticiones */
@@ -145,14 +169,22 @@ export class PacienteComponent implements OnInit {
     this.paciente = Paciente.fromJSON(res);
     if (this.paciente != null){
       this.completeForm();
+      this.disableForm();
     }else{
       this.deleteForm();
+      this.paciente = new Paciente();
+      this.paciente.identificacion = this.pacienteId;
+      this.enableForm();
     }
   }
 
-  //Pendiente por cargar al servidor
   async setTiposID(){
     let res = await this.tipoIdService.get().toPromise();
     this.tiposIdentidicacion = TipoId.fromJSON(res);
+  }
+
+  /**Envios */
+  async createAgenda(){
+    
   }
 }

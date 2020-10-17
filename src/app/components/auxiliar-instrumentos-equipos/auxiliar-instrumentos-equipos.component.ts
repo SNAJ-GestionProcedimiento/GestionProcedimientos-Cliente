@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ɵConsole } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { VentanaAuxiliarInstrumentosEquiposComponent } from '../ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
 import { InstrumentosEquiposService } from 'src/_services/serviciosInstrumentos/instrumentos-equipos.service';
 import { editInstrumentosEquipos, InstrumentosEquipos, intrumentoEstadoUnidos } from 'src/_models/modelInstrumento/instrumentos-equipos.model';
-import { ProcedimientoComponent } from '../procedimiento/procedimiento.component';
+
 import { estadoClass, obtenerEstado } from 'src/_models/modelInstrumento/instrumentos-equipos-estado.model';
 import * as notificationService from 'src/_services/notification.service';
  
@@ -23,8 +23,8 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     estado: null
   }
 
-  public idProcedimientoInstrumento: string;  //variable para obtener el id del procedimiento
-  idProcedimientoInstrumento: number;  //variable para obtener el id del procedimiento
+  
+  @Input() codigoProcedimiento: string;//Codigo del procedimiento seleccionado
   instrumEstadoUnido: intrumentoEstadoUnidos[] = [];  //variable utilizada para unir getIstrumento y getEstado..... no sirvio jaja
 
   editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los instrumentos
@@ -36,27 +36,20 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   dataIntrumentEquip: MatTableDataSource<InstrumentosEquipos>; //variable que contiene los datos que irán en la tabla
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //utilizado para paginar la tabla
-  @ViewChild(ProcedimientoComponent) procedimientoRef: ProcedimientoComponent; //se llama al procedimiento como padre para obtener el código del procedimiento
+
 
   constructor(private dialog: MatDialog, private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService) { }
 
   //la inicialización del componente
   ngOnInit(): void {
-    this.setIdProcedimiento();
-    console.log(this.idProcedimientoInstrumento);
-    this.getEstadoObtenido();
-    this.idProcedimientoInstrumento = 0;
     this.estados=obtenerEstado.getEstadoObtenido(); 
   }
-  public setIdProcedimiento(){
-    this.idProcedimientoInstrumento = this.procedimientoRef.getCodigoProcedimiento()
-  }
+  
 
   result2: InstrumentosEquipos; //variable para probar el método fromJson de la clase instrumentoEquipo
 
   //método para en listar los equipos asociados a un procedimiento
   public listarIntrumentEquip() {
-
     //se llama el servicio del get para que traiga los instrumentos de la base de datos y los guarda en resul como Json
     this.serviceIntrumentosEquipos.getInstrumentoEquipo(5).subscribe((result: InstrumentosEquipos[]) => {
 

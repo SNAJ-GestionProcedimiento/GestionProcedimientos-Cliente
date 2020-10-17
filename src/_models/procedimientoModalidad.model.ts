@@ -19,4 +19,18 @@ export class ProcedimientoModalidad{
      * Codigo de modalidad
      */
     public idModalidad_id:number;
+
+    public static fromJSON(json):ProcedimientoModalidad{
+        if(json==null){return null;}
+
+        var proceMod = new ProcedimientoModalidad();
+
+        proceMod.idProcedimientoModalidad = json.idProcedimientoModalidad;
+        proceMod.bancoSangre = json.bancoSangre;
+        proceMod.camaUCI = json.camaUCI;
+        proceMod.codigoProcedimiento_id = json.codigoProcedimiento;
+        proceMod.idModalidad_id = json.idModalidad;
+
+        return proceMod;
+    }
 }

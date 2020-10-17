@@ -2,6 +2,14 @@
         <h5>Datos del paciente</h5>
         <form [formGroup]="pacienteForm">
             <div class="form-row align-items-center">
+            <!--Numero de identificacion-->
+            <div class="col-auto mr-3 mt-1">
+                Identificación:
+                <input class="form-control" type="number" formControlName='id'>
+                <div class="error" *ngIf="pacienteForm.get('id').errors && this.pacienteForm.get('id').touched">
+                    <p>*Ingrese el numero de documento</p>
+                </div>
+            </div>
             <!--tipo de documento-->
             <div class="col-auto mr-3 mt-1">
                 Tipo de documento:
@@ -10,14 +18,6 @@
                 </select>
                 <div class="error" *ngIf="pacienteForm.get('documentType').errors && this.pacienteForm.get('documentType').touched">
                     <p>*Seleccione el tipo de documento</p>
-                </div>
-            </div>
-            <!--Numero de identificacion-->
-            <div class="col-auto mr-3 mt-1">
-                Identificación:
-                <input class="form-control" type="number" formControlName='id'>
-                <div class="error" *ngIf="pacienteForm.get('id').errors && this.pacienteForm.get('id').touched">
-                    <p>*Ingrese el numero de documento</p>
                 </div>
             </div>
             <!--Fecha de nacimiento-->
@@ -65,13 +65,23 @@
             <div class="col-auto mr-3 mt-1">
                 Genero:
                 <select class="form-control" formControlName="gender">
-                    <option value="1">Masculino</option>
-                    <option value="2">Femenino</option>
+                    <option value="masculino">masculino</option>
+                    <option value="femenino">femenino</option>
                 </select>
                 <div class="error" *ngIf="pacienteForm.get('gender').errors && this.pacienteForm.get('gender').touched">
                     <p>*Seleccione el genero del paciente</p>
                 </div>
             </div>
+            <!--Correo electronico-->
+            <div class="col-auto mr-3 mt-1">
+                Correo electronico:
+                <input class="form-control" type="text" formControlName='email'>
+                <div class="error" *ngIf="pacienteForm.get('email').errors && this.pacienteForm.get('email').touched">
+                    <p>*Ingrese el email y que sea valido</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-row align-items-center mt-1">
             <!--Observación-->
             <div class="col-auto mr-3 mt-1">
                 Observación: <br/>
