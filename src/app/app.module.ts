@@ -7,6 +7,7 @@ import { AuxiliarNavbarComponent } from './components/auxiliar-navbar/auxiliar-n
 import { AppRoutingModule } from './app-routing.module';
 import { SidebarModule } from 'ng-sidebar';
 import { ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 import { FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
@@ -18,7 +19,10 @@ import { PacienteComponent } from './components/paciente/paciente.component';
 import { AcudienteComponent } from './components/acudiente/acudiente.component';
 import { AcudienteService } from '../_services/acudiente.service';
 import { ProcedimientoComponent } from './components/procedimiento/procedimiento.component';
-import { InstrumentosEquiposService } from '../_services/instrumentos-equipos.service';
+
+import { InstrumentosEquiposService } from '../_services/serviciosInstrumentos/instrumentos-equipos.service';
+import { EspecilidadRequeridaService }  from '../_services/especilidad-requerida.service';
+import { NotificationService } from 'src/_services/notification.service';
 
 import { MaterialModule } from './material/material.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
@@ -54,6 +58,7 @@ import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    CommonModule,
     FormsModule,
     SidebarModule.forRoot(),
     HttpClientModule,
@@ -65,8 +70,10 @@ import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component
   providers: [
     PacienteService,
     AcudienteService,
-    InstrumentosEquiposService
-  ],
+    InstrumentosEquiposService,
+    NotificationService,
+    EspecilidadRequeridaService
+    ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent]
 })
