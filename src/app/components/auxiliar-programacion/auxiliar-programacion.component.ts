@@ -57,10 +57,10 @@ export class AuxiliarProgramacionComponent implements OnInit {
   }
 
   crearAgendaonClick(){
-    
+
     this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
     /**Captura de campos */
-    /** 
+    
     let paciente = this.pacienteCmp.getObjPaciente();
     let observacion = this.pacienteCmp.getObservacion();
     let acudiente = this.acudienteCmp.getObjAcudiente();
@@ -70,13 +70,12 @@ export class AuxiliarProgramacionComponent implements OnInit {
     let fecha = this.horaFechaCmp.getElemento('fecha');
     let estadoAgenda = this.horaFechaCmp.getElemento('estado');
     let salaId = this.horaFechaCmp.getElemento('salaId');
-    */
+  
     /**Creacion del modelo */
-    /** 
     let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion,salaId,'1');
 
     this.crearAgenda(agenda);
-    */
+    
     
   }
 

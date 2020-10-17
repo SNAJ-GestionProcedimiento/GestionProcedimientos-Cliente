@@ -19,7 +19,7 @@ export class AgendaCrearService extends HttpService{
     */
    create(agendaCrear: AgendaCrear){
     return this.http.post(
-      `${this.apiURL}/${agendaCrear.parseToJSON()}`,
+      `${this.apiURL}`,agendaCrear.parseToJSON(),
       { headers: this.headers  },
     );
   }

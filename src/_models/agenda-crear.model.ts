@@ -9,7 +9,7 @@ export class AgendaCrear{
      * Campos de paciente
      */
     public identificacionPac: string;
-    public tipoIdentificacinPac: string;
+    public tipoIdentificacionPac: string;
     public fechaNacimientoPac: string;
     public correoPac: string;
     public telefonoPac: string;
@@ -63,7 +63,7 @@ export class AgendaCrear{
         ){
             /**Datos Paciente */
             this.identificacionPac = paciente.identificacion;
-            this.tipoIdentificacinPac = paciente.tipoIdentificacion;
+            this.tipoIdentificacionPac = paciente.tipoIdentificacion;
             this.fechaNacimientoPac = paciente.fechaNacimiento.toString();
             this.correoPac = paciente.correo;
             this.telefonoPac = paciente.telefono;
@@ -94,7 +94,9 @@ export class AgendaCrear{
             this.idSala = idSala;
     }
 
-    public parseToJSON():JSON{
-        return JSON.parse(JSON.stringify(this));
+    public parseToJSON():any{
+        let as = JSON.stringify(this);
+        console.log(as);
+        return as;
     }
 }
