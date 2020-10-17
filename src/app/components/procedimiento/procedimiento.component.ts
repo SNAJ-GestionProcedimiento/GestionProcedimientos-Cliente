@@ -36,6 +36,10 @@ export class ProcedimientoComponent implements OnInit {
 
   ngOnInit(): void {
     this.setEstadosCama();
+<<<<<<< HEAD
+=======
+    this.codigoProc=0;
+>>>>>>> 1830a8737af91f867b23831bc4d3a0d77f913bd1
   }
 
   private buildbusquedaForm(){

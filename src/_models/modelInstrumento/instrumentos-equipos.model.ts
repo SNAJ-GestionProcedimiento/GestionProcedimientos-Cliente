@@ -1,3 +1,4 @@
+import { instrument } from 'src/app/components/ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
 import { estadoClass } from './instrumentos-equipos-estado.model';
 
 export class InstrumentosEquipos {
@@ -38,18 +39,21 @@ export class InstrumentosEquipos {
     return JSON.parse(JSON.stringify(this));
   }
 
-  public static fromJSON(json): InstrumentosEquipos {
+  public static fromJSON(json): InstrumentosEquipos[] {
     
     if (json.length == 0) { return null; }
-    var instrumentosEquipos = new InstrumentosEquipos();
-    instrumentosEquipos.id = json.agendaEquipos[0].id;
-    instrumentosEquipos.codigoEquipo = json.agendaEquipos[0].codigoEquipo;
-    instrumentosEquipos.nombre = json.agendaEquipos[0].nombre;
-    instrumentosEquipos.descripcion = json.agendaEquipos[0].descripcion;
-    instrumentosEquipos.estado = json.agendaEquipos[0].estado;
-    instrumentosEquipos.cantidad = json.agendaEquipos[0].cantidad;
-
-    return instrumentosEquipos;
+    let instrumentos=[];
+    for (let i = 0; i < json.length; i++) {
+      var instrumentosEquipos = new InstrumentosEquipos();
+      instrumentosEquipos.id = json[i].id;
+      instrumentosEquipos.codigoEquipo = json[i].codigoEquipo;
+      instrumentosEquipos.nombre = json[i].nombre;
+      instrumentosEquipos.descripcion = json[i].descripcion;
+      instrumentosEquipos.estado = json[i].estado;
+      instrumentosEquipos.cantidad = json[i].cantidad;  
+      instrumentos.push(instrumentosEquipos);
+    }
+    return instrumentos;
   }
 }
 
@@ -93,11 +97,11 @@ export class editInstrumentosEquipos {
   public static fromJSON(json): editInstrumentosEquipos {
     if (json.agendaEquipo.length == 0) { return null; }
     var editInstrumentosEquipos = new editInstrumentosEquipos();
-    editInstrumentosEquipos.id = json.agendaEquipo[0].id;
-    editInstrumentosEquipos.idAgendaProcedimiento = json.agendaEquipo[0].idAgendaProcedimiento;
-    editInstrumentosEquipos.codigoEquipo = json.agendaEquipo[0].codigoEquipo;
-    editInstrumentosEquipos.estado = json.agendaEquipo[0].estado;
-    editInstrumentosEquipos.cantidad = json.agendaEquipo[0].cantidad;
+    editInstrumentosEquipos.id = json.id;
+    editInstrumentosEquipos.idAgendaProcedimiento = json.idAgendaProcedimiento;
+    editInstrumentosEquipos.codigoEquipo = json.codigoEquipo;
+    editInstrumentosEquipos.estado = json.estado;
+    editInstrumentosEquipos.cantidad = json.cantidad;
 
     return editInstrumentosEquipos;
   }
