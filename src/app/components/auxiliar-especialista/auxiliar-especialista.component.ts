@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
@@ -14,6 +14,8 @@ import { estadoClass, obtenerEstado } from 'src/_models/modelInstrumento/instrum
   styleUrls: ['./auxiliar-especialista.component.css']
 })
 export class AuxiliarEspecialistaComponent implements OnInit {
+
+  @Input() codigoProcedimientoObtenido: string="";//Codigo del procedimiento seleccionado
 
   displayedColumns: string[] = ['codigoEspecialidad', 'nombreEspecialidad', 'registroMedico', 'identificacion', 'nombreEspecialista', 'estado', 'acciones'];
   dataEspecialidad = null;
@@ -31,8 +33,9 @@ export class AuxiliarEspecialistaComponent implements OnInit {
 
   //método para en listar los equipos asociados a un procedimiento
   public listarEspecialidades() {
+    console.log("el codigo desde ESPECIALISTAS es: "+this.codigoProcedimientoObtenido);
     //se llama el servicio del get para que traiga los instrumentos de la base de datos y los guarda en resul como Json
-    this.serviceEspecialidadRequerida.getEspecialidadRequerida(5).subscribe((rest: especialidadesRequeridas[])=>{
+    this.serviceEspecialidadRequerida.getEspecialidadRequerida(parseInt(this.codigoProcedimientoObtenido)).subscribe((rest: especialidadesRequeridas[])=>{
 
       this.especialidadAsociada=especialidadesRequeridas.fromJSON(rest);
       if (this.especialidadAsociada!=null) {

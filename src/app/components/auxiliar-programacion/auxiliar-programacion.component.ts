@@ -40,14 +40,14 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
   receiveMessage($event) {
     this.message = $event
-    console.log($event);
+    //console.log($event);
   }
 
   ngOnInit(): void {
   }
 
   public setIdProcedimiento(){
-    console.log('Desde el padre:'+this.procedimientoCmp.getCodigoProcedimiento());
+    //console.log('Desde el padre:'+this.procedimientoCmp.getCodigoProcedimiento());
   }
 
   listarInstrumentosDesdeProgramacion(){
@@ -59,6 +59,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
   crearAgendaonClick(){
 
     this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
+    console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
     /**Captura de campos */
     
     let paciente = this.pacienteCmp.getObjPaciente();
@@ -75,15 +76,15 @@ export class AuxiliarProgramacionComponent implements OnInit {
     let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion,salaId,'1');
 
     this.crearAgenda(agenda);
-    
+    this.listarInstrumentosDesdeProgramacion();
     
   }
 
   /**Peticiones */
   public async crearAgenda(agenda:AgendaCrear){
-    console.log(agenda.parseToJSON());
+    //console.log(agenda.parseToJSON());
     let res:any = await this.agendaCrearService.create(agenda);
-    console.log(res);
+    //console.log(res);
   }
 
 }

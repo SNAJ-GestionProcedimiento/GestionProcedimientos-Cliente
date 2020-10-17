@@ -18,14 +18,11 @@ import * as notificationService from 'src/_services/notification.service';
 })
 export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
-  varVariables = {
-    cantidad: null,
-    estado: null
-  }
-
   
-  @Input() codigoProcedimiento: string;//Codigo del procedimiento seleccionado
+  @Input() codigoProcedimientoObtenido: string="";//Codigo del procedimiento seleccionado
   instrumEstadoUnido: intrumentoEstadoUnidos[] = [];  //variable utilizada para unir getIstrumento y getEstado..... no sirvio jaja
+
+  parrafo="";//para colocar que no hay nada en las tablas
 
   editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los instrumentos
   estados: estadoClass[];  //variable que tiene el array de estados
@@ -50,14 +47,19 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
   //método para en listar los equipos asociados a un procedimiento
   public listarIntrumentEquip() {
+    console.log("el codigo desde instrumento es: "+this.codigoProcedimientoObtenido);
     //se llama el servicio del get para que traiga los instrumentos de la base de datos y los guarda en resul como Json
-    this.serviceIntrumentosEquipos.getInstrumentoEquipo(5).subscribe((result: InstrumentosEquipos[]) => {
+    this.serviceIntrumentosEquipos.getInstrumentoEquipo(parseInt(this.codigoProcedimientoObtenido)).subscribe((result: InstrumentosEquipos[]) => {
 
       this.arrayInstrumentos=InstrumentosEquipos.fromJSON(result);
+      if (this.arrayInstrumentos!=null) {
       this.convertirEstadoLleda(this.arrayInstrumentos);
       console.log("Es el array! estado: "+this.arrayInstrumentos[0].estado);
-      this.dataIntrumentEquip = new MatTableDataSource(this.arrayInstrumentos); //se le envia los datos a la tabla.
-      this.instrumEstadoUnido.push(new intrumentoEstadoUnidos(result, this.estados));
+      this.dataIntrumentEquip = new MatTableDataSource(this.arrayInstrumentos); //se le envia los datos a la tabla. 
+      }else{
+        this.parrafo="No hay instrumentos y/o equipos asociado al procedimiento";
+        this.notificationService.success('No hay instrumentos y/o equipos asociados al procedimiento!');
+      }
     });
   }
 
