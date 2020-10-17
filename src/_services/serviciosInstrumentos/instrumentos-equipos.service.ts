@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { HttpService } from '../http.service';
 import { editInstrumentosEquipos, InstrumentosEquipos } from '../../_models/modelInstrumento/instrumentos-equipos.model';
 import { Observable } from 'rxjs';
-import { InstrumentosEquiposEstado } from 'src/_models/modelInstrumento/instrumentos-equipos-estado.model';
 
 @Injectable()
 export class InstrumentosEquiposService extends HttpService{
@@ -12,9 +11,6 @@ export class InstrumentosEquiposService extends HttpService{
   urlGeneral: string;
   constructor(protected http: HttpClient) { 
     super(http);
-    /*this.urlGeneral=this.apiURL;
-    this.apiURL += 'listAgendaEquipo';
-    this.urlGeneral+='editAgendaEquipo';*/
   }
 
 
@@ -25,9 +21,5 @@ export class InstrumentosEquiposService extends HttpService{
   editarInstrumentoEquipo(instrumentEquipo: editInstrumentosEquipos): Observable<editInstrumentosEquipos>{
     console.log("desde servicio: "+instrumentEquipo);
     return this.http.put<editInstrumentosEquipos>(`${this.apiURL}editAgendaEquipo`, instrumentEquipo);
-  }
-
-  getEstados(): Observable<InstrumentosEquiposEstado[]>{
-    return this.http.get<InstrumentosEquiposEstado[]>(`${this.apiURL}getEstadosAgendaProc`);
   }
 }

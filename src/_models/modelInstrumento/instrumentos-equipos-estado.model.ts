@@ -1,24 +1,26 @@
-export class InstrumentosEquiposEstado {
-  /**
-   * id de agenda instrumento
-   */
-  public estadosAgendaProc: string[];
-  constructor() { }
 
-  public parseToJSON(): JSON {
-    return JSON.parse(JSON.stringify(this));
-  }
-
-  public static fromJSON(json): InstrumentosEquiposEstado {
-    if (json.agendaEquipos.length == 0) { return null; }
-    var instrumentosEquipos = new InstrumentosEquiposEstado();
-    instrumentosEquipos.estadosAgendaProc = json.agendaEquipos[0].estado;
-
-    return instrumentosEquipos;
-  }
-}
-
-export interface estadoClass{
+export interface estadoClass {
   valor: string;
   contenido: string;
+}
+
+export class obtenerEstado{
+  estados: estadoClass[] = [];  //variable que tiene el array de estados
+  constructor(){};
+
+  //Método para obtener los estados.
+  public static getEstadoObtenido():  estadoClass[]{
+    var estados = [];
+     let estado = {
+      valor: "PEND",
+      contenido: "Pendiente"
+    };
+    estados.push(estado);
+    estado = {
+      valor: "AGEN",
+      contenido: "Agendado"
+    };
+    estados.push(estado);
+    return estados;
+  }
 }

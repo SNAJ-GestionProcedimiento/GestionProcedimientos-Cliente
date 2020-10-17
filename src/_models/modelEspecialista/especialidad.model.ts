@@ -11,7 +11,7 @@ export class especialidadesRequeridas {
    * registro médico de Especialista
    */
   public registroMedico: string;
-  
+
   /**
    * Identificación del especialista
    */
@@ -25,24 +25,31 @@ export class especialidadesRequeridas {
    */
   public estado: string;
 
-   public static cant: number;
-  constructor() { 
+  public static cant: number;
+  constructor() {
   }
 
   public parseToJSON(): JSON {
     return JSON.parse(JSON.stringify(this));
   }
 
-  public static fromJSON(json): especialidadesRequeridas {
+  public static fromJSON(json): especialidadesRequeridas[] {
+    console.log("entra");
+    let arrayEspecialidades = [];
     if (json.length == 0) { return null; }
-    var especialidadRequerida = new especialidadesRequeridas();
-    especialidadRequerida.codigoEspecialidad = json.agendaEspecialista[0].código;
-    especialidadRequerida.nombreEspecialidad = json.especialidad[0].nombreEspecialidad;
-    especialidadRequerida.registroMedico = json.especialista[0].registroMedico;
-    especialidadRequerida.identificacion = json.persona[0].identificacion;
-    especialidadRequerida.nombreEspecialista = json.persona[0].nombreEspecialista;
-    especialidadRequerida.estado = json.agendaEspecialista[0].estado;
 
-    return especialidadRequerida;
+    for (let i = 0; i < json.length; i++) {
+      var especialidadRequerida = new especialidadesRequeridas();
+      especialidadRequerida.codigoEspecialidad = json[i].codigoEspecialidad;
+      especialidadRequerida.nombreEspecialidad = json[i].nombreEspecialidad;
+      especialidadRequerida.registroMedico = json[i].registroMedico;
+      especialidadRequerida.identificacion = json[i].identificacion;
+      especialidadRequerida.nombreEspecialista = json[i].nombreEspecialista;
+      especialidadRequerida.estado = json[i].estado;
+      console.log("intrument "+i+": "+ especialidadRequerida);
+      arrayEspecialidades.push(especialidadRequerida);
+    }
+    return arrayEspecialidades;
   }
 }
+
