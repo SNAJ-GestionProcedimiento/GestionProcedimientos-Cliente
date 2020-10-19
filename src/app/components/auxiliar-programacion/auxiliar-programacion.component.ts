@@ -59,7 +59,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
   crearAgendaonClick(){
 
     this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
-    console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
+    //console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
     /**Captura de campos */
     
     let paciente = this.pacienteCmp.getObjPaciente();
@@ -83,8 +83,8 @@ export class AuxiliarProgramacionComponent implements OnInit {
   /**Peticiones */
   public async crearAgenda(agenda:AgendaCrear){
     //console.log(agenda.parseToJSON());
-    let res:any = await this.agendaCrearService.create(agenda);
-    //console.log(res);
+    let res:any = await this.agendaCrearService.create(agenda).toPromise();
+    console.log(res);
   }
 
 }

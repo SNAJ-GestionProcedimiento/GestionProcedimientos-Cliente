@@ -80,7 +80,7 @@ export class AgendaCrear{
             this.nombreAcu = acudiente.nombre;
             this.generoAcu = acudiente.genero; 
             /**Datos de hora y fecha */
-            this.fechaHora = fecha + ' ' + hora;
+            this.fechaHora = fecha + ' ' + DateHelper.horaSalida(hora);
             this.estadoFecha = estadoFecha;
             /**Campos de procedimiento - modalidad */
             this.cama = proceModalidad.camaUCI.toString();
