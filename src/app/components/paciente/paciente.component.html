@@ -9,6 +9,9 @@
                 <div class="error" *ngIf="pacienteForm.get('id').errors && this.pacienteForm.get('id').touched">
                     <p>*Ingrese el numero de documento</p>
                 </div>
+                <div class="alert alert-danger mt-3" role="alert" *ngIf="this.pacAcudiente">
+                    El paciente no puede ser el acudiente.
+                </div>
             </div>
             <!--tipo de documento-->
             <div class="col-auto mr-3 mt-1">
@@ -56,7 +59,7 @@
             <!--Telefono-->
             <div class="col-auto mr-3 mt-1">
                 Teléfono:
-                <input type="text" class="form-control" formControlName="phoneNumber">
+                <input type="number" class="form-control" formControlName="phoneNumber">
                 <div class="error" *ngIf="pacienteForm.get('phoneNumber').errors && this.pacienteForm.get('phoneNumber').touched">
                     <p>*Ingrese el número de teléfono del paciente</p>
                 </div>

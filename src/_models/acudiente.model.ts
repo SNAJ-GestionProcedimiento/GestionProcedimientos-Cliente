@@ -49,7 +49,7 @@ export class Acudiente{
         acudiente.idPersona = json.personas[0].idPersona;
         acudiente.identificacion = json.personas[0].identificacion;
         acudiente.tipoIdentificacion = json.personas[0].tipoIdentificacion;
-        acudiente.fechaNacimiento = new Date(json.personas[0].fechaNacimiento+"T00:00:00");
+        acudiente.fechaNacimiento = json.personas[0].fechaNacimiento;
         acudiente.correo = json.personas[0].correo;
         acudiente.telefono = json.personas[0].telefono;
         acudiente.direccion = json.personas[0].direccion;

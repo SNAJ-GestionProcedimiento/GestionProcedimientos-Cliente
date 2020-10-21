@@ -27,7 +27,19 @@
                 <ng-template #notFoundTemplate let-notFound>
                 <div [innerHTML]=""></div>
                 </ng-template>
+                <div class="error" *ngIf="busquedaForm.get('searchType').errors && this.busquedaForm.get('searchType').touched && !datoBusqueda">
+                    <p>*Seleccione el tipo de busqueda</p>
                 </div>
+                <div class="error" id="campoVacio">
+                    <p>*Campo de busqueda vacío</p>
+                </div>
+                <div class="error" id="tipoBusqueda">
+                    <p>*Campo de busqueda vacío</p>
+                </div>
+                <div class="alert alert-danger mt-3" role="alert" *ngIf="busquedaNula">
+                    {{this.msjBusquedaNula}}
+                </div>
+            </div>
         </div>
         <button type="button" class="btn btn-info" (click)="buscarClick()">Buscar</button>
     </form>

@@ -20,6 +20,9 @@ export class ProcedimientoComponent implements OnInit {
 
   public busquedaForm:FormGroup;
   public valorBusqueda:string;
+  public datoBusqueda:boolean=false;
+  public busquedaNula:boolean=false;
+  public msjBusquedaNula:string="No existe procedimiento con ";
   public estadosCama:Array<EstadoCama>;
 
   public procedimiento:Procedimiento;
@@ -38,6 +41,8 @@ export class ProcedimientoComponent implements OnInit {
   ngOnInit(): void {
     this.setEstadosCama();
     this.estadoCama = this.busquedaForm.get('stateBed').value;
+    document.getElementById('campoVacio').style.display='none';
+    document.getElementById('tipoBusqueda').style.display='none';
   }
 
   public getObjProcedimientoModalidad(){
@@ -86,23 +91,34 @@ export class ProcedimientoComponent implements OnInit {
     }
   }
   selectEvent(item) {
-    this.valorBusqueda = item.id;
+    if(this.busquedaForm.get('searchType').value!=''){
+      this.codigoProc = item.id;
+      this.setProcedimiento();
+    }
   }
   onChangeSearch($event){
-    if(this.busquedaForm.get('searchType').value=='2'){
-      this.valorBusqueda = $event;
-      if(this.busquedaForm.get('searchType').value=='2'){
-        this.setProcedimiento();
+    if($event != ''){
+      this.datoBusqueda = true;
+      document.getElementById('campoVacio').style.display='none';
+      if(this.busquedaForm.get('searchType').touched){
+        if(this.busquedaForm.get('searchType').value == '1'){
+          this.codigoProc = $event;
+        }else{
+          this.valorBusqueda = $event;
+          this.setProcedimientos();    
+        }
       }
+    }else{
+      document.getElementById('campoVacio').style.display='block';
+      this.datoBusqueda=false;
     }
-    this.valorBusqueda = $event;
   }
 
   public buscarClick(){
-    this.busquedaForm.get('searchType').setValue('1');
-    this.setProcedimiento();
-    if(this.procedimiento!=null){
-      this.updateBusquedaForm();
+    if(this.datoBusqueda){
+      this.setProcedimiento();
+    }else{
+      document.getElementById('campoVacio').style.display='block';
     }
   }
 
@@ -123,22 +139,29 @@ export class ProcedimientoComponent implements OnInit {
 
   /**Peticiones */
   async setProcedimiento(){
-    if(this.busquedaForm.get('searchType').value==='1'){
-      let res:any = await this.procedimientoService.getCodigo(this.valorBusqueda).toPromise();
-      console.log(res);
-      this.procedimiento = Procedimiento.fromJSON(res.procedimiento);
-      this.procedimientos=new Array<Procedimiento>();
-    }else{
-      let res:any = await this.procedimientoService.getNombre(this.valorBusqueda).toPromise();
-      this.procedimientos = new Array<Procedimiento>();
-      res.procedimientos.forEach(procedimiento => {
-        this.procedimientos.push(procedimiento);
-      });
-      this.procedimiento = null;
-      this.data = this.procedimientos;
-      if(this.procedimientos.length > 0){
-        this.cargarNombres();
+      let res:any = await this.procedimientoService.getCodigo(this.codigoProc).toPromise();
+      if(res!=null){
+        this.procedimiento = Procedimiento.fromJSON(res.procedimiento);
+        if(this.procedimiento!=null){
+          this.updateBusquedaForm();
+        }
+        this.procedimientos = new Array<Procedimiento>();
+      }else{
+        this.msjBusquedaNula += 'codigo:'+this.codigoProc;
+        this.busquedaNula=true;
       }
+  }
+
+  async setProcedimientos(){
+    let res:any = await this.procedimientoService.getNombre(this.valorBusqueda).toPromise();
+    this.procedimientos = new Array<Procedimiento>();
+    res.procedimientos.forEach(procedimiento => {
+      this.procedimientos.push(procedimiento);
+    });
+    this.procedimiento = null;
+    this.data = this.procedimientos;
+    if(this.procedimientos.length > 0){
+      this.cargarNombres();
     }
   }
 

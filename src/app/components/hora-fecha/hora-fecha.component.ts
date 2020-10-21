@@ -7,6 +7,8 @@ import { SalaService } from 'src/_services/sala.service';
 import { EstadoAgendaService } from 'src/_services/estado-agenda.service';
 import { BrowserStack } from 'protractor/built/driverProviders';
 
+import { DateHelper } from 'src/_helpers/date.helper';
+
 @Component({
   selector: 'app-hora-fecha',
   templateUrl: './hora-fecha.component.html',
@@ -22,6 +24,7 @@ export class HoraFechaComponent implements OnInit {
   public hora:string;
   public fecha:string;
   public estadoFecha:string;
+  public fechaActual:string;
 
   constructor(
     private formBuilder:FormBuilder,
@@ -35,6 +38,7 @@ export class HoraFechaComponent implements OnInit {
     this.setSalas();
     this.setEstadosAgenda();
     this.estadoFecha=this.horafechaForm.get('stateSchedule').value;
+    this.fechaActual = DateHelper.dateToStr(new Date());
   }
 
   public buildHorafechaForm(){

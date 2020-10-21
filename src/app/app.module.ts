@@ -23,6 +23,7 @@ import { ProcedimientoComponent } from './components/procedimiento/procedimiento
 import { InstrumentosEquiposService } from '../_services/serviciosInstrumentos/instrumentos-equipos.service';
 import { EspecilidadRequeridaService }  from '../_services/especilidad-requerida.service';
 import { NotificationService } from 'src/_services/notification.service';
+import { PacienteAcudienteService } from 'src/_services/paciente-acudiente.service';
 
 import { MaterialModule } from './material/material.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
@@ -72,7 +73,8 @@ import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component
     AcudienteService,
     InstrumentosEquiposService,
     NotificationService,
-    EspecilidadRequeridaService
+    EspecilidadRequeridaService,
+    PacienteAcudienteService
     ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent]

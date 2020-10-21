@@ -7,6 +7,7 @@ import { TipoId } from 'src/_models/tipoId.model';
 
 import { PacienteService } from 'src/_services/paciente.service';
 import { TipoIdService } from 'src/_services/tipo-id.service';
+import { PacienteAcudienteService } from 'src/_services/paciente-acudiente.service';
 
 import { DateHelper } from 'src/_helpers/date.helper';
 import { GenderHelper } from 'src/_helpers/gender.helper';
@@ -23,7 +24,10 @@ export class PacienteComponent implements OnInit {
 
   public paciente: Paciente;
   public pacienteId:string;
+  public idAcudiente:string;
   public observacionPaciente:string;
+
+  public pacAcudiente:boolean=false;
 
   public pacienteForm : FormGroup;
   
@@ -31,13 +35,15 @@ export class PacienteComponent implements OnInit {
   constructor(
     private formBuilder:FormBuilder,
     private pacienteService: PacienteService,
-    private tipoIdService: TipoIdService
+    private tipoIdService: TipoIdService,
+    private pacienteAcudienteService:PacienteAcudienteService
     ) {
       this.buildpacienteForm();
   }
 
   ngOnInit(): void {  
     this.setTiposID();
+    this.pacienteAcudienteService.idAcudiente.subscribe(value=> this.idAcudiente = value);
   }
 
   public getObjPaciente(){
@@ -69,7 +75,15 @@ export class PacienteComponent implements OnInit {
     )
     .subscribe(value=>{
       this.pacienteId=value;
-      this.setPaciente();
+      this.cambiarIdPaciente();
+      if(this.idAcudiente!=this.pacienteId){
+        this.pacAcudiente = false;
+        this.setPaciente();
+      }else{
+        this.pacAcudiente = true;
+        this.paciente=null;
+        this.deleteForm();
+      }
     });
     this.pacienteForm.get("documentType").valueChanges
     .subscribe(value =>{
@@ -130,7 +144,7 @@ export class PacienteComponent implements OnInit {
     this.pacienteForm.get('documentType').setValue(this.paciente.tipoIdentificacion);
     this.pacienteForm.get('name').setValue(this.paciente.nombre);
     this.pacienteForm.get('homeAddress').setValue(this.paciente.direccion);
-    this.pacienteForm.get('birthdate').setValue(DateHelper.dateToStr(this.paciente.fechaNacimiento));
+    this.pacienteForm.get('birthdate').setValue(this.paciente.fechaNacimiento);
     this.pacienteForm.get('phoneNumber').setValue(this.paciente.telefono);
     this.pacienteForm.get('gender').setValue(GenderHelper.genderValue(this.paciente.genero));
     this.pacienteForm.get('email').setValue(this.paciente.correo);
@@ -141,7 +155,6 @@ export class PacienteComponent implements OnInit {
     this.pacienteForm.get('name').disable();
     this.pacienteForm.get('birthdate').disable();
     this.pacienteForm.get('gender').disable();
-    this.pacienteForm.get('email').disable();
   }
   /**Limpiar el formulario*/
   private deleteForm():void{
@@ -168,8 +181,10 @@ export class PacienteComponent implements OnInit {
     let res = await this.pacienteService.get(this.pacienteId).toPromise();
     this.paciente = Paciente.fromJSON(res);
     if (this.paciente != null){
-      this.completeForm();
-      this.disableForm();
+      if(this.pacienteForm.get('id').value == this.paciente.identificacion){
+        this.completeForm();
+        this.disableForm();
+      }
     }else{
       this.deleteForm();
       this.paciente = new Paciente();
@@ -186,5 +201,9 @@ export class PacienteComponent implements OnInit {
   /**Envios */
   async createAgenda(){
     
+  }
+
+  public cambiarIdPaciente(){
+    this.pacienteAcudienteService.cambiarIdPaciente(this.pacienteId);
   }
 }

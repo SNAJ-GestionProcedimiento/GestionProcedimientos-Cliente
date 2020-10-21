@@ -7,6 +7,7 @@ import { TipoId } from 'src/_models/tipoId.model';
 
 import { AcudienteService } from '../../../_services/acudiente.service';
 import { TipoIdService } from 'src/_services/tipo-id.service'; 
+import { PacienteAcudienteService } from 'src/_services/paciente-acudiente.service';
 
 import { DateHelper } from 'src/_helpers/date.helper';
 import { GenderHelper } from 'src/_helpers/gender.helper';
@@ -20,19 +21,27 @@ export class AcudienteComponent implements OnInit {
   public tiposIdentidicacion:Array<TipoId>;
   public acudiente:Acudiente;
   public acudienteId:string;
+  public pacienteId:string;
+  public fecNacMaxima:string;
+
+  public acuMenor:boolean=false;
+  public acuPaciente:boolean=false;
 
   public acudienteForm : FormGroup;
 
   constructor(
     private formBuilder:FormBuilder,
     private acudienteService: AcudienteService,
-    private tipoIdService: TipoIdService
+    private tipoIdService: TipoIdService,
+    private pacienteAcudienteService:PacienteAcudienteService
     ) { 
     this.buildacudienteForm();
   }
 
   ngOnInit(): void {
     this.setTiposID();
+    this.pacienteAcudienteService.idPaciente.subscribe(value=> this.pacienteId = value);
+    this.fecNacMaxima = DateHelper.dateToStr(DateHelper.getMaxDate(new Date()));
   }
 
   public getObjAcudiente(){
@@ -59,7 +68,15 @@ export class AcudienteComponent implements OnInit {
     )
     .subscribe(value=>{
       this.acudienteId=value;
-      this.setAcudiente();
+      this.cambiarIdAcudiente();
+      if(this.pacienteId != this.acudienteId){
+        this.acuPaciente = false;
+        this.setAcudiente();
+      }else{
+        this.acuPaciente = true;
+        this.acudiente = null;
+        this.deleteForm();
+      }
     });
     this.acudienteForm.get("documentType").valueChanges
     .subscribe(value =>{
@@ -113,7 +130,7 @@ export class AcudienteComponent implements OnInit {
     this.acudienteForm.get('documentType').setValue(this.acudiente.tipoIdentificacion);
     this.acudienteForm.get('name').setValue(this.acudiente.nombre);
     this.acudienteForm.get('homeAddress').setValue(this.acudiente.direccion);
-    this.acudienteForm.get('birthdate').setValue(DateHelper.dateToStr(this.acudiente.fechaNacimiento));
+    this.acudienteForm.get('birthdate').setValue(this.acudiente.fechaNacimiento);
     this.acudienteForm.get('phoneNumber').setValue(this.acudiente.telefono);
     this.acudienteForm.get('gender').setValue(GenderHelper.genderValue(this.acudiente.genero));
     this.acudienteForm.get('email').setValue(this.acudiente.correo);
@@ -124,7 +141,6 @@ export class AcudienteComponent implements OnInit {
     this.acudienteForm.get('name').disable();
     this.acudienteForm.get('birthdate').disable();
     this.acudienteForm.get('gender').disable();
-    this.acudienteForm.get('email').disable();
   }
   /**Limpiar el formulario*/
   private deleteForm():void{
@@ -151,8 +167,17 @@ export class AcudienteComponent implements OnInit {
     let res = await this.acudienteService.get(this.acudienteId).toPromise();
     this.acudiente = Acudiente.fromJSON(res);
     if (this.acudiente != null){
-      this.completeForm();
-      this.disableForm();
+      let edad = DateHelper.getAge(new Date(this.acudiente.fechaNacimiento));
+      console.log(edad);
+      if(edad > 18){
+        this.completeForm();
+        this.disableForm();
+        this.acuMenor=false;
+      }else{
+        this.acuMenor=true;
+        this.acudiente=null;
+        this.deleteForm();
+      }
     }else{
       this.deleteForm();
       this.acudiente = new Acudiente();
@@ -161,10 +186,14 @@ export class AcudienteComponent implements OnInit {
     }
   }
 
-  //Pendiente por cargar al servidor
+  //Carga los tipos de datos 
   async setTiposID(){
     let res = await this.tipoIdService.get().toPromise();
     this.tiposIdentidicacion = TipoId.fromJSON(res);
+  }
+
+  public cambiarIdAcudiente(){
+    this.pacienteAcudienteService.cambiarIdAcudiente(this.acudienteId);
   }
 
 }
