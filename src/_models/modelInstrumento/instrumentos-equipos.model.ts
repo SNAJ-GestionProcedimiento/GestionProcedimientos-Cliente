@@ -1,4 +1,3 @@
-import { instrument } from 'src/app/components/ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
 import { estadoClass } from './instrumentos-equipos-estado.model';
 
 export class InstrumentosEquipos {

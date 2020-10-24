@@ -1,0 +1,57 @@
+<div class="mat-elevation-z8">
+    <h2>Instrumento o equipo a editar</h2>
+    <br>
+    <div class="modal-body row">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Código: </label>
+        </div>
+        <div class="col-md-6">
+            <label>{{datosInstrumento.codigoEquipo}}</label>
+        </div>
+    </div>
+    <div class="modal-body row">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Nombre: </label>
+        </div>
+        <div class="col-md-6">
+            <label>{{datosInstrumento.nombre}}</label>
+        </div>
+    </div>
+    <div class="modal-body row">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Cantidad: </label>
+        </div>
+        <div class="col-md-6">
+            <!-- <label>{{datosInstrumento.cantidad}}</label>
+            <input type="text" id="inputCantidad" name="inputCantidad" placeholder="{{datosInstrumento.cantidad}}" />-->
+            <input type="text" placeholder="{{datosInstrumento.cantidad}}" (keypress)=" keyPress($event)" [(ngModel)]="customertext">
+        </div>
+    </div>
+    <div class="modal-body row ">
+        <div class="col-md-6 ContenedorTitulo ">
+            <label>Descripción: </label>
+        </div>
+        <div class="col-md-6 ">
+            <label>{{datosInstrumento.descripcion}}</label>
+        </div>
+    </div>
+    <div class=" modal-body row ">
+        <div class="col-md-6 ContenedorTitulo ">
+            <label>Estado: </label>
+        </div>
+        <div class="col-md-6 ">
+            <select [(ngModel)]="opcionSeleccionado " (change)="capturar() ">
+                <option value="0" selected>{{datosInstrumento.estado}}</option>
+                <option *ngFor="let dato of listaEstado ">
+                    {{dato.contenido}}
+                </option>
+                </select>
+        </div>
+    </div>
+    <!--<p [hidden]="opcionSeleccionado=='0' ">Haz seleccionado la opción # {{verSeleccion}}</p>-->
+    <hr>
+    <div style="text-align: center; ">
+        <button type="button " class="btn btn-danger mr-3 " (click)="cerrarVentana() " value=" Cerrar esta ventana ">Cancelar edición</button>
+        <button type="button " class="btn btn-info " (click)="editar() ">Editar</button>
+    </div>
+</div>
