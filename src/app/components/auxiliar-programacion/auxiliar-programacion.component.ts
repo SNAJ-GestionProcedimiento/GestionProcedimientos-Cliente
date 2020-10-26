@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { AuxiliarEspecialistaComponent } from '../auxiliar-especialista/auxiliar-especialista.component';
+
 import { ProcedimientoComponent } from '../procedimiento/procedimiento.component';
 import { PacienteComponent } from 'src/app/components/paciente/paciente.component';
 import { AcudienteComponent } from 'src/app/components/acudiente/acudiente.component';
@@ -10,6 +10,8 @@ import { AgendaCrear } from 'src/_models/agenda-crear.model';
 
 import { AgendaCrearService } from 'src/_services/agenda-crear.service';
 import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-Equipos/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
+import { UtilityServiceService } from 'src/_services/utility-service.service';
+import { AuxiliarEspecialistaComponent } from '../auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
 
 @Component({
   selector: 'app-auxiliar-programacion',
@@ -33,9 +35,10 @@ export class AuxiliarProgramacionComponent implements OnInit {
   public activoAcudiente:boolean; 
   message:boolean;
   public codigoProcedimiento:string='';
+  idProcedimiento: string;
 
   constructor(
-    private agendaCrearService:AgendaCrearService
+    private agendaCrearService:AgendaCrearService, private utilityService: UtilityServiceService
   ) { }
 
   receiveMessage($event) {
@@ -44,6 +47,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento=msg);
   }
 
   public setIdProcedimiento(){
@@ -58,8 +62,10 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
   crearAgendaonClick(){
 
-    this.listarInstrumentosDesdeProgramacion();
+    
     this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
+    this.utilityService.changeIdProcedimiento("11");
+    this.listarInstrumentosDesdeProgramacion();
     //console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
     /**Captura de campos */
     

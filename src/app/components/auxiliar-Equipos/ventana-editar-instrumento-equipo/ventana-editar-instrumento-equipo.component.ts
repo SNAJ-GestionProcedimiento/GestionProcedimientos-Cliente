@@ -5,7 +5,6 @@ import { InstrumentosEquiposService } from 'src/_services/serviciosInstrumentos/
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import * as notificationService from 'src/_services/notification.service';
 import { MatDialog } from "@angular/material/dialog";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ventana-editar-instrumento-equipo',
@@ -25,7 +24,7 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
   opcionSeleccionado: string = '0';
   verSeleccion = '';
   customertext: number=0;
-
+ 
   listaEstado: estadoClass[] = [];
 
   ngOnInit(): void {
@@ -59,7 +58,7 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
   editar() {
     this.datosInstrumento.estado = this.verSeleccion;
     let instrumetEnviar = this.convertirEstadoSalida(this.datosInstrumento);
-    console.log("idProcedimiento que llega a editar: " + this.idProcedimiento+" cantidad obtenida: "+this.customertext);
+    //console.log("idProcedimiento que llega a editar: " + this.idProcedimiento+" cantidad obtenida: "+this.customertext);
     if (this.customertext.toString()!="" && this.customertext.toString()!=" ") {
       this.datosInstrumento.cantidad=this.customertext;
     }else{
@@ -86,7 +85,6 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
   }
 
   convertirEstadoSalida(instrumentoAcambiar): InstrumentosEquipos {
-    console.log("entro al método: " + instrumentoAcambiar.length);
     for (let j = 0; j < this.estados.length; j++) {
       //console.log("instrment que llego: "+instrumentoAcambiar.estado+" estado: "+this.estados[j].contenido);
       if (instrumentoAcambiar.estado == this.estados[j].contenido) {

@@ -32,6 +32,8 @@ export class InstrumentosEquipos {
 
    public static cant: number;
   constructor() { 
+    this.cantidad=1;
+    this.estado="PEND";
   }
 
   public parseToJSON(): JSON {
@@ -105,13 +107,4 @@ export class editInstrumentosEquipos {
     return editInstrumentosEquipos;
   }
 
-}
-
-export class intrumentoEstadoUnidos{
-  public intrumento: InstrumentosEquipos[];
-  public estados: estadoClass[];
-  constructor(intrumento: InstrumentosEquipos[], estados: estadoClass[]){
-    this.intrumento=intrumento;
-    this.estados=estados;
-  }
 }

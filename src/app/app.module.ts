@@ -31,13 +31,14 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuxiliarInstrumentosEquiposComponent } from './components/auxiliar-Equipos/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
 import { VentanaAuxiliarInstrumentosEquiposComponent } from './components/auxiliar-Equipos/ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
-import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialista/auxiliar-especialista.component';
-import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component';
 import { VentanaEditarInstrumentoEquipoComponent } from './components/auxiliar-Equipos/ventana-editar-instrumento-equipo/ventana-editar-instrumento-equipo.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
+import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
+import { VentanaAuxiliarEspecialidadComponent } from './components/auxiliar-especialidad/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
+import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/editar-especialidad/editar-especialidad.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
     AuxiliarMaterialesComponent,
     HoraFechaComponent,
     VentanaEditarInstrumentoEquipoComponent,
+    EditarEspecialidadComponent,
   ],
   imports: [
     BrowserModule,
