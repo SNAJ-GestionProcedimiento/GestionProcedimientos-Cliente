@@ -15,7 +15,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
   dataSource = null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { } 
 
   ngOnInit(): void {
     for (let x = 1; x <= 100; x++)
@@ -32,7 +32,12 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
     dialogoConfig.width="60%";
   }
 
+  cancelar(){
+    this.dialog.closeAll();
+
+  }
 }
+
 
 
 export class especialidad {

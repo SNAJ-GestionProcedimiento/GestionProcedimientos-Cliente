@@ -46,6 +46,7 @@ export class AgendaCrear{
     /**
      * Campos salas y usuario
      */
+    public estadoSala: string;
     public idSala : string;
     public idUsuario:string='1';
 
@@ -58,6 +59,7 @@ export class AgendaCrear{
         estadoFecha:string,
         estadoCama:string,
         observacion:string,
+        estadoSala:string,
         idSala:string,
         idUsuario:string
         ){
@@ -90,8 +92,10 @@ export class AgendaCrear{
             /**Datos de observacion */
             this.observacion = observacion;
             /**Campos salas y usuario*/
-            this.idUsuario = idUsuario;
+            this.estadoSala=estadoSala;
             this.idSala = idSala;
+            this.idUsuario = idUsuario;
+
     }
 
     public parseToJSON():any{

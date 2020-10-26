@@ -14,7 +14,7 @@ import { estadoClass, obtenerEstado } from 'src/_models/modelInstrumento/instrum
   styleUrls: ['./auxiliar-especialista.component.css']
 })
 export class AuxiliarEspecialistaComponent implements OnInit {
-
+ 
   @Input() codigoProcedimientoObtenido: string="";//Codigo del procedimiento seleccionado
 
   displayedColumns: string[] = ['codigoEspecialidad', 'nombreEspecialidad', 'registroMedico', 'identificacion', 'nombreEspecialista', 'estado', 'acciones'];
@@ -25,9 +25,12 @@ export class AuxiliarEspecialistaComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private serviceEspecialidadRequerida: EspecilidadRequeridaService, private notificationService: notificationService.NotificationService) { }
+  constructor(
+    private dialog: MatDialog, 
+    private serviceEspecialidadRequerida: EspecilidadRequeridaService, 
+    private notificationService: notificationService.NotificationService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.estados=obtenerEstado.getEstadoObtenido(); 
   }
 

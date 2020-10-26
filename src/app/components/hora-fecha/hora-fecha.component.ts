@@ -8,6 +8,8 @@ import { EstadoAgendaService } from 'src/_services/estado-agenda.service';
 import { BrowserStack } from 'protractor/built/driverProviders';
 
 import { DateHelper } from 'src/_helpers/date.helper';
+import { EstadoSala } from '../../../_models/estado-sala.model';
+import { EstadoSalaService } from '../../../_services/estado-sala.service';
 
 @Component({
   selector: 'app-hora-fecha',
@@ -19,17 +21,20 @@ export class HoraFechaComponent implements OnInit {
   public horafechaForm:FormGroup;
   public estadosAgenda:Array<EstadoAgenda>;
   public salas:Array<Sala>;
+  public estadosSalas:Array<EstadoSala>;
 
   public idsala:string;
   public hora:string;
   public fecha:string;
   public estadoFecha:string;
   public fechaActual:string;
+  public estadoSala: string;
 
   constructor(
     private formBuilder:FormBuilder,
     private salaService: SalaService,
-    private estadoAgendaService:EstadoAgendaService
+    private estadoAgendaService:EstadoAgendaService,
+    private estadoSalaService:EstadoSalaService
     ) { 
     this.buildHorafechaForm();
   }
@@ -37,6 +42,7 @@ export class HoraFechaComponent implements OnInit {
   ngOnInit(): void {
     this.setSalas();
     this.setEstadosAgenda();
+    this.setEstadosSala();
     this.estadoFecha=this.horafechaForm.get('stateSchedule').value;
     this.fechaActual = DateHelper.dateToStr(new Date());
   }
@@ -47,7 +53,8 @@ export class HoraFechaComponent implements OnInit {
       hour:['',[Validators.required]],
       state:['',[]],
       room:['',[Validators.required]],
-      stateSchedule:['PEND',[]]
+      stateSchedule:['PEND',[]],
+      stateSala:['PEND',[]]
     });
     this.horafechaForm.get('date').valueChanges
     .subscribe(value =>{
@@ -59,13 +66,20 @@ export class HoraFechaComponent implements OnInit {
     });
     this.horafechaForm.get('stateSchedule').valueChanges
     .subscribe(value =>{
-      console.log(value);
+      console.log("Estado agenda: "+value);
       this.estadoFecha = value;
     });
     this.horafechaForm.get('room').valueChanges
     .subscribe(value=>{
       this.idsala =value;
     });
+    this.horafechaForm.get('stateSala').valueChanges
+    .subscribe(value=>{
+      console.log("Estado sala: "+value);
+      this.estadoSala =value;
+    });
+    
+    
   }
 
   public getElemento(nombre:string){
@@ -78,6 +92,8 @@ export class HoraFechaComponent implements OnInit {
          return this.estadoFecha;
       case 'salaId':
          return this.idsala;
+      case 'estadoSala':
+        return this.estadoSala;
       default:
         return null;
     }
@@ -97,4 +113,12 @@ export class HoraFechaComponent implements OnInit {
     this.estadosAgenda = EstadoAgenda.fromJSON(res);
   }
 
-}
+  public async setEstadosSala(){
+    let resSala:any = await this.estadoSalaService.get().toPromise();
+    this.estadosSalas = EstadoSala.fromJSON(resSala);
+
+
+  }
+
+
+} 

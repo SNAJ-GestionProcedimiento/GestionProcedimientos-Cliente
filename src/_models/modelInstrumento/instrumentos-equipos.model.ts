@@ -37,7 +37,7 @@ export class InstrumentosEquipos {
 
   public parseToJSON(): JSON {
     return JSON.parse(JSON.stringify(this));
-  }
+  } 
 
   public static fromJSON(json): InstrumentosEquipos[] {
     

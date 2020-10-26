@@ -49,6 +49,7 @@ export class ProcedimientoComponent implements OnInit {
     return this.procedimiento.modalidades[0];
   }
   public getestadoCama(){
+    console.log("Estado cama: "+this.estadoCama);
     return this.estadoCama;
   }
 

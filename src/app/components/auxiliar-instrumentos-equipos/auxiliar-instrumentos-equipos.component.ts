@@ -5,7 +5,6 @@ import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { VentanaAuxiliarInstrumentosEquiposComponent } from '../ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
 import { InstrumentosEquiposService } from 'src/_services/serviciosInstrumentos/instrumentos-equipos.service';
 import { editInstrumentosEquipos, InstrumentosEquipos, intrumentoEstadoUnidos } from 'src/_models/modelInstrumento/instrumentos-equipos.model';
-
 import { estadoClass, obtenerEstado } from 'src/_models/modelInstrumento/instrumentos-equipos-estado.model';
 import * as notificationService from 'src/_services/notification.service';
  
@@ -35,11 +34,15 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //utilizado para paginar la tabla
 
 
-  constructor(private dialog: MatDialog, private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService) { }
+  constructor(
+    private dialog: MatDialog, 
+    private serviceIntrumentosEquipos: InstrumentosEquiposService, 
+    private notificationService: notificationService.NotificationService) { }
 
   //la inicialización del componente
   ngOnInit(): void {
     this.estados=obtenerEstado.getEstadoObtenido(); 
+    console.log("El codigo desde documentacion es: "+this.codigoProcedimientoObtenido);
   }
   
 

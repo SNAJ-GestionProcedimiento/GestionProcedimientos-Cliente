@@ -36,6 +36,10 @@ import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxil
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component';
+import { VentanaAuxiliarDocumentacionComponent } from './components/ventana-auxiliar-documentacion/ventana-auxiliar-documentacion.component';
+import { DocumentoService } from '../_services/documentacion.service';
+import { VentanaAuxiliarMaterialComponent } from './components/ventana-auxiliar-material/ventana-auxiliar-material.component';
+import { EstadoSalaService } from '../_services/estado-sala.service';
 
 @NgModule({
   declarations: [
@@ -54,6 +58,9 @@ import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component
     AuxiliarDocumentacionComponent,
     AuxiliarMaterialesComponent,
     HoraFechaComponent,
+    VentanaAuxiliarDocumentacionComponent,
+    VentanaAuxiliarMaterialComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -74,9 +81,12 @@ import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component
     InstrumentosEquiposService,
     NotificationService,
     EspecilidadRequeridaService,
-    PacienteAcudienteService
+    PacienteAcudienteService,
+    DocumentoService,
+    EstadoSalaService 
+
     ],
   bootstrap: [AppComponent],
-  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent]
+  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent]
 })
 export class AppModule { }

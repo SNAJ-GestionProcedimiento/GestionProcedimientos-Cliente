@@ -33,7 +33,7 @@ export class ProcedimientoService extends HttpService {
     */
    getNombre(nombre: string){
     return this.http.get(
-      `${this.apiURL+'Nombre'}/${nombre}`,
+      `${this.apiURL+'getEstadosSalas'}`,
       {
         headers: this.headers
       },
