@@ -36,16 +36,13 @@ import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxil
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component';
-<<<<<<< HEAD
 import { VentanaAuxiliarDocumentacionComponent } from './components/ventana-auxiliar-documentacion/ventana-auxiliar-documentacion.component';
 import { DocumentoService } from '../_services/documentacion.service';
 import { VentanaAuxiliarMaterialComponent } from './components/ventana-auxiliar-material/ventana-auxiliar-material.component';
 import { EstadoSalaService } from '../_services/estado-sala.service';
-=======
 import { VentanaEditarInstrumentoEquipoComponent } from './components/auxiliar-Equipos/ventana-editar-instrumento-equipo/ventana-editar-instrumento-equipo.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 
->>>>>>> 4aaff7d1a7161935224e3d7ad02992e2a444a8bd
 
 @NgModule({
   declarations: [
@@ -64,13 +61,10 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
     AuxiliarDocumentacionComponent,
     AuxiliarMaterialesComponent,
     HoraFechaComponent,
-<<<<<<< HEAD
     VentanaAuxiliarDocumentacionComponent,
     VentanaAuxiliarMaterialComponent,
 
-=======
     VentanaEditarInstrumentoEquipoComponent,
->>>>>>> 4aaff7d1a7161935224e3d7ad02992e2a444a8bd
   ],
   imports: [
     BrowserModule,
@@ -92,18 +86,11 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
     NotificationService,
     EspecilidadRequeridaService,
     PacienteAcudienteService,
-<<<<<<< HEAD
     DocumentoService,
     EstadoSalaService 
 
     ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent]
-=======
-    UtilityServiceService
-    ],
-  bootstrap: [AppComponent],
-  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaEditarInstrumentoEquipoComponent]
->>>>>>> 4aaff7d1a7161935224e3d7ad02992e2a444a8bd
 })
 export class AppModule { }
