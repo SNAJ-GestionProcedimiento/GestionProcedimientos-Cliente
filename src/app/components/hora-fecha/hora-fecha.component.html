@@ -28,6 +28,16 @@
                 <select class="form-control" formControlName="room">
                     <option value="{{sala.idSala}}" *ngFor="let sala of salas">{{sala.nombre}}</option>
                 </select>
+
+
+            </div>
+
+            <!--Estado sala-->
+            <div class="col-auto mr-3 mt-3">
+                Estado sala:
+                <select class="form-control" formControlName="stateSala">
+                <option value="{{estado.idEstado}}" *ngFor="let estado of estadosSalas">{{estado.nombre}}</option>
+            </select>
             </div>
         </div>
     </form>

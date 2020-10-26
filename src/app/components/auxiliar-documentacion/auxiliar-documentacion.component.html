@@ -1,46 +1,50 @@
-<div class="tabla-documentacion">
-    <h2>Documentacion</h2>
+<div class="tabla-documentos">
+    <h2>Documentación</h2>
     <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSourceDoc" class="mat-elevation-z8
-            table-bordered table-responsive-sm">
-
-            <!-- posición Column -->
-            <ng-container matColumnDef="posicion">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.posicion}}
-                </td>
-            </ng-container>
+        <table mat-table [dataSource]="dataDocumentosRequeridos" class="mat-elevation-z8
+        table-bordered table-responsive-sm">
 
             <!-- código Column -->
-            <ng-container matColumnDef="codigo">
+            <ng-container matColumnDef="cod">
                 <th mat-header-cell *matHeaderCellDef> Codigo </th>
-                <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.cod}} </td>
             </ng-container>
 
             <!-- nombre Column -->
-            <ng-container matColumnDef="nombre">
+            <ng-container matColumnDef="nom">
                 <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
             </ng-container>
 
             <!-- estado Column -->
-            <ng-container matColumnDef="estado">
-                <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+            <ng-container matColumnDef="desc">
+                <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
             </ng-container>
+
+            <!-- estado Column -->
+            <ng-container matColumnDef="caduc">
+                <th mat-header-cell *matHeaderCellDef> Caduca </th>
+                <td mat-cell *matCellDef="let element"> {{element.caduc}} </td>
+            </ng-container>
+
+            <!-- estado Column -->
+            <ng-container matColumnDef="est">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let element"> {{element.est}} </td>
+            </ng-container>
+
+            <!-- estado Column -->
+            <ng-container matColumnDef="path">
+                <th mat-header-cell *matHeaderCellDef> Archivo </th>
+                <td mat-cell *matCellDef="let element"> {{element.path}} </td>
+            </ng-container>
+
 
             <!-- archivo Column -->
-            <ng-container matColumnDef="archivo">
-                <th mat-header-cell *matHeaderCellDef> Archivo </th>
-                <td mat-cell *matCellDef="let element"> {{element.archivo}}
-                </td>
-            </ng-container>
-
-            <!-- observacion Column -->
-            <ng-container matColumnDef="observacion">
-                <th mat-header-cell *matHeaderCellDef> Observacion </th>
-                <td mat-cell *matCellDef="let element"> {{element.observacion}}
-                </td>
+            <ng-container matColumnDef="observ">
+                <th mat-header-cell *matHeaderCellDef> Observaciones </th>
+                <td mat-cell *matCellDef="let element"> {{element.observ}} </td>
             </ng-container>
 
             <!-- acciones Column -->
@@ -59,12 +63,12 @@
         </table>
 
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-    </div>
 
-    <button type="button" class="btn btn-info">Añadir documento</button>
+
+    </div>
+    <button type="button" class="btn btn-info" (click)="openAgregarDocu()">Añadir documento</button>
+    <button type="button" class="btn btn-info" (click)="generarRecibido()">Generar Recibido</button>
+
     <br>
     <hr>
-
-
-
 </div>

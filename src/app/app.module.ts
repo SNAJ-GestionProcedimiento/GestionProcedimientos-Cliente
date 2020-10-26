@@ -34,6 +34,10 @@ import { VentanaAuxiliarInstrumentosEquiposComponent } from './components/auxili
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component';
+import { VentanaAuxiliarDocumentacionComponent } from './components/ventana-auxiliar-documentacion/ventana-auxiliar-documentacion.component';
+import { DocumentoService } from '../_services/documentacion.service';
+import { VentanaAuxiliarMaterialComponent } from './components/ventana-auxiliar-material/ventana-auxiliar-material.component';
+import { EstadoSalaService } from '../_services/estado-sala.service';
 import { VentanaEditarInstrumentoEquipoComponent } from './components/auxiliar-Equipos/ventana-editar-instrumento-equipo/ventana-editar-instrumento-equipo.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
@@ -58,6 +62,9 @@ import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/
     AuxiliarDocumentacionComponent,
     AuxiliarMaterialesComponent,
     HoraFechaComponent,
+    VentanaAuxiliarDocumentacionComponent,
+    VentanaAuxiliarMaterialComponent,
+
     VentanaEditarInstrumentoEquipoComponent,
     EditarEspecialidadComponent,
   ],
@@ -81,9 +88,11 @@ import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/
     NotificationService,
     EspecilidadRequeridaService,
     PacienteAcudienteService,
-    UtilityServiceService
+    DocumentoService,
+    EstadoSalaService 
+
     ],
   bootstrap: [AppComponent],
-  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaEditarInstrumentoEquipoComponent]
+  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent]
 })
 export class AppModule { }

@@ -5,10 +5,10 @@ import { ProcedimientoComponent } from '../procedimiento/procedimiento.component
 import { PacienteComponent } from 'src/app/components/paciente/paciente.component';
 import { AcudienteComponent } from 'src/app/components/acudiente/acudiente.component';
 import { HoraFechaComponent } from 'src/app/components/hora-fecha/hora-fecha.component';
-
 import { AgendaCrear } from 'src/_models/agenda-crear.model';
-
 import { AgendaCrearService } from 'src/_services/agenda-crear.service';
+import {AuxiliarDocumentacionComponent} from '../../components/auxiliar-documentacion/auxiliar-documentacion.component';
+
 import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-Equipos/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from '../auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
@@ -22,7 +22,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
   
   @ViewChild(AuxiliarInstrumentosEquiposComponent) listarInstrumentos: AuxiliarInstrumentosEquiposComponent;
   @ViewChild(AuxiliarEspecialistaComponent) listarEspecialidad: AuxiliarEspecialistaComponent;
-
+  @ViewChild(AuxiliarDocumentacionComponent) listarDocumentos: AuxiliarDocumentacionComponent; 
   @ViewChild(ProcedimientoComponent) procedimientoCmp: ProcedimientoComponent;
   @ViewChild(PacienteComponent) pacienteCmp: PacienteComponent;
   @ViewChild(AcudienteComponent) acudienteCmp: AcudienteComponent;
@@ -60,6 +60,11 @@ export class AuxiliarProgramacionComponent implements OnInit {
     this.listarEspecialidad.listarEspecialidades();
   }
 
+  listarDocumentosDesdeProgramacion(){
+    this.listarDocumentos.listarDocumentosRequeridos();
+    this.listarDocumentos.listarDocumentosPorCodigoModalidad();
+  }
+
   crearAgendaonClick(){
 
     
@@ -77,12 +82,18 @@ export class AuxiliarProgramacionComponent implements OnInit {
     let hora = this.horaFechaCmp.getElemento('hora');
     let fecha = this.horaFechaCmp.getElemento('fecha');
     let estadoAgenda = this.horaFechaCmp.getElemento('estado');
+    let estadoSala = this.horaFechaCmp.getElemento('estadosala');
     let salaId = this.horaFechaCmp.getElemento('salaId');
+
+    console.log("El de la sala desde aux program: "+estadoSala);
   
     /**Creacion del modelo */
-    let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion,salaId,'1');
+    let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion, 'PEND',salaId,'1');
 
+    console.log(agenda.estadoSala);
     this.crearAgenda(agenda);
+    this.listarInstrumentosDesdeProgramacion();
+    this.listarDocumentosDesdeProgramacion();
     
     
   }
