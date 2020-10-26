@@ -100,7 +100,7 @@ export class AgendaCrear{
 
     public parseToJSON():any{
         let as = JSON.stringify(this);
-        console.log(as);
+        //console.log(as);
         return as;
     }
 }

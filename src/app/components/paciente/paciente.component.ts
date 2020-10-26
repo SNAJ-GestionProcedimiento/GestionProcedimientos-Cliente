@@ -54,7 +54,7 @@ export class PacienteComponent implements OnInit {
     return this.observacionPaciente;
   }
 
-  private buildpacienteForm(){
+  private  buildpacienteForm(){
     this.pacienteForm = this.formBuilder.group({
       documentType:['',[Validators.required]],
       id:['',[Validators.required]],

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuxiliarEspecialistaComponent } from '../auxiliar-especialista/auxiliar-especialista.component';
-import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
 import { ProcedimientoComponent } from '../procedimiento/procedimiento.component';
 import { PacienteComponent } from 'src/app/components/paciente/paciente.component';
 import { AcudienteComponent } from 'src/app/components/acudiente/acudiente.component';
@@ -9,6 +8,7 @@ import { AgendaCrear } from 'src/_models/agenda-crear.model';
 import { AgendaCrearService } from 'src/_services/agenda-crear.service';
 import {AuxiliarDocumentacionComponent} from '../../components/auxiliar-documentacion/auxiliar-documentacion.component';
 
+import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-Equipos/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
 
 @Component({
   selector: 'app-auxiliar-programacion',
@@ -62,6 +62,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
   crearAgendaonClick(){
 
+    this.listarInstrumentosDesdeProgramacion();
     this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
     //console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
     /**Captura de campos */
@@ -92,9 +93,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
   /**Peticiones */
   public async crearAgenda(agenda:AgendaCrear){
-    //console.log(agenda.parseToJSON());
     let res:any = await this.agendaCrearService.create(agenda).toPromise();
-    console.log(res);
   }
 
 }
