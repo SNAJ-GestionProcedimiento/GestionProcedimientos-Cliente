@@ -25,11 +25,9 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  onCreate() {
+  Cerrar() {
     const dialogoConfig = new MatDialogConfig();
-    //dialogoConfig.disableClose=true;
-    dialogoConfig.autoFocus=true;
-    dialogoConfig.width="60%";
+    dialogoConfig.disableClose=true;
   }
 
   cancelar(){

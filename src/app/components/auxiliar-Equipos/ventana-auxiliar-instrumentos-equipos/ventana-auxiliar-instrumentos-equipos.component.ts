@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { InstrumentosEquipos } from 'src/_models/modelInstrumento/instrumentos-equipos.model';
+import { InstrumentosEquiposService } from 'src/_services/serviciosInstrumentos/instrumentos-equipos.service';
+import * as notificationService from 'src/_services/notification.service';
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-ventana-auxiliar-instrumentos-equipos',
@@ -10,29 +13,70 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./ventana-auxiliar-instrumentos-equipos.component.css']
 })
 export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
-  private dialog: MatDialog;
-  displayedColumns: string[] = ['No', 'codigo', 'nombre', 'cantidad', 'descripcion', 'acciones'];
-  datos: instrument[] = [];
-  dataSource = null;
+
+  data: Array<any>;
+  arrayInstrumentos: InstrumentosEquipos[];
+  opcionSeleccionado: string = '0';
+  verSeleccion = '';
+  datosSeleccionador: InstrumentosEquipos[] = [];
+
+  displayedColumns: string[] = ['codigo', 'nombre', 'cantidad', 'descripcion', 'acciones'];
+  dataSource = new MatTableDataSource<InstrumentosEquipos>();
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor() { }
+  constructor(private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    for (let x = 1; x <= 100; x++)
+    this.getAllInstrumentos();
 
-      this.datos.push(new instrument(x, Math.trunc(Math.random() * 1000), `artículo ${x}`, x, `artículo ${x}`, ``));
-    this.dataSource = new MatTableDataSource<instrument>(this.datos);
+  }
+
+  getAllInstrumentos() {
+    this.serviceIntrumentosEquipos.getAllIntrumentos().subscribe((result: InstrumentosEquipos[]) => {
+
+      this.arrayInstrumentos = InstrumentosEquipos.fromJSON(result);
+      console.log("desde añadir instrumento: " + this.arrayInstrumentos);
+      if (this.arrayInstrumentos != null) {
+        for (let i = 0; i < this.arrayInstrumentos.length; i++) {
+          this.arrayInstrumentos[i].cantidad = 1;
+        }
+      } else {
+        this.notificationService.success('No hay instrumentos y/o equipos en la base de datos');
+      }
+    });
+  }
+
+  capturar() {
+    this.verSeleccion = this.opcionSeleccionado;
+    this.agregarDatoTabla();
+  }
+
+  agregarDatoTabla() {
+    for (let i = 0; i < this.arrayInstrumentos.length; i++) {
+      if (this.arrayInstrumentos[i].nombre == this.verSeleccion) {
+        if (!this.datosSeleccionador.includes(this.arrayInstrumentos[i])) {
+          this.datosSeleccionador.push(this.arrayInstrumentos[i]);
+          this.dataSource = new MatTableDataSource(this.datosSeleccionador);
+          this.dataSource.paginator = this.paginator;
+        }
+      }
+    }
+  }
+
+  limpiarLista() {
+    this.datosSeleccionador = [];
+    this.dataSource = new MatTableDataSource(this.datosSeleccionador);
     this.dataSource.paginator = this.paginator;
   }
 
-  cancelar(){
+  cerrarVentana() {
     this.dialog.closeAll();
+  }
+
+  eliminarDato(datoAEliminar: InstrumentosEquipos){
 
   }
 
 }
 
-export class instrument {
-  constructor(public No: number, public codigo: number, public nombre: string, public cantidad: number, public descripcion: string, public acciones: string) {
-  }
-}

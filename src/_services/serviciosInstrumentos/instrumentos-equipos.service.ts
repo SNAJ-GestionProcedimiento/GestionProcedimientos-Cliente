@@ -19,7 +19,10 @@ export class InstrumentosEquiposService extends HttpService{
   }
 
   editarInstrumentoEquipo(instrumentEquipo: editInstrumentosEquipos): Observable<editInstrumentosEquipos>{
-    console.log("desde servicio: "+instrumentEquipo);
     return this.http.put<editInstrumentosEquipos>(`${this.apiURL}editAgendaEquipo`, instrumentEquipo);
+  }
+
+  getAllIntrumentos(): Observable<InstrumentosEquipos[]>{
+    return this.http.get<InstrumentosEquipos[]>(`${this.apiURL}getAllEquipos`);
   }
 }
