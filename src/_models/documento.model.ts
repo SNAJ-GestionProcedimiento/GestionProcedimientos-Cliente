@@ -15,7 +15,7 @@ export class DocumentoRequerido{
     public parseToJSON(): JSON {
       return JSON.parse(JSON.stringify(this));
     }
-  
+   
     public static fromJSON(json): DocumentoRequerido[] {
       console.log("entra a Documento Requerido desde Documento model!!!!!!! ");
       let arrayDocumentacionRequerida = [];

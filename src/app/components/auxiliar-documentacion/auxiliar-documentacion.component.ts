@@ -47,12 +47,21 @@ export class AuxiliarDocumentacionComponent implements OnInit {
       console.log("Codigo de procedimiento desde documentos: "+this.codigoProcedimientoObtenido)
     }
 
-    result2: DocumentoRequerido;
+    public getElement(nombreElemento:string){
+      switch (nombreElemento) {
+        case 'hola':
+          
+          break;
+      
+        default:
+          break;
+      }
+    }
 
 
   public listarDocumentosRequeridos(){
     console.log("El codigo desde documentacion es: "+this.codigoProcedimientoObtenido);
-    this.documentosService.getDocumentoRequerido(parseInt(this.codigoProcedimientoObtenido)).subscribe((result: DocumentoRequerido[]) => {
+    this.documentosService.getDocumentoRequerido(parseInt('2')).subscribe((result: DocumentoRequerido[]) => {
       this.arrayDocs=DocumentoRequerido.fromJSON(result);
       
       console.log("Documentos por codigo agenda: "+this.arrayDocs);

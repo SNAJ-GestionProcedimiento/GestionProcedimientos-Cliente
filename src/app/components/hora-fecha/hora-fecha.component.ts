@@ -44,6 +44,7 @@ export class HoraFechaComponent implements OnInit {
     this.setEstadosAgenda();
     this.setEstadosSala();
     this.estadoFecha=this.horafechaForm.get('stateSchedule').value;
+    this.estadoSala=this.horafechaForm.get('stateSala').value;
     this.fechaActual = DateHelper.dateToStr(new Date());
   }
 
@@ -54,7 +55,7 @@ export class HoraFechaComponent implements OnInit {
       state:['',[]],
       room:['',[Validators.required]],
       stateSchedule:['PEND',[]],
-      stateSala:['PEND',[]]
+      stateSala:[[],[]]
     });
     this.horafechaForm.get('date').valueChanges
     .subscribe(value =>{
@@ -83,7 +84,10 @@ export class HoraFechaComponent implements OnInit {
   }
 
   public getElemento(nombre:string){
+    console.log("Entré al getElemento de hora y fecha");
+    console.log("nombre: "+nombre);
     switch(nombre){
+
       case 'hora':
         return this.hora;
       case 'fecha':
@@ -91,8 +95,10 @@ export class HoraFechaComponent implements OnInit {
       case 'estado':
          return this.estadoFecha;
       case 'salaId':
+        console.log("estoy en el case salaid"+this.idsala);
          return this.idsala;
       case 'estadoSala':
+        console.log("estoy en el case estado sala"+this.estadoSala);
         return this.estadoSala;
       default:
         return null;
@@ -114,8 +120,8 @@ export class HoraFechaComponent implements OnInit {
   }
 
   public async setEstadosSala(){
-    let resSala:any = await this.estadoSalaService.get().toPromise();
-    this.estadosSalas = EstadoSala.fromJSON(resSala);
+    let res:any = await this.estadoSalaService.get().toPromise();
+    this.estadosSalas = EstadoSala.fromJSON(res);
 
 
   }
