@@ -82,15 +82,14 @@ export class AuxiliarProgramacionComponent implements OnInit {
     let hora = this.horaFechaCmp.getElemento('hora');
     let fecha = this.horaFechaCmp.getElemento('fecha');
     let estadoAgenda = this.horaFechaCmp.getElemento('estado');
-    let estadoSala = this.horaFechaCmp.getElemento('estadosala');
+    let estadoSala = this.horaFechaCmp.getElemento('estadoSala');
     let salaId = this.horaFechaCmp.getElemento('salaId');
 
     console.log("El de la sala desde aux program: "+estadoSala);
   
     /**Creacion del modelo */
-    let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion, 'PEND',salaId,'1');
+    let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion, estadoSala,salaId,'1');
 
-    console.log(agenda.estadoSala);
     this.crearAgenda(agenda);
     //this.listarInstrumentosDesdeProgramacion();
     this.listarDocumentosDesdeProgramacion();

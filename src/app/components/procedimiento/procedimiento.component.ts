@@ -38,7 +38,7 @@ export class ProcedimientoComponent implements OnInit {
     private estadoCamaService:EstadoCamaService,
     private utilityService: UtilityServiceService
   ) { 
-    this.buildbusquedaForm();
+    this.buildbusquedaForm(); 
   }
 
   ngOnInit(): void {

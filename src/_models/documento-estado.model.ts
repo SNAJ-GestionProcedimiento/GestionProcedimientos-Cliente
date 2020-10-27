@@ -33,4 +33,4 @@ export interface estadoDocClass {
 
       return estados;
     }
-  }
+  } 
