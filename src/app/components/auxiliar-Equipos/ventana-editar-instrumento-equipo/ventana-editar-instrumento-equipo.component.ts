@@ -69,11 +69,11 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
     if (res != null) {
       this.convertirEstadoLleda(this.datosInstrumento);
       this.notificationService.success('Se edito el instrumento con código: ' + this.datosInstrumento.codigoEquipo.toString());
-      console.log("cambio");
+      //console.log("cambio");
       this.utilityService.changeIntrumento(this.datosInstrumento);
       this.cerrarVentana();
     } else {
-      console.log("no cambio");
+      //console.log("no cambio");
     }
   }
   convertirEstadoLleda(instrumentoAcambiar) {

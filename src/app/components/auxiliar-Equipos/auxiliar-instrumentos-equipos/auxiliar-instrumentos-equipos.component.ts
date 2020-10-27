@@ -10,6 +10,7 @@ import * as notificationService from 'src/_services/notification.service';
 import { VentanaAuxiliarInstrumentosEquiposComponent } from '../ventana-auxiliar-instrumentos-equipos/ventana-auxiliar-instrumentos-equipos.component';
 import { VentanaEditarInstrumentoEquipoComponent } from '../ventana-editar-instrumento-equipo/ventana-editar-instrumento-equipo.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -38,8 +39,12 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //utilizado para paginar la tabla
 
 
-  constructor(private dialog: MatDialog, private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService,
-    private utilityService: UtilityServiceService) { }
+  constructor(
+    private dialogo: MatDialog, 
+    private serviceIntrumentosEquipos: InstrumentosEquiposService, 
+    private notificationService: notificationService.NotificationService,
+    private utilityService: UtilityServiceService
+    ) { }
 
   //la inicialización del componente
   ngOnInit(): void {
@@ -47,7 +52,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
       this.instrumentoEditable = msg;
     });
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
-    console.log("idProcedimiento desde instrumento: " + this.idProcedimiento);
+    //console.log("idProcedimiento desde instrumento: " + this.idProcedimiento);
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
     this.utilityService.changeEstado(this.estados);
@@ -80,10 +85,10 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   }
 
   listarIntrumentosRequeridos() {
-    console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
+    //console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
     this.serviceIntrumentosEquipos.getInstrumentosRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
       (restultado: InstrumentosEquipos[]) => this.instrumentosRequeridos = restultado);
-    console.log("Requeridos: " + JSON.stringify(this.instrumentosRequeridos));
+    
   }
 
   //metodo para editar un instrumento
@@ -95,7 +100,46 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     const dialogoConfig = new MatDialogConfig();
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
-    this.dialog.open(VentanaEditarInstrumentoEquipoComponent, dialogoConfig);
+    this.dialogo.open(VentanaEditarInstrumentoEquipoComponent, dialogoConfig);
+  }
+
+  validarInstrumentoRequerido(Instrument: InstrumentosEquipos): Boolean{
+    //console.log("entro al validar: ");
+    //console.log("Requeridos: " + JSON.stringify(this.instrumentosRequeridos));
+    let res=false;
+    for (let i = 0; i < this.instrumentosRequeridos.length; i++) {
+      //console.log("intrumento que entra: "+JSON.stringify(Instrument));
+      //console.log("intrumento en la posicion i: "+JSON.stringify(this.instrumentosRequeridos[i]));
+      if(this.instrumentosRequeridos[i].nombre==Instrument.nombre){
+        //console.log("si******************************************");
+        res=true;
+        break;
+      }
+    }
+    return res;
+  }
+
+  eliminarDato(Instrument: InstrumentosEquipos){
+    this.dialogo
+      .open(ConfirmationDialogComponent, {
+        data: `¿Seguro que desea eliminar el instrumento o equipo?`
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          for (let i = 0; i < this.arrayInstrumentos.length; i++) {
+            console.log("intrumento traido: "+JSON.stringify(Instrument));
+            console.log("intrumento a evaluar: "+JSON.stringify(this.arrayInstrumentos[i]));
+            if(this.arrayInstrumentos[i].nombre==Instrument.nombre){
+              console.log("entro al if!");
+              this.serviceIntrumentosEquipos.deleteInstrumento(this.arrayInstrumentos[i].id);
+              this.listarIntrumentEquip();
+              this.listarIntrumentosRequeridos();
+              break;
+            }
+          }
+        }
+      });
   }
 
   //método para abrir una ventana emergente
@@ -104,7 +148,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     //dialogoConfig.disableClose=true;
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
-    this.dialog.open(VentanaAuxiliarInstrumentosEquiposComponent, dialogoConfig);
+    this.dialogo.open(VentanaAuxiliarInstrumentosEquiposComponent, dialogoConfig);
   }
 
   convertirEstadoLleda(instrumentoAcambiar) {

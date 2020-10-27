@@ -70,6 +70,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
           this.datosSeleccionador.push(this.arrayInstrumentos[i]);
           this.dataSource = new MatTableDataSource(this.datosSeleccionador);
           this.dataSource.paginator = this.paginator;
+          break;
         }
       }
     }
@@ -113,6 +114,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
         this.datosSeleccionador.splice(i, 1);
         this.dataSource = new MatTableDataSource(this.datosSeleccionador);
         this.dataSource.paginator = this.paginator;
+        break;
       }
     }
   }
@@ -133,9 +135,9 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
               //this.convertirEstadoLleda(this.datosInstrumento);
               this.utilityService.changeIntrumentoAdd(this.datosAdd);
               this.notificationService.success('Se añadio el instrumento con código: ' + this.editInstrument.codigoEquipo.toString());
-              console.log("cambio");
+              //console.log("cambio");
             } else {
-              console.log("no cambio");
+              //console.log("no cambio");
             }
           }
           //this.utilityService.changeIntrumentoAdd(this.datosAdd);

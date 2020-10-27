@@ -44,7 +44,7 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
     ngOnInit(): void {
       this.estadosDoc = obtenerEstadoDoc.getEstadoObtenido();
-      console.log("Codigo de procedimiento desde documentos: "+this.codigoProcedimientoObtenido)
+      //console.log("Codigo de procedimiento desde documentos: "+this.codigoProcedimientoObtenido)
     }
 
     public getElement(nombreElemento:string){
@@ -60,11 +60,11 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
 
   public listarDocumentosRequeridos(){
-    console.log("El codigo desde documentacion es: "+this.codigoProcedimientoObtenido);
+    //console.log("El codigo desde documentacion es: "+this.codigoProcedimientoObtenido);
     this.documentosService.getDocumentoRequerido(parseInt('2')).subscribe((result: DocumentoRequerido[]) => {
       this.arrayDocs=DocumentoRequerido.fromJSON(result);
       
-      console.log("Documentos por codigo agenda: "+this.arrayDocs);
+      //console.log("Documentos por codigo agenda: "+this.arrayDocs);
 
       if (this.arrayDocs != null) {
         
@@ -76,11 +76,11 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   }
 
   public listarDocumentosPorCodigoModalidad(){
-    console.log("Estoy dentro de listar documentos desde component documentos");
+    //console.log("Estoy dentro de listar documentos desde component documentos");
     this.documentosService.getDocumentosProcedimiento(Number(this.codigoProcedimientoObtenido),1).subscribe((result: DocumentoRequerido[]) => {
       this.arrayDocs=result;
-      console.log("ArraryDocs: v")
-      console.log(this.arrayDocs);
+      //console.log("ArraryDocs: v")
+      //console.log(this.arrayDocs);
       this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocs);
 
 
