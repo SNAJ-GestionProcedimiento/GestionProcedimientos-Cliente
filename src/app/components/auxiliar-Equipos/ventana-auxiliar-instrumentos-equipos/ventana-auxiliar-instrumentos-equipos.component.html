@@ -67,11 +67,11 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 15] " showFirstLastButtons></mat-paginator>
 </div>
 <br>
-<button type="button " class="btn btn-outline-success " (click)="limpiarLista() ">Limpiar</button>
+<button type="button " class="btn btn-outline-success " (click)="confirmacionLimpiar()">Limpiar</button>
 <br>
 <hr>
 <div class="trans ">
     <button class="btn btn-outline-success btn-responsive btninter centrado " (click)="cerrarVentana() ">Cancelar</button>
     <br>
-    <button class="btn btn-outline-success btn-responsive btninter right centrado ">Añadir intrumento/equipo</button>
+    <button class="btn btn-outline-success btn-responsive btninter right centrado" (click)="addInstruments()">Añadir intrumento/equipo</button>
 </div>

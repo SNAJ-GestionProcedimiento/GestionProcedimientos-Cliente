@@ -28,6 +28,9 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   estados: estadoClass[];  //variable que tiene el array de estados
   arrayInstrumentos: InstrumentosEquipos[];
   instrumentoEditable: InstrumentosEquipos;
+  datosAddTabla: InstrumentosEquipos[] = [];
+  instrumentosRequeridos: InstrumentosEquipos[] = [];
+  idModalidad: string;
 
   displayedColumns: string[] = ['codigo', 'nombre', 'cantidad', 'descripcion', 'estado', 'acciones'];  //las columnas de la tabla asociadas a las propiedades
   dataIntrumentEquip: MatTableDataSource<InstrumentosEquipos>; //variable que contiene los datos que irán en la tabla
@@ -35,7 +38,8 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //utilizado para paginar la tabla
 
 
-  constructor(private dialog: MatDialog, private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService, private utilityService: UtilityServiceService) { }
+  constructor(private dialog: MatDialog, private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService,
+    private utilityService: UtilityServiceService) { }
 
   //la inicialización del componente
   ngOnInit(): void {
@@ -47,31 +51,46 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
     this.utilityService.changeEstado(this.estados);
+    this.utilityService.customInstrumentoAdd.subscribe(msg => {
+      this.datosAddTabla = msg;
+      if (this.idProcedimiento != "") {
+        this.listarIntrumentEquip()
+      }
+    });
+    this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
   }
 
   //método para en listar los equipos asociados a un procedimiento
   public listarIntrumentEquip() {
     this.parrafo = "";
-    
+
     this.serviceIntrumentosEquipos.getInstrumentoEquipo(parseInt(this.idProcedimiento)).subscribe((result: InstrumentosEquipos[]) => {
-      
       this.arrayInstrumentos = InstrumentosEquipos.fromJSON(result);
       if (this.arrayInstrumentos != null) {
         this.convertirEstadoLleda(this.arrayInstrumentos);
-        this.dataIntrumentEquip = new MatTableDataSource(this.arrayInstrumentos); //se le envia los datos a la tabla. 
-        this.dataIntrumentEquip.paginator = this.paginator;
+        this.listarIntrumentosRequeridos();
       } else {
+        this.arrayInstrumentos = [];
         this.parrafo = "No hay instrumentos y/o equipos asociado al procedimiento";
         this.notificationService.success('No hay instrumentos y/o equipos asociados al procedimiento!');
       }
+      this.dataIntrumentEquip = new MatTableDataSource(this.arrayInstrumentos); //se le envia los datos a la tabla. 
+      this.dataIntrumentEquip.paginator = this.paginator;
     });
+  }
+
+  listarIntrumentosRequeridos() {
+    console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
+    this.serviceIntrumentosEquipos.getInstrumentosRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
+      (restultado: InstrumentosEquipos[]) => this.instrumentosRequeridos = restultado);
+    console.log("Requeridos: " + JSON.stringify(this.instrumentosRequeridos));
   }
 
   //metodo para editar un instrumento
   editarIntrumentoEquipo(Instrument: InstrumentosEquipos): void {
     this.instrumentoEditable = Instrument;
     this.utilityService.changeIntrumento(this.instrumentoEditable);
-    
+
 
     const dialogoConfig = new MatDialogConfig();
     dialogoConfig.autoFocus = true;
@@ -100,7 +119,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
   convertirEstadoSalida(instrumentoAcambiar): InstrumentosEquipos {
     for (let j = 0; j < this.estados.length; j++) {
-     if (instrumentoAcambiar.estado == this.estados[j].contenido) {
+      if (instrumentoAcambiar.estado == this.estados[j].contenido) {
         instrumentoAcambiar.estado = this.estados[j].valor;
       }
     }

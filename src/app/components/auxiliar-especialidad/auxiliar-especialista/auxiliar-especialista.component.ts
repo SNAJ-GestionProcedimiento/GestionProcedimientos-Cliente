@@ -32,7 +32,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   constructor(private dialog: MatDialog, private serviceEspecialidadRequerida: EspecilidadRequeridaService, private notificationService: notificationService.NotificationService, private utilityService: UtilityServiceService) { }
 
   ngOnInit(): void {
-    this.utilityService.customEstados.subscribe(msg => {this.estados = msg});
+    this.utilityService.customEstados.subscribe(msg => { this.estados = msg });
     this.utilityService.customEspecialidad.subscribe(msg => this.especialidadEditable = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
@@ -43,16 +43,17 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   listarEspecialidades() {
     this.parrafo = "";
     this.serviceEspecialidadRequerida.getEspecialidadRequerida(parseInt(this.idProcedimiento)).subscribe((rest: especialidadesRequeridas[]) => {
-      console.log("estado desde especialidad, "+this.estados[0].contenido);
+      console.log("estado desde especialidad, " + this.estados[0].contenido);
       this.especialidadAsociada = especialidadesRequeridas.fromJSON(rest);
       if (this.especialidadAsociada != null) {
         this.convertirEstadoLleda(this.especialidadAsociada);
-        this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada); //se le envia los datos a la tabla. 
-        this.dataEspecialidad.paginator = this.paginator;
       } else {
+        this.especialidadAsociada = [];
         this.parrafo = "No hay especialidad asociado al procedimiento";
         this.notificationService.success('No hay especialistas asociados al procedimiento!');
       }
+      this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada); //se le envia los datos a la tabla. 
+      this.dataEspecialidad.paginator = this.paginator;
     });
 
   }

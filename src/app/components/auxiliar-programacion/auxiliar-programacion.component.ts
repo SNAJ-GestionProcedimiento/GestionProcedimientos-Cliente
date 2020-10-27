@@ -69,7 +69,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
     
     this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
-    this.utilityService.changeIdProcedimiento("11");
+    this.utilityService.changeIdProcedimiento(this.codigoProcedimiento);
     this.listarInstrumentosDesdeProgramacion();
     //console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
     /**Captura de campos */
@@ -92,7 +92,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
     console.log(agenda.estadoSala);
     this.crearAgenda(agenda);
-    this.listarInstrumentosDesdeProgramacion();
+    //this.listarInstrumentosDesdeProgramacion();
     this.listarDocumentosDesdeProgramacion();
     
     
