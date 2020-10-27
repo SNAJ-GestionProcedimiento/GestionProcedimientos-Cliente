@@ -132,15 +132,10 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
             this.editInstrument = new editInstrumentosEquipos(this.datosAdd[i].id, parseInt(this.idProcedimiento), this.datosAdd[i].codigoEquipo.toString(), "PEND", this.datosAdd[i].cantidad);
             let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe();
             if (res != null) {
-              //this.convertirEstadoLleda(this.datosInstrumento);
               this.utilityService.changeIntrumentoAdd(this.datosAdd);
-              this.notificationService.success('Se añadio el instrumento con código: ' + this.editInstrument.codigoEquipo.toString());
-              //console.log("cambio");
-            } else {
-              //console.log("no cambio");
             }
           }
-          //this.utilityService.changeIntrumentoAdd(this.datosAdd);
+          this.utilityService.changeIntrumentoAdd(this.datosAdd);
           this.dialogo.closeAll();
         }
       });

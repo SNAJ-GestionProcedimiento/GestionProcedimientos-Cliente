@@ -40,11 +40,11 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
 
   constructor(
-    private dialogo: MatDialog, 
-    private serviceIntrumentosEquipos: InstrumentosEquiposService, 
+    private dialogo: MatDialog,
+    private serviceIntrumentosEquipos: InstrumentosEquiposService,
     private notificationService: notificationService.NotificationService,
     private utilityService: UtilityServiceService
-    ) { }
+  ) { }
 
   //la inicialización del componente
   ngOnInit(): void {
@@ -86,9 +86,13 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
   listarIntrumentosRequeridos() {
     //console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
-    this.serviceIntrumentosEquipos.getInstrumentosRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
-      (restultado: InstrumentosEquipos[]) => this.instrumentosRequeridos = restultado);
-    
+    //parseInt(this.idModalidad)
+    if(parseInt(this.idModalidad)!=null){
+      this.serviceIntrumentosEquipos.getInstrumentosRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
+        (restultado: InstrumentosEquipos[]) => this.instrumentosRequeridos = restultado);
+    }else{
+      this.notificationService.success('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
+    }
   }
 
   //metodo para editar un instrumento
@@ -103,23 +107,18 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.dialogo.open(VentanaEditarInstrumentoEquipoComponent, dialogoConfig);
   }
 
-  validarInstrumentoRequerido(Instrument: InstrumentosEquipos): Boolean{
-    //console.log("entro al validar: ");
-    //console.log("Requeridos: " + JSON.stringify(this.instrumentosRequeridos));
-    let res=false;
+  validarInstrumentoRequerido(Instrument: InstrumentosEquipos): Boolean {
+    let res = false;
     for (let i = 0; i < this.instrumentosRequeridos.length; i++) {
-      //console.log("intrumento que entra: "+JSON.stringify(Instrument));
-      //console.log("intrumento en la posicion i: "+JSON.stringify(this.instrumentosRequeridos[i]));
-      if(this.instrumentosRequeridos[i].nombre==Instrument.nombre){
-        //console.log("si******************************************");
-        res=true;
+      if (this.instrumentosRequeridos[i].nombre == Instrument.nombre) {
+        res = true;
         break;
       }
     }
     return res;
   }
 
-  eliminarDato(Instrument: InstrumentosEquipos){
+  eliminarDato(Instrument: InstrumentosEquipos) {
     this.dialogo
       .open(ConfirmationDialogComponent, {
         data: `¿Seguro que desea eliminar el instrumento o equipo?`
@@ -128,17 +127,19 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           for (let i = 0; i < this.arrayInstrumentos.length; i++) {
-            console.log("intrumento traido: "+JSON.stringify(Instrument));
-            console.log("intrumento a evaluar: "+JSON.stringify(this.arrayInstrumentos[i]));
-            if(this.arrayInstrumentos[i].nombre==Instrument.nombre){
-              console.log("entro al if!");
-              this.serviceIntrumentosEquipos.deleteInstrumento(this.arrayInstrumentos[i].id);
+            //console.log("intrumento traido: " + JSON.stringify(Instrument));
+            //console.log("intrumento a evaluar: " + JSON.stringify(this.arrayInstrumentos[i]));
+            if (this.arrayInstrumentos[i].nombre == Instrument.nombre) {
+              //console.log("entro al if!");
+              this.serviceIntrumentosEquipos.deleteInstrumento(this.arrayInstrumentos[i].id).subscribe();
               this.listarIntrumentEquip();
               this.listarIntrumentosRequeridos();
               break;
             }
           }
         }
+        this.listarIntrumentEquip();
+        this.listarIntrumentosRequeridos();
       });
   }
 

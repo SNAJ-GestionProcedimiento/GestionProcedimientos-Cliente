@@ -70,7 +70,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
     
     this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
     this.utilityService.changeIdProcedimiento(this.codigoProcedimiento);
-    this.listarInstrumentosDesdeProgramacion();
+    //this.listarInstrumentosDesdeProgramacion();
     //console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
     /**Captura de campos */
     
@@ -91,7 +91,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
     let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion, estadoSala,salaId,'1');
 
     this.crearAgenda(agenda);
-    //this.listarInstrumentosDesdeProgramacion();
+    this.listarInstrumentosDesdeProgramacion();
     this.listarDocumentosDesdeProgramacion();
     
     
