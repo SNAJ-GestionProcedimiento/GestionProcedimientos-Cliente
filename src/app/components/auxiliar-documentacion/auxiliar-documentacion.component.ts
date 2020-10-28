@@ -21,7 +21,7 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   mensajeDeNotificacion="";
   estados: estadoDocClass[];
   arrayDocs: DocumentoRequerido[]=[];
-
+ 
    /*docs: Documento[] = [new Documento(1, 0, '', '', '','',''), new Documento(2, 0, '', '', '','',''), new Documento(3, 0, '', '', '','','')];*/
   
   dataDocs = null;
@@ -29,9 +29,9 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   estadosDoc: estadoDocClass[];
   varDocumentosRequeridos: DocumentoRequerido[];
 
-  displayedColumnsDoc: string[] = ['cod', 'nom', 'desc', 'caduc', 'est', 'path', 'observ', 'acciones'];
+  displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion', 'caduca', 'estado', 'fechaDocRecibido', 'fechaVencimiento' , 'archivo', 'observacion','acciones'];
 
-  dataDocumentosRequeridos: MatTableDataSource<DocumentoRequerido>;
+  dataDocumentosRequeridos: MatTableDataSource<DocumegntoRequerido>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -58,17 +58,21 @@ export class AuxiliarDocumentacionComponent implements OnInit {
       }
     }
 
-
+ 
   public listarDocumentosRequeridos(){
-    //console.log("El codigo desde documentacion es: "+this.codigoProcedimientoObtenido);
-    this.documentosService.getDocumentoRequerido(parseInt('2')).subscribe((result: DocumentoRequerido[]) => {
+    console.log("El codigo desde documentacion es: "+this.codigoProcedimientoObtenido);
+    this.documentosService.getDocumentoRequerido(parseInt(this.codigoProcedimientoObtenido)).subscribe((result: DocumentoRequerido[]) => {
       this.arrayDocs=DocumentoRequerido.fromJSON(result);
       
-      //console.log("Documentos por codigo agenda: "+this.arrayDocs);
+      console.log("Documentos por codigo agenda:"+JSON.stringify(this.arrayDocs));
 
+    
+      
+     
       if (this.arrayDocs != null) {
         
         this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocs);
+        this.dataDocumentosRequeridos.paginator = this.paginator;
       } else {
         this.parrafo = "No hay documentos requeridos para el procedimiento seleccionado";
       }
@@ -79,8 +83,9 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     //console.log("Estoy dentro de listar documentos desde component documentos");
     this.documentosService.getDocumentosProcedimiento(Number(this.codigoProcedimientoObtenido),1).subscribe((result: DocumentoRequerido[]) => {
       this.arrayDocs=result;
-      //console.log("ArraryDocs: v")
-      //console.log(this.arrayDocs);
+      console.log("ArraryDocs: v")
+      console.log("Por codigo procedimiento"+JSON.stringify(this.arrayDocs));
+      console.log("RECORRIENDO ARRAY!!!!!!")
       this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocs);
 
 
