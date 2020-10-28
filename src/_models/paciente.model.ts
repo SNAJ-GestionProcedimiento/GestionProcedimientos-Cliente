@@ -1,3 +1,5 @@
+import { newArray } from '@angular/compiler/src/util';
+
 export class Paciente{
     /**
      * Identificador del objeto Persona
@@ -57,6 +59,26 @@ export class Paciente{
         paciente.genero = json.personas[0].genero;
         
         return paciente;
+    }
+
+    public static listPaciente(json):Paciente[]{
+        if (json.personas.length == 0) { return null;}
+        let pacientes=new Array<Paciente>();
+        json.personas.forEach(element => {
+            var paciente  =new Paciente();
+            paciente.idPersona = element.idPersona;
+            paciente.identificacion = element.identificacion;
+            paciente.tipoIdentificacion = element.tipoIdentificacion;
+            paciente.fechaNacimiento = element.fechaNacimiento;
+            paciente.correo = element.correo;
+            paciente.telefono = element.telefono;
+            paciente.direccion = element.direccion;
+            paciente.nombre = element.nombre;
+            paciente.genero = element.genero;
+
+            pacientes.push(paciente);
+        });
+        return pacientes;
     }
 }
 

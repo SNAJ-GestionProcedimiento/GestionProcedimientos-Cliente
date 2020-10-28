@@ -22,4 +22,11 @@ export class DateHelper{
         actualDate.setFullYear(actualDate.getFullYear()-18);
         return actualDate;
     }
+
+    public static getFecha(fechaHora:string){
+        return fechaHora.substr(0,fechaHora.indexOf('T'));
+    }
+    public static getHora(fechaHora:string){
+        return fechaHora.substr(fechaHora.indexOf('T'));
+    }
 }

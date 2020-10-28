@@ -36,6 +36,7 @@ import { VentanaAuxiliarEspecialidadComponent } from './components/ventana-auxil
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component';
+import { AgendaInfoComponent } from './components/auxiliar-agenda/agenda-info/agenda-info.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component
     AuxiliarDocumentacionComponent,
     AuxiliarMaterialesComponent,
     HoraFechaComponent,
+    AgendaInfoComponent,
   ],
   imports: [
     BrowserModule,

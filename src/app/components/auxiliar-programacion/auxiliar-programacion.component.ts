@@ -9,7 +9,7 @@ import { HoraFechaComponent } from 'src/app/components/hora-fecha/hora-fecha.com
 
 import { AgendaCrear } from 'src/_models/agenda-crear.model';
 
-import { AgendaCrearService } from 'src/_services/agenda-crear.service';
+import { AgendaProcedimientoService } from 'src/_services/agenda-procedimiento.service';
 
 @Component({
   selector: 'app-auxiliar-programacion',
@@ -31,11 +31,11 @@ export class AuxiliarProgramacionComponent implements OnInit {
   public idProcedimientoInstrumento: string;  //variable para obtener el id del procedimiento
   public edadPaciente:number;
   public activoAcudiente:boolean; 
-  message:boolean;
+  public message:boolean;
   public codigoProcedimiento:string='';
 
   constructor(
-    private agendaCrearService:AgendaCrearService
+    private agendaProcedimiento:AgendaProcedimientoService
   ) { }
 
   receiveMessage($event) {
@@ -44,6 +44,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   public setIdProcedimiento(){
@@ -57,11 +58,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
   }
 
   crearAgendaonClick(){
-
-    this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
-    //console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
     /**Captura de campos */
-    
     let paciente = this.pacienteCmp.getObjPaciente();
     let observacion = this.pacienteCmp.getObservacion();
     let acudiente = this.acudienteCmp.getObjAcudiente();
@@ -76,15 +73,16 @@ export class AuxiliarProgramacionComponent implements OnInit {
     let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion,salaId,'1');
 
     this.crearAgenda(agenda);
-    this.listarInstrumentosDesdeProgramacion();
     
   }
 
   /**Peticiones */
   public async crearAgenda(agenda:AgendaCrear){
-    //console.log(agenda.parseToJSON());
-    let res:any = await this.agendaCrearService.create(agenda).toPromise();
-    console.log(res);
+    let res:any = await this.agendaProcedimiento.create(agenda).toPromise();
+    if(res!=null){
+      console.log(res);
+      this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
+      this.listarInstrumentosDesdeProgramacion();
+    }
   }
-
 }

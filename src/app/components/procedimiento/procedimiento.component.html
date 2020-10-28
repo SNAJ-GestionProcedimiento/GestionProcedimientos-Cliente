@@ -27,6 +27,7 @@
                 <ng-template #notFoundTemplate let-notFound>
                 <div [innerHTML]=""></div>
                 </ng-template>
+                <!--errores-->
                 <div class="error" *ngIf="busquedaForm.get('searchType').errors && this.busquedaForm.get('searchType').touched && !datoBusqueda">
                     <p>*Seleccione el tipo de busqueda</p>
                 </div>
