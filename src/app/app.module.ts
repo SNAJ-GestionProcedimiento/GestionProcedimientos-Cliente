@@ -43,7 +43,7 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
 import { VentanaAuxiliarEspecialidadComponent } from './components/auxiliar-especialidad/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/editar-especialidad/editar-especialidad.component';
-import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component'; 
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -91,7 +91,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     PacienteAcudienteService,
     DocumentoService,
     EstadoSalaService ,
-    UtilityServiceService
+    UtilityServiceService,
     ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, ConfirmationDialogComponent]

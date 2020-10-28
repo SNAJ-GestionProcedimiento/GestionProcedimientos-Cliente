@@ -19,7 +19,7 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
     }
   datosInstrumento: InstrumentosEquipos;
   estados: estadoClass[];
-  idProcedimiento: string;
+  idProcedimiento: number;
   editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los instrumentos
   opcionSeleccionado: string = '0';
   verSeleccion = '';
@@ -29,7 +29,7 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
 
   ngOnInit(): void {
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);
-    this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idProcedimiento = msg);
     this.utilityService.customInstrumento.subscribe(msg => {
       this.datosInstrumento = msg
       this.convertirEstadoLleda(this.datosInstrumento);
@@ -64,7 +64,7 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
     }else{
       this.notificationService.success('Se tomo la cantidad con la que estaba el instrumento o equipo');
     }
-    this.editInstrument = new editInstrumentosEquipos(this.datosInstrumento.id, parseInt(this.idProcedimiento), this.datosInstrumento.codigoEquipo.toString(), instrumetEnviar.estado, this.datosInstrumento.cantidad);
+    this.editInstrument = new editInstrumentosEquipos(this.datosInstrumento.id, this.idProcedimiento, this.datosInstrumento.codigoEquipo.toString(), instrumetEnviar.estado, this.datosInstrumento.cantidad);
     let res = this.serviceIntrumentosEquipos.editarInstrumentoEquipo(this.editInstrument).subscribe();
     if (res != null) {
       this.convertirEstadoLleda(this.datosInstrumento);

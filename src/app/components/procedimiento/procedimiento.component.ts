@@ -31,6 +31,7 @@ export class ProcedimientoComponent implements OnInit {
   public estadoCama:string;
   public procedimientos:Array<Procedimiento>;
   public idModalidad:string;
+  public idProcedimientoModalidad: string;
 
   constructor(
     private formBuilder:FormBuilder,
@@ -47,6 +48,7 @@ export class ProcedimientoComponent implements OnInit {
     document.getElementById('campoVacio').style.display='none';
     document.getElementById('tipoBusqueda').style.display='none';
     this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
+    this.utilityService.customIdProcedimientoModalidad.subscribe(msg=>this.idProcedimientoModalidad=msg);
   }
 
   public getObjProcedimientoModalidad(){
@@ -151,6 +153,7 @@ export class ProcedimientoComponent implements OnInit {
           this.updateBusquedaForm();
           this.idModalidad=this.procedimiento.modalidades[0].idModalidad_id.toString();
           this.utilityService.changeIdModalidad(this.idModalidad);
+          this.idProcedimientoModalidad= this.procedimiento.modalidades[0].idProcedimientoModalidad.toString();
         }
         this.procedimientos = new Array<Procedimiento>();
       }else{

@@ -1,4 +1,4 @@
-import { especialidad } from 'src/app/components/auxiliar-especialidad/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
+//import { especialidad } from 'src/app/components/auxiliar-especialidad/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 
 export class especialidadesRequeridas {
   /**
@@ -40,7 +40,6 @@ export class especialidadesRequeridas {
   }
 
   public static fromJSON(json): especialidadesRequeridas[] {
-    console.log("entra");
     let arrayEspecialidades = [];
     if (json.length == 0) { return null; }
 
@@ -53,7 +52,6 @@ export class especialidadesRequeridas {
       especialidadRequerida.identificacion = json[i].identificacion;
       especialidadRequerida.nombreEspecialista = json[i].nombreEspecialista;
       especialidadRequerida.estado = json[i].estado;
-      console.log("intrument " + i + ": " + especialidadRequerida);
       arrayEspecialidades.push(especialidadRequerida);
     }
     return arrayEspecialidades;
@@ -102,5 +100,27 @@ export class editarEpecialidadesRequeridas {
     this.nombreEspecialista=nombreEspecialista;
     this.estado=estado;
     this.idAgendaProcedimiento= idAgendaProcedimiento;
+  }
+}
+
+export class especialidadesPrevisualizar {
+  idAgendaProcedimiento: number;
+  codigoEspecialidad: string;
+  nombre: string;
+  cantidad: number;
+  estado: string;
+  constructor(
+    idAgendaProcedimiento: number, 
+    codigoEspecialidad: string, 
+    nombre: string, 
+    cantidad: number,
+    estado: string
+    )
+  {
+    this.idAgendaProcedimiento=idAgendaProcedimiento;
+    this.codigoEspecialidad=codigoEspecialidad;
+    this.nombre=nombre;
+    this.cantidad=cantidad;
+    this.estado=estado;
   }
 }

@@ -14,14 +14,20 @@ export class UtilityServiceService {
   private objIntrumento = new BehaviorSubject<InstrumentosEquipos>(null);
   private objEstados = new BehaviorSubject<estadoClass[]>(null);
   private objIdProcedimiento = new BehaviorSubject<string>("");
+  private objIdProcedimientoModalidad = new BehaviorSubject<string>("");
+  private objIdAgendaProcedimiento = new BehaviorSubject<number>(0);
   private objEspecialidad= new BehaviorSubject<especialidadesRequeridas>(null);
+  private objEspecialidadAdd= new BehaviorSubject<especialidadesRequeridas>(null);
   private objIntrumentoAdd = new BehaviorSubject<InstrumentosEquipos[]>(null);
   private objIdModalidad = new BehaviorSubject<string>("");
 
   public customInstrumento = this.objIntrumento.asObservable();
   public customEstados = this.objEstados.asObservable();
   public customIdProcedimiento = this.objIdProcedimiento.asObservable();
+  public customIdAgendaProcedimiento = this.objIdAgendaProcedimiento.asObservable();
+  public customIdProcedimientoModalidad = this.objIdProcedimientoModalidad.asObservable();
   public customEspecialidad = this.objEspecialidad.asObservable();
+  public customEspecialidadAdd = this.objEspecialidadAdd.asObservable();
   public customInstrumentoAdd = this.objIntrumentoAdd.asObservable();
   public customIdModalidad = this.objIdModalidad.asObservable();
 
@@ -34,8 +40,17 @@ export class UtilityServiceService {
     public changeIdProcedimiento(msg: string): void {
       this.objIdProcedimiento.next(msg);
     }
+    public changeIdAgendaProcedimiento(msg: number): void {
+      this.objIdAgendaProcedimiento.next(msg);
+    }
+    public changeIdProcedimientoModalidad(msg: string): void {
+      this.objIdProcedimientoModalidad.next(msg);
+    }
     public changeEspecialidad(msg: especialidadesRequeridas): void {
       this.objEspecialidad.next(msg);
+    }
+    public changeEspecialidadAdd(msg: especialidadesRequeridas): void {
+      this.objEspecialidadAdd.next(msg);
     }
     public changeIntrumentoAdd(msg: InstrumentosEquipos[]): void {
       this.objIntrumentoAdd.next(msg);

@@ -10,7 +10,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item my-2 my-sm-0">
                     <select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
-                        <option value="0" selected>Seleccione un instrumento o equipo a agregar</option>
+                        <option value="0" selected>--Seleccione un instrumento o equipo a agregar--</option>
                         <option *ngFor="let dato of arrayInstrumentos">
                             {{dato.nombre}}
                         </option>

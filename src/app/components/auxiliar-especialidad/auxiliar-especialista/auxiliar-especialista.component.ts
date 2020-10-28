@@ -6,7 +6,7 @@ import { EspecilidadRequeridaService } from 'src/_services/especilidad-requerida
 import { especialidadesRequeridas } from 'src/_models/modelEspecialista/especialidad.model';
 import * as notificationService from 'src/_services/notification.service';
 import { estadoClass, obtenerEstado } from 'src/_models/modelInstrumento/instrumentos-equipos-estado.model';
-import { especialidad, VentanaAuxiliarEspecialidadComponent } from '../ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
+import { VentanaAuxiliarEspecialidadComponent } from '../ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { EditarEspecialidadComponent } from '../editar-especialidad/editar-especialidad.component';
 
@@ -26,16 +26,28 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   especialidadAsociada: especialidadesRequeridas[];
   especialidadEditable: especialidadesRequeridas;
   idProcedimiento: string;
+  especialidadBandera: especialidadesRequeridas;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private serviceEspecialidadRequerida: EspecilidadRequeridaService, private notificationService: notificationService.NotificationService, private utilityService: UtilityServiceService) { }
+  constructor(
+    private dialog: MatDialog,
+    private serviceEspecialidadRequerida: EspecilidadRequeridaService,
+    private notificationService: notificationService.NotificationService,
+    private utilityService: UtilityServiceService
+  ) { }
 
   ngOnInit(): void {
     this.utilityService.customEstados.subscribe(msg => { this.estados = msg });
+    this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
     this.utilityService.customEspecialidad.subscribe(msg => this.especialidadEditable = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
-    this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
+    this.utilityService.customEspecialidadAdd.subscribe(msg => {
+      this.especialidadBandera = msg;
+      if (this.idProcedimiento != "") {
+        this.listarEspecialidades();
+      }
+    });
     //console.log("idProcedimiento desde instrumento: " + this.idProcedimiento);
   }
 
