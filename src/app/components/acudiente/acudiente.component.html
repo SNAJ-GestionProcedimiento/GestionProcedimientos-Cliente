@@ -1,92 +1,92 @@
 <div class="container">
-    <h5>Datos del acudiente</h5>
+    <h2>Datos del acudiente</h2>
     <form [formGroup]="acudienteForm">
         <div class="form-row align-items-center">
-        <!--Numero de identificacion-->
-        <div class="col-auto mr-3 mt-1">
-            Identificación:
-            <input class="form-control" type="number" formControlName='id'>
-            <!--Errores -->
-            <div class="error" *ngIf="acudienteForm.get('id').errors && this.acudienteForm.get('id').touched">
-                <p>*Ingrese el numero de documento</p>
+            <!--Numero de identificacion-->
+            <div class="col-auto mr-3 mt-1">
+                Identificación:
+                <input class="form-control" type="number" formControlName='id'>
+                <!--Errores -->
+                <div class="error" *ngIf="acudienteForm.get('id').errors && this.acudienteForm.get('id').touched">
+                    <p>*Ingrese el numero de documento</p>
+                </div>
+                <div class="alert alert-danger mt-3" role="alert" *ngIf="this.acuMenor">
+                    El acudiente no puede ser menor de edad.
+                </div>
+                <div class="alert alert-danger mt-3" role="alert" *ngIf="this.acuPaciente">
+                    El paciente no puede ser el acudiente.
+                </div>
             </div>
-            <div class="alert alert-danger mt-3" role="alert" *ngIf="this.acuMenor">
-                El acudiente no puede ser menor de edad.
-            </div>
-            <div class="alert alert-danger mt-3" role="alert" *ngIf="this.acuPaciente">
-                El paciente no puede ser el acudiente.
-            </div>
-        </div>
-        <!--tipo de documento-->
-        <div class="col-auto mr-3 mt-1">
-            Tipo de documento:
-            <select class="form-control" id="exampleFormControlSelect1" formControlName="documentType">
+            <!--tipo de documento-->
+            <div class="col-auto mr-3 mt-1">
+                Tipo de documento:
+                <select class="form-control" id="exampleFormControlSelect1" formControlName="documentType">
                 <option value="{{tipo.id}}" *ngFor="let tipo of tiposIdentidicacion">{{tipo.nombre}}</option>
             </select>
-            <div class="error" *ngIf="acudienteForm.get('documentType').errors && this.acudienteForm.get('documentType').touched">
-                <p>*Seleccione el tipo de documento</p>
+                <div class="error" *ngIf="acudienteForm.get('documentType').errors && this.acudienteForm.get('documentType').touched">
+                    <p>*Seleccione el tipo de documento</p>
+                </div>
+            </div>
+            <!--Fecha de nacimiento-->
+            <div class="col-auto mr-3 mt-1">
+                Fecha de nacimiento
+                <input class="form-control" type="date" formControlName="birthdate" max="{{this.fecNacMaxima}}">
+                <div class="error" *ngIf="acudienteForm.get('birthdate').errors && this.acudienteForm.get('birthdate').touched">
+                    <p>*Ingrese una fecha de nacimiento</p>
+                </div>
             </div>
         </div>
-        <!--Fecha de nacimiento-->
-        <div class="col-auto mr-3 mt-1">
-            Fecha de nacimiento
-            <input class="form-control" type="date" formControlName="birthdate" max="{{this.fecNacMaxima}}">
-            <div class="error" *ngIf="acudienteForm.get('birthdate').errors && this.acudienteForm.get('birthdate').touched">
-                <p>*Ingrese una fecha de nacimiento</p>
+        <div class="form-row align-items-center mt-1">
+            <!--Nombre-->
+            <div class="col-auto mr-3 mt-1">
+                Nombre:
+                <input type="text" class="form-control" formControlName="name">
+                <div class="error" *ngIf="acudienteForm.get('name').errors && this.acudienteForm.get('name').touched">
+                    <p>*Ingrese el nombre del acudiente</p>
+                </div>
+            </div>
+            <!--Dirección-->
+            <div class="col-auto mr-3 mt-1">
+                Dirección:
+                <input type="text" class="form-control" formControlName="homeAddress">
+                <div class="error" *ngIf="acudienteForm.get('homeAddress').errors && this.acudienteForm.get('homeAddress').touched">
+                    <p>*Ingrese la dirección del acudiente</p>
+                </div>
+            </div>
+            <!--Edad del acudiente-->
+            <div class="col-auto mr-3 mt-1">
+                Edad:
+                <input class="form-control" type="text" formControlName="age" placeholder="Edad del acudiente" readonly>
             </div>
         </div>
-    </div>
-    <div class="form-row align-items-center mt-1">
-        <!--Nombre-->
-        <div class="col-auto mr-3 mt-1">
-            Nombre:
-            <input type="text" class="form-control" formControlName="name">
-            <div class="error" *ngIf="acudienteForm.get('name').errors && this.acudienteForm.get('name').touched">
-                <p>*Ingrese el nombre del acudiente</p>
+        <div class="form-row align-items-center mt-1">
+            <!--Telefono-->
+            <div class="col-auto mr-3 mt-1">
+                Teléfono:
+                <input type="number" class="form-control" formControlName="phoneNumber">
+                <div class="error" *ngIf="acudienteForm.get('phoneNumber').errors && this.acudienteForm.get('phoneNumber').touched">
+                    <p>*Ingrese el número de teléfono del acudiente</p>
+                </div>
             </div>
-        </div>
-        <!--Dirección-->
-        <div class="col-auto mr-3 mt-1">
-            Dirección:
-            <input type="text" class="form-control" formControlName="homeAddress">
-            <div class="error" *ngIf="acudienteForm.get('homeAddress').errors && this.acudienteForm.get('homeAddress').touched">
-                <p>*Ingrese la dirección del acudiente</p>
-            </div>
-        </div>
-        <!--Edad del acudiente-->
-        <div class="col-auto mr-3 mt-1">
-            Edad:
-            <input class="form-control" type="text" formControlName="age" placeholder="Edad del acudiente" readonly>
-        </div>
-    </div>
-    <div class="form-row align-items-center mt-1">
-        <!--Telefono-->
-        <div class="col-auto mr-3 mt-1">
-            Teléfono:
-            <input type="number" class="form-control" formControlName="phoneNumber">
-            <div class="error" *ngIf="acudienteForm.get('phoneNumber').errors && this.acudienteForm.get('phoneNumber').touched">
-                <p>*Ingrese el número de teléfono del acudiente</p>
-            </div>
-        </div>
-        <!--tipo de documento-->
-        <div class="col-auto mr-3 mt-1">
-            Genero:
-            <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="gender">
+            <!--tipo de documento-->
+            <div class="col-auto mr-3 mt-1">
+                Genero:
+                <select class="form-control form-control-sm" id="exampleFormControlSelect1" formControlName="gender">
                 <option value="masculino">masculino</option>
                 <option value="femenino">femenino</option>
             </select>
-            <div class="error" *ngIf="acudienteForm.get('gender').errors && this.acudienteForm.get('gender').touched">
-                <p>*Seleccione el genero del acudiente</p>
+                <div class="error" *ngIf="acudienteForm.get('gender').errors && this.acudienteForm.get('gender').touched">
+                    <p>*Seleccione el genero del acudiente</p>
+                </div>
+            </div>
+            <!--Correo electronico-->
+            <div class="col-auto mr-3 mt-1">
+                Correo electronico:
+                <input class="form-control" type="text" formControlName='email'>
+                <div class="error" *ngIf="acudienteForm.get('email').errors && this.acudienteForm.get('email').touched">
+                    <p>*Ingrese el email</p>
+                </div>
             </div>
         </div>
-        <!--Correo electronico-->
-        <div class="col-auto mr-3 mt-1">
-            Correo electronico:
-            <input class="form-control" type="text" formControlName='email'>
-            <div class="error" *ngIf="acudienteForm.get('email').errors && this.acudienteForm.get('email').touched">
-                <p>*Ingrese el email</p>
-            </div>
-        </div>
-    </div>
-</form>
+    </form>
 </div>

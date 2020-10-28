@@ -31,7 +31,7 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
   displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion', 'caduca', 'estado', 'fechaDocRecibido', 'fechaVencimiento' , 'archivo', 'observacion','acciones'];
 
-  dataDocumentosRequeridos: MatTableDataSource<DocumentoRequerido>;
+  dataDocumentosRequeridos: MatTableDataSource<DocumegntoRequerido>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -44,7 +44,7 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
     ngOnInit(): void {
       this.estadosDoc = obtenerEstadoDoc.getEstadoObtenido();
-      console.log("Codigo de procedimiento desde documentos: "+this.codigoProcedimientoObtenido)
+      //console.log("Codigo de procedimiento desde documentos: "+this.codigoProcedimientoObtenido)
     }
 
     public getElement(nombreElemento:string){
@@ -80,7 +80,7 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   }
 
   public listarDocumentosPorCodigoModalidad(){
-    console.log("Estoy dentro de listar documentos desde component documentos");
+    //console.log("Estoy dentro de listar documentos desde component documentos");
     this.documentosService.getDocumentosProcedimiento(Number(this.codigoProcedimientoObtenido),1).subscribe((result: DocumentoRequerido[]) => {
       this.arrayDocs=result;
       console.log("ArraryDocs: v")

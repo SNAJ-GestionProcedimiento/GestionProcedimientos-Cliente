@@ -69,8 +69,8 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
     
     this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
-    this.utilityService.changeIdProcedimiento("11");
-    this.listarInstrumentosDesdeProgramacion();
+    this.utilityService.changeIdProcedimiento(this.codigoProcedimiento);
+    //this.listarInstrumentosDesdeProgramacion();
     //console.log("desde metodo crear, el codigo es: "+this.codigoProcedimiento);
     /**Captura de campos */
     
@@ -85,13 +85,12 @@ export class AuxiliarProgramacionComponent implements OnInit {
     let estadoSala = this.horaFechaCmp.getElemento('estadoSala');
     let salaId = this.horaFechaCmp.getElemento('salaId');
 
-    console.log("El de la sala desde aux program: "+estadoSala);
+    //console.log("El de la sala desde aux program: "+estadoSala);
   
     /**Creacion del modelo */
     let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion, estadoSala,salaId,'1');
 
     this.crearAgenda(agenda);
-    
     this.listarInstrumentosDesdeProgramacion();
     this.listarDocumentosDesdeProgramacion();
     

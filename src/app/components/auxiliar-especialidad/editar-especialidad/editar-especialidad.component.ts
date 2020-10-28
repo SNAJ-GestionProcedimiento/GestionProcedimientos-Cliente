@@ -49,11 +49,11 @@ export class EditarEspecialidadComponent implements OnInit {
     if (res != null) {
       //this.convertirEstadoLleda(this.datosInstrumento);
       this.notificationService.success('Se edito la especialidad con código: ' + this.datosEspecialidad.codigoEspecialidad.toString());
-      console.log("cambio");
+      //console.log("cambio");
       this.utilityService.changeEspecialidad(this.datosEspecialidad);
       this.cerrarVentana();
     } else {
-      console.log("no cambio");
+      //console.log("no cambio");
     }
 
     this.cerrarVentana();
@@ -71,7 +71,7 @@ export class EditarEspecialidadComponent implements OnInit {
     this.listaEstado = [];
     for (let i = 0; i < this.estados.length; i++) {
       if (this.estados[i].contenido != this.datosEspecialidad.estado) {
-        console.log("entro al if de hacer listados con el estado: "+this.estados[i].contenido);
+        //console.log("entro al if de hacer listados con el estado: "+this.estados[i].contenido);
         this.listaEstado.push(this.estados[i]);
       }
     }

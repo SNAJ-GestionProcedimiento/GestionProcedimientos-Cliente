@@ -168,7 +168,7 @@ export class AcudienteComponent implements OnInit {
     this.acudiente = Acudiente.fromJSON(res);
     if (this.acudiente != null){
       let edad = DateHelper.getAge(new Date(this.acudiente.fechaNacimiento));
-      console.log(edad);
+      //console.log(edad);
       if(edad > 18){
         this.completeForm();
         this.disableForm();

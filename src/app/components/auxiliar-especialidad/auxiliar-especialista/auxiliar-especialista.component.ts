@@ -32,27 +32,28 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   constructor(private dialog: MatDialog, private serviceEspecialidadRequerida: EspecilidadRequeridaService, private notificationService: notificationService.NotificationService, private utilityService: UtilityServiceService) { }
 
   ngOnInit(): void {
-    this.utilityService.customEstados.subscribe(msg => {this.estados = msg});
+    this.utilityService.customEstados.subscribe(msg => { this.estados = msg });
     this.utilityService.customEspecialidad.subscribe(msg => this.especialidadEditable = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
-    console.log("idProcedimiento desde instrumento: " + this.idProcedimiento);
+    //console.log("idProcedimiento desde instrumento: " + this.idProcedimiento);
   }
 
   //método para en listar los equipos asociados a un procedimiento
   listarEspecialidades() {
     this.parrafo = "";
     this.serviceEspecialidadRequerida.getEspecialidadRequerida(parseInt(this.idProcedimiento)).subscribe((rest: especialidadesRequeridas[]) => {
-      console.log("estado desde especialidad, "+this.estados[0].contenido);
+      //console.log("estado desde especialidad, " + this.estados[0].contenido);
       this.especialidadAsociada = especialidadesRequeridas.fromJSON(rest);
       if (this.especialidadAsociada != null) {
         this.convertirEstadoLleda(this.especialidadAsociada);
-        this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada); //se le envia los datos a la tabla. 
-        this.dataEspecialidad.paginator = this.paginator;
       } else {
+        this.especialidadAsociada = [];
         this.parrafo = "No hay especialidad asociado al procedimiento";
         this.notificationService.success('No hay especialistas asociados al procedimiento!');
       }
+      this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada); //se le envia los datos a la tabla. 
+      this.dataEspecialidad.paginator = this.paginator;
     });
 
   }
@@ -85,11 +86,11 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   }
 
   convertirEstadoSalida(instrumentoAcambiar): especialidadesRequeridas {
-    console.log("entro al método: " + instrumentoAcambiar.length);
+    //console.log("entro al método: " + instrumentoAcambiar.length);
     for (let j = 0; j < this.estados.length; j++) {
-      console.log("uio que llego: " + instrumentoAcambiar.estado + " estado: " + this.estados[j].contenido);
+      //console.log("uio que llego: " + instrumentoAcambiar.estado + " estado: " + this.estados[j].contenido);
       if (instrumentoAcambiar.estado == this.estados[j].contenido) {
-        console.log("entro en salida");
+        //console.log("entro en salida");
         instrumentoAcambiar.estado = this.estados[j].valor;
       }
     }

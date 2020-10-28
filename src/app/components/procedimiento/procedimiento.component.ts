@@ -6,6 +6,7 @@ import { EstadoCama } from 'src/_models/estado-cama.model';
 
 import { ProcedimientoService } from 'src/_services/procedimiento.service';
 import { EstadoCamaService } from 'src/_services/estado-cama.service';
+import { UtilityServiceService } from 'src/_services/utility-service.service';
 
 
 
@@ -29,11 +30,13 @@ export class ProcedimientoComponent implements OnInit {
   public codigoProc: string;
   public estadoCama:string;
   public procedimientos:Array<Procedimiento>;
+  public idModalidad:string;
 
   constructor(
     private formBuilder:FormBuilder,
     private procedimientoService:ProcedimientoService,
-    private estadoCamaService:EstadoCamaService
+    private estadoCamaService:EstadoCamaService,
+    private utilityService: UtilityServiceService
   ) { 
     this.buildbusquedaForm(); 
   }
@@ -43,13 +46,14 @@ export class ProcedimientoComponent implements OnInit {
     this.estadoCama = this.busquedaForm.get('stateBed').value;
     document.getElementById('campoVacio').style.display='none';
     document.getElementById('tipoBusqueda').style.display='none';
+    this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
   }
 
   public getObjProcedimientoModalidad(){
     return this.procedimiento.modalidades[0];
   }
   public getestadoCama(){
-    console.log("Estado cama: "+this.estadoCama);
+    //console.log("Estado cama: "+this.estadoCama);
     return this.estadoCama;
   }
 
@@ -145,6 +149,8 @@ export class ProcedimientoComponent implements OnInit {
         this.procedimiento = Procedimiento.fromJSON(res.procedimiento);
         if(this.procedimiento!=null){
           this.updateBusquedaForm();
+          this.idModalidad=this.procedimiento.modalidades[0].idModalidad_id.toString();
+          this.utilityService.changeIdModalidad(this.idModalidad);
         }
         this.procedimientos = new Array<Procedimiento>();
       }else{

@@ -43,6 +43,7 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
 import { VentanaAuxiliarEspecialidadComponent } from './components/auxiliar-especialidad/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/editar-especialidad/editar-especialidad.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component'; 
 
 
 @NgModule({
@@ -64,9 +65,9 @@ import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/
     HoraFechaComponent,
     VentanaAuxiliarDocumentacionComponent,
     VentanaAuxiliarMaterialComponent,
-
     VentanaEditarInstrumentoEquipoComponent,
     EditarEspecialidadComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,10 +90,10 @@ import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/
     EspecilidadRequeridaService,
     PacienteAcudienteService,
     DocumentoService,
-    EstadoSalaService 
-
+    EstadoSalaService ,
+    UtilityServiceService
     ],
   bootstrap: [AppComponent],
-  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent]
+  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, ConfirmationDialogComponent]
 })
 export class AppModule { }

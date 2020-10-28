@@ -15,11 +15,15 @@ export class UtilityServiceService {
   private objEstados = new BehaviorSubject<estadoClass[]>(null);
   private objIdProcedimiento = new BehaviorSubject<string>("");
   private objEspecialidad= new BehaviorSubject<especialidadesRequeridas>(null);
+  private objIntrumentoAdd = new BehaviorSubject<InstrumentosEquipos[]>(null);
+  private objIdModalidad = new BehaviorSubject<string>("");
 
   public customInstrumento = this.objIntrumento.asObservable();
   public customEstados = this.objEstados.asObservable();
   public customIdProcedimiento = this.objIdProcedimiento.asObservable();
   public customEspecialidad = this.objEspecialidad.asObservable();
+  public customInstrumentoAdd = this.objIntrumentoAdd.asObservable();
+  public customIdModalidad = this.objIdModalidad.asObservable();
 
     public changeIntrumento(msg: InstrumentosEquipos): void {
       this.objIntrumento.next(msg);
@@ -32,5 +36,11 @@ export class UtilityServiceService {
     }
     public changeEspecialidad(msg: especialidadesRequeridas): void {
       this.objEspecialidad.next(msg);
+    }
+    public changeIntrumentoAdd(msg: InstrumentosEquipos[]): void {
+      this.objIntrumentoAdd.next(msg);
+    }
+    public changeIdModalidad(msg: string): void {
+      this.objIdModalidad.next(msg);
     }
 }

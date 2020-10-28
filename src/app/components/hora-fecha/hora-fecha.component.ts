@@ -67,7 +67,7 @@ export class HoraFechaComponent implements OnInit {
     });
     this.horafechaForm.get('stateSchedule').valueChanges
     .subscribe(value =>{
-      console.log("Estado agenda: "+value);
+      //console.log("Estado agenda: "+value);
       this.estadoFecha = value;
     });
     this.horafechaForm.get('room').valueChanges
@@ -76,7 +76,7 @@ export class HoraFechaComponent implements OnInit {
     });
     this.horafechaForm.get('stateSala').valueChanges
     .subscribe(value=>{
-      console.log("Estado sala: "+value);
+      //console.log("Estado sala: "+value);
       this.estadoSala =value;
     });
     
@@ -84,8 +84,8 @@ export class HoraFechaComponent implements OnInit {
   }
 
   public getElemento(nombre:string){
-    console.log("Entré al getElemento de hora y fecha");
-    console.log("nombre: "+nombre);
+    //console.log("Entré al getElemento de hora y fecha");
+    //console.log("nombre: "+nombre);
     switch(nombre){
 
       case 'hora':
@@ -95,10 +95,10 @@ export class HoraFechaComponent implements OnInit {
       case 'estado':
          return this.estadoFecha;
       case 'salaId':
-        console.log("estoy en el case salaid"+this.idsala);
+        //console.log("estoy en el case salaid"+this.idsala);
          return this.idsala;
       case 'estadoSala':
-        console.log("estoy en el case estado sala"+this.estadoSala);
+        //console.log("estoy en el case estado sala"+this.estadoSala);
         return this.estadoSala;
       default:
         return null;
