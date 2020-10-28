@@ -92,9 +92,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
     /**Creacion del modelo */
     let agenda:AgendaCrear = new AgendaCrear(paciente,acudiente,proceModalidad,fecha,hora,estadoCama,estadoAgenda,observacion, estadoSala,salaId,'1');
 
-    this.crearAgenda(agenda);
-    this.listarDocumentosDesdeProgramacion();
-    
+    this.crearAgenda(agenda);   
     
   }
 
@@ -105,6 +103,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
     this.utilityService.changeIdAgendaProcedimiento(this.idAgendaProcedimiento);
     console.log("idAgenda: "+this.idAgendaProcedimiento);
     this.listarInstrumentosDesdeProgramacion();
+    this.listarDocumentosDesdeProgramacion();
   }
 
 }

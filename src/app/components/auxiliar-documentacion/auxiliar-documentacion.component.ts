@@ -31,7 +31,7 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
   displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion', 'caduca', 'estado', 'fechaDocRecibido', 'fechaVencimiento' , 'archivo', 'observacion','acciones'];
 
-  dataDocumentosRequeridos: MatTableDataSource<DocumegntoRequerido>;
+  dataDocumentosRequeridos: MatTableDataSource<DocumentoRequerido>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
