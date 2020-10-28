@@ -5,19 +5,16 @@ import { DocumentoRequerido } from '../_models/documento.model';
 import { Observable } from 'rxjs';
 import {ProcedimientoModalidad} from '../_models/procedimientoModalidad.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DocumentoService extends HttpService{
-
-  urlGeneral: string;
-  constructor(protected http: HttpClient) { 
+    constructor(protected http: HttpClient) { 
     super(http);
   }
 
   getDocumentoRequerido(idAgendaProcedimiento: number): Observable<DocumentoRequerido[]>{
-    
     return this.http.get<DocumentoRequerido[]>(`${this.apiURL}listDocAdjunto/${idAgendaProcedimiento}`);
-
-      
       /*return this.http.get<DocumentoRequerido[]>(`${this.apiURL}getDocumentosProc/${idProcedimiento}/${idModalidad}`);*/
   } 
   
