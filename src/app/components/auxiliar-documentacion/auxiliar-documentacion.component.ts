@@ -29,9 +29,9 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   estadosDoc: estadoDocClass[];
   varDocumentosRequeridos: DocumentoRequerido[];
 
-  displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion', 'caduca', 'estado', 'fechaDocRecibido', 'fechaVencimiento' , 'archivo', 'observacion','acciones'];
+  displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion', 'caduca', 'estado', 'fechaVencimiento' , 'archivo', 'observacion','acciones'];
 
-  dataDocumentosRequeridos: MatTableDataSource<DocumegntoRequerido>;
+  dataDocumentosRequeridos: MatTableDataSource<DocumentoRequerido>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -70,7 +70,7 @@ export class AuxiliarDocumentacionComponent implements OnInit {
       
      
       if (this.arrayDocs != null) {
-        
+         
         this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocs);
         this.dataDocumentosRequeridos.paginator = this.paginator;
       } else {
