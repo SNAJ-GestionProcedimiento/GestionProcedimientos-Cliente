@@ -33,7 +33,7 @@ export class EspecilidadRequeridaService extends HttpService {
     return this.http.get<especialidadesRequeridas[]>(`${this.apiURL}getEspecialidadesProc/${idAgendaProcedimiento}/${idModalidad}`);
   }
   
-  deleteInstrumento(idEspecialidad: number): Observable<any> {
+  deleteEspecialidad(idEspecialidad: number): Observable<any> {
     return this.http.delete(`${this.apiURL}deleteAgendaEspecialista/${idEspecialidad}`);
   }
 

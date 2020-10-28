@@ -76,6 +76,7 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
       //console.log("no cambio");
     }
   }
+  
   convertirEstadoLleda(instrumentoAcambiar) {
     for (let j = 0; j < this.estados.length; j++) {
       if (instrumentoAcambiar.estado == this.estados[j].valor) {

@@ -9,6 +9,7 @@ import { estadoClass, obtenerEstado } from 'src/_models/modelInstrumento/instrum
 import { VentanaAuxiliarEspecialidadComponent } from '../ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { EditarEspecialidadComponent } from '../editar-especialidad/editar-especialidad.component';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-auxiliar-especialista',
@@ -26,12 +27,15 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   especialidadAsociada: especialidadesRequeridas[];
   especialidadEditable: especialidadesRequeridas;
   idProcedimiento: string;
+  idAgendaProcedimiento: number;
+  idModalidad: string;
   especialidadBandera: especialidadesRequeridas;
+  especialidadesRequeridas: especialidadesRequeridas[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private dialog: MatDialog,
+    private dialogo: MatDialog,
     private serviceEspecialidadRequerida: EspecilidadRequeridaService,
     private notificationService: notificationService.NotificationService,
     private utilityService: UtilityServiceService
@@ -48,17 +52,19 @@ export class AuxiliarEspecialistaComponent implements OnInit {
         this.listarEspecialidades();
       }
     });
-    //console.log("idProcedimiento desde instrumento: " + this.idProcedimiento);
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
+    this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
   }
 
   //método para en listar los equipos asociados a un procedimiento
   listarEspecialidades() {
     this.parrafo = "";
-    this.serviceEspecialidadRequerida.getEspecialidadRequerida(parseInt(this.idProcedimiento)).subscribe((rest: especialidadesRequeridas[]) => {
+    this.serviceEspecialidadRequerida.getEspecialidadRequerida(this.idAgendaProcedimiento).subscribe((rest: especialidadesRequeridas[]) => {
       //console.log("estado desde especialidad, " + this.estados[0].contenido);
       this.especialidadAsociada = especialidadesRequeridas.fromJSON(rest);
       if (this.especialidadAsociada != null) {
         this.convertirEstadoLleda(this.especialidadAsociada);
+        this.listarEspecialidadesRequeridos();
       } else {
         this.especialidadAsociada = [];
         this.parrafo = "No hay especialidad asociado al procedimiento";
@@ -70,21 +76,70 @@ export class AuxiliarEspecialistaComponent implements OnInit {
 
   }
 
+  listarEspecialidadesRequeridos() {
+    //console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
+    //parseInt(this.idModalidad)
+    if (parseInt(this.idModalidad) != null) {
+      this.serviceEspecialidadRequerida.getEspecialidadesRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
+        (restultado: especialidadesRequeridas[]) => this.especialidadesRequeridas = restultado);
+    } else {
+      this.notificationService.success('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
+    }
+  }
+
+
   editarEspecialidad(especialidad: especialidadesRequeridas): void {
     this.especialidadEditable = especialidad;
     this.utilityService.changeEspecialidad(this.especialidadEditable);
     const dialogoConfig = new MatDialogConfig();
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
-    this.dialog.open(EditarEspecialidadComponent, dialogoConfig);
+    this.dialogo.open(EditarEspecialidadComponent, dialogoConfig);
   }
+
+  validarEspecialidadRequerido(especialidad: especialidadesRequeridas): Boolean {
+    let res = false;
+    for (let i = 0; i < this.especialidadesRequeridas.length; i++) {
+      if (this.especialidadesRequeridas[i].nombreEspecialidad == especialidad.nombreEspecialidad) {
+        res = true;
+        break;
+      }
+    }
+    return res;
+  }
+
+  eliminarDato(especialidad: especialidadesRequeridas) {
+    this.dialogo
+      .open(ConfirmationDialogComponent, {
+        data: `¿Seguro que desea eliminar el instrumento o equipo?`
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          for (let i = 0; i < this.especialidadAsociada.length; i++) {
+            //console.log("intrumento traido: " + JSON.stringify(Instrument));
+            //console.log("intrumento a evaluar: " + JSON.stringify(this.arrayInstrumentos[i]));
+            if (this.especialidadAsociada[i].nombreEspecialidad == especialidad.nombreEspecialidad) {
+              //console.log("entro al if!");
+              this.serviceEspecialidadRequerida.deleteEspecialidad(this.especialidadAsociada[i].id).subscribe();
+              this.listarEspecialidades();
+              this.listarEspecialidadesRequeridos();
+              break;
+            }
+          }
+        }
+        this.listarEspecialidades();
+        this.listarEspecialidadesRequeridos();
+      });
+  }
+
 
   openAgregarEspecialidad() {
     const dialogoConfig = new MatDialogConfig();
     //dialogoConfig.disableClose=true;
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
-    this.dialog.open(VentanaAuxiliarEspecialidadComponent, dialogoConfig);
+    this.dialogo.open(VentanaAuxiliarEspecialidadComponent, dialogoConfig);
   }
 
   convertirEstadoLleda(instrumentoAcambiar) {

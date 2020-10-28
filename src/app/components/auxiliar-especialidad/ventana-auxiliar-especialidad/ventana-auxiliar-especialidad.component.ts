@@ -21,10 +21,12 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
   arrayEspecialidadesCantidad: especialidadesPrevisualizar[] = [];
   datosAdd: especialidadesPrevisualizar;
 
+  customertext: number = 1;
+
   opcionSeleccionado: string = '0';
   verSeleccion = '';
   datosSeleccionador: especialidadesPrevisualizar[] = [];
-  idAgendaProcedimiento: string;
+  idAgendaProcedimiento: number;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -37,7 +39,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllEspecialidad();
-    this.utilityService.customIdProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
     this.utilityService.customEspecialidadAdd.subscribe(msg => this.especialidadBandera = msg);
   }
 
@@ -55,7 +57,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
         //console.log("array: " + JSON.stringify(this.arrayEspecialidadesCantidad));
         for (let i = 0; i < this.arrayEspecialidadesCantidad.length; i++) {
           this.arrayEspecialidadesCantidad[i].cantidad = 1;
-          this.arrayEspecialidadesCantidad[i].idAgendaProcedimiento = parseInt(this.idAgendaProcedimiento);
+          this.arrayEspecialidadesCantidad[i].idAgendaProcedimiento = this.idAgendaProcedimiento;
           this.arrayEspecialidadesCantidad[i].estado = "PEND";
         }
       } else {
@@ -83,6 +85,26 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
     }
   }
 
+  keyPress(event: any, datoACambiar: especialidadesPrevisualizar) {
+    const pattern = /[0-9]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+    this.onChange(datoACambiar);
+  }
+
+  onChange(datoACambiar: especialidadesPrevisualizar) {
+    let int;
+    for (let i = 0; i < this.arrayEspecialidadesCantidad.length; i++) {
+      if (this.arrayEspecialidadesCantidad[i].codigoEspecialidad == datoACambiar.codigoEspecialidad) {
+        this.arrayEspecialidadesCantidad[i].cantidad = this.customertext;
+        int = i;
+        break;
+      }
+    }
+    console.log(JSON.stringify(this.arrayEspecialidadesCantidad[int]));
+  }
   confirmacionLimpiar() {
     this.dialogo
       .open(ConfirmationDialogComponent, {

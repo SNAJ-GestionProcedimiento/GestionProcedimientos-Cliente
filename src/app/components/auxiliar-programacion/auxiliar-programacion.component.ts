@@ -52,12 +52,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento=msg)
   }
 
-  public setIdProcedimiento(){
-    //console.log('Desde el padre:'+this.procedimientoCmp.getCodigoProcedimiento());
-  }
-
   listarInstrumentosDesdeProgramacion(){
-    this.setIdProcedimiento();
     this.listarInstrumentos.listarIntrumentEquip();
     this.listarEspecialidad.listarEspecialidades();
   }

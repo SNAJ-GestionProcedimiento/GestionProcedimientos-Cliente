@@ -50,6 +50,11 @@
                     btn-sm btn-just-icon" (click)="editarEspecialidad(element)">
                     <i class="material-icons">edit</i>
                 </button>
+                <button mat-raised-button type="button" matTooltip="Eliminar" [matTooltipPosition]="'above'" class="btn
+                    btn-link  btn-danger
+                    btn-sm btn-just-icon" *ngIf="!validarEspecialidadRequerido(element)" (click)="eliminarDato(element)">
+                    <i class=" material-icons ">delete_forever</i>
+                </button>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
