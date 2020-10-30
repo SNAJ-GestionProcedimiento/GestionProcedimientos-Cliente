@@ -8,10 +8,12 @@ import { HoraFechaComponent } from 'src/app/components/hora-fecha/hora-fecha.com
 import { AgendaCrear } from 'src/_models/agenda-crear.model';
 import { AgendaCrearService } from 'src/_services/agenda-crear.service';
 import {AuxiliarDocumentacionComponent} from '../../components/auxiliar-documentacion/auxiliar-documentacion.component';
+import {AuxiliarMaterialesComponent} from '../../components/auxiliar-materiales/auxiliar-materiales.component'
 
 import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-Equipos/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from '../auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
+
 
 @Component({
   selector: 'app-auxiliar-programacion',
@@ -23,6 +25,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
   @ViewChild(AuxiliarInstrumentosEquiposComponent) listarInstrumentos: AuxiliarInstrumentosEquiposComponent;
   @ViewChild(AuxiliarEspecialistaComponent) listarEspecialidad: AuxiliarEspecialistaComponent;
   @ViewChild(AuxiliarDocumentacionComponent) listarDocumentos: AuxiliarDocumentacionComponent; 
+  @ViewChild(AuxiliarMaterialesComponent) listarMateriales: AuxiliarMaterialesComponent;
   @ViewChild(ProcedimientoComponent) procedimientoCmp: ProcedimientoComponent;
   @ViewChild(PacienteComponent) pacienteCmp: PacienteComponent;
   @ViewChild(AcudienteComponent) acudienteCmp: AcudienteComponent;
@@ -61,8 +64,12 @@ export class AuxiliarProgramacionComponent implements OnInit {
   }
 
   listarDocumentosDesdeProgramacion(){
-    this.listarDocumentos.listarDocumentosRequeridos();
+    //this.listarDocumentos.listarDocumentosRequeridos();
     this.listarDocumentos.listarDocumentosPorCodigoModalidad();
+  }
+
+  listarMaterialesDesdeProgramacion(){
+    this.listarMateriales.listarMaterialesPorCodigoModalidad();
   }
 
   crearAgendaonClick(){
@@ -93,6 +100,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
     this.crearAgenda(agenda);
     this.listarInstrumentosDesdeProgramacion();
     this.listarDocumentosDesdeProgramacion();
+    this.listarMaterialesDesdeProgramacion();
     
     
   }
