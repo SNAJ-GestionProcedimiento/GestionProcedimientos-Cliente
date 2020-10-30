@@ -38,7 +38,7 @@
         <ng-container matColumnDef="cantidad">
             <th mat-header-cell *matHeaderCellDef> Cantidad </th>
             <!--<td mat-cell *matCellDef="let element" contenteditable="true" (keypress)=" keyPress($event)" [(ngModel)]="customertext"> {{element.cantidad}} </td>-->
-            <td mat-cell *matCellDef="let element"><input type="text" placeholder="{{element.cantidad}}" style="text-align: center;" (keypress)=" keyPress($event, element)" [(ngModel)]="customertext" (change)="onChange(element)"></td>
+            <td mat-cell *matCellDef="let element"><input type="text" placeholder="{{element.cantidad}}" style="text-align: center;" (keypress)=" keyPress($event)" [(ngModel)]="element.cantidad"></td>
         </ng-container>
 
         <!-- Columna de acciones -->
