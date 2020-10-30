@@ -8,6 +8,8 @@ import { Procedimiento } from '../../../_models/procedimiento.model';
 import { estadoDocClass, obtenerEstadoDoc } from '../../../_models/documento-estado.model';
 import {DocumentoService} from '../../../_services/documentacion.service'
 import * as notificationService from 'src/_services/notification.service';
+import { estadoClass } from '../../../_models/modelInstrumento/instrumentos-equipos-estado.model';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-auxiliar-documentacion',
@@ -18,18 +20,17 @@ import * as notificationService from 'src/_services/notification.service';
 export class AuxiliarDocumentacionComponent implements OnInit {
 
   @Input() codigoProcedimientoObtenido: string="";
+  public tituloTabla = "Documentos";
   mensajeDeNotificacion="";
   estados: estadoDocClass[];
   arrayDocs: DocumentoRequerido[]=[];
- 
-   /*docs: Documento[] = [new Documento(1, 0, '', '', '','',''), new Documento(2, 0, '', '', '','',''), new Documento(3, 0, '', '', '','','')];*/
   
   dataDocs = null;
   parrafo=""
   estadosDoc: estadoDocClass[];
   varDocumentosRequeridos: DocumentoRequerido[];
 
-  displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion', 'caduca', 'estado', 'fechaDocRecibido', 'fechaVencimiento' , 'archivo', 'observacion','acciones'];
+  displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion', 'caduca', 'estado', 'fechaVencimiento' , 'archivo', 'observacion','acciones'];
 
   dataDocumentosRequeridos: MatTableDataSource<DocumentoRequerido>;
 
@@ -44,49 +45,54 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
     ngOnInit(): void {
       this.estadosDoc = obtenerEstadoDoc.getEstadoObtenido();
+      this.estadosDoc.forEach(element => console.log(element));
       //console.log("Codigo de procedimiento desde documentos: "+this.codigoProcedimientoObtenido)
     }
 
-    public getElement(nombreElemento:string){
-      switch (nombreElemento) {
-        case 'hola':
-          
-          break;
-      
-        default:
-          break;
-      }
-    }
-
  
-  public listarDocumentosRequeridos(){
+  /*public listarDocumentosRequeridos(){
     console.log("El codigo desde documentacion es: "+this.codigoProcedimientoObtenido);
     this.documentosService.getDocumentoRequerido(parseInt(this.codigoProcedimientoObtenido)).subscribe((result: DocumentoRequerido[]) => {
       this.arrayDocs=DocumentoRequerido.fromJSON(result);
       
       console.log("Documentos por codigo agenda:"+JSON.stringify(this.arrayDocs));
-
-    
-      
      
       if (this.arrayDocs != null) {
-        
+         
         this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocs);
         this.dataDocumentosRequeridos.paginator = this.paginator;
       } else {
         this.parrafo = "No hay documentos requeridos para el procedimiento seleccionado";
       }
     })
+  }*/
+
+  public validarEstados(){
+    for (let i = 0; i < this.arrayDocs.length; i++) {
+      if(this.arrayDocs[i].estado == 'null'){
+        for (let j = 0; j < this.estadosDoc.length; j++) {
+          this.arrayDocs[i].estado = "Pendiente";
+        } 
+      }
+    }
   }
+  
+
 
   public listarDocumentosPorCodigoModalidad(){
-    //console.log("Estoy dentro de listar documentos desde component documentos");
     this.documentosService.getDocumentosProcedimiento(Number(this.codigoProcedimientoObtenido),1).subscribe((result: DocumentoRequerido[]) => {
       this.arrayDocs=result;
-      console.log("ArraryDocs: v")
-      console.log("Por codigo procedimiento"+JSON.stringify(this.arrayDocs));
-      console.log("RECORRIENDO ARRAY!!!!!!")
-      this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocs);
+      this.parrafo="";
+      this.validarEstados();
+
+      if (this.arrayDocs != null) {
+        console.log("Documentos requeridos cargados exitosamente");
+        this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocs);
+        this.dataDocumentosRequeridos.paginator = this.paginator;
+      } else {
+        this.parrafo = "No hay documentos requeridos para el procedimiento seleccionado";
+        this.notificationService.success(this.parrafo);
+      }
 
 
     })
@@ -107,6 +113,17 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     {titulo: 'Observación', columnName: 'observ'},
    ];*/
 
+   /*asignarEstadoDocumentos(arrayDocumentacion){
+     for (let i = 0; i < arrayDocumentacion.length; i++) {
+       for (let j = 0; j < this.estados.length; j++) {
+         
+         
+       }
+
+       
+     }
+
+   }*/
    
   
 
@@ -129,9 +146,9 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     //dialogoConfig.disableClose=true;
     
 
-    const dialogoConfig= this.dialog.open(VentanaAuxiliarDocumentacionComponent,{
+   /* const dialogoConfig= this.dialog.open(VentanaAuxiliarDocumentacionComponent,{
       data: new DocumentoRequerido()
-    });
+    });*/
 
   ;
   }

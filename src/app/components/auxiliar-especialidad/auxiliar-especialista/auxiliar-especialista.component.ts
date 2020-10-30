@@ -66,12 +66,9 @@ export class AuxiliarEspecialistaComponent implements OnInit {
         this.convertirEstadoLleda(this.especialidadAsociada);
         this.listarEspecialidadesRequeridos();
       } else {
-        this.especialidadAsociada = [];
         this.parrafo = "No hay especialidad asociado al procedimiento";
         this.notificationService.success('No hay especialistas asociados al procedimiento!');
       }
-      this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada); //se le envia los datos a la tabla. 
-      this.dataEspecialidad.paginator = this.paginator;
     });
 
   }
@@ -153,11 +150,11 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   }
 
   convertirEstadoSalida(instrumentoAcambiar): especialidadesRequeridas {
-    //console.log("entro al método: " + instrumentoAcambiar.length);
+    console.log("entro al método: " + instrumentoAcambiar.length);
     for (let j = 0; j < this.estados.length; j++) {
-      //console.log("uio que llego: " + instrumentoAcambiar.estado + " estado: " + this.estados[j].contenido);
+      console.log("uio que llego: " + instrumentoAcambiar.estado + " estado: " + this.estados[j].contenido);
       if (instrumentoAcambiar.estado == this.estados[j].contenido) {
-        //console.log("entro en salida");
+        console.log("entro en salida");
         instrumentoAcambiar.estado = this.estados[j].valor;
       }
     }

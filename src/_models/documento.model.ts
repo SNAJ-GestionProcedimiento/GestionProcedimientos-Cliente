@@ -18,10 +18,8 @@ export class DocumentoRequerido{
     }
    
     public static fromJSON(json): DocumentoRequerido[] {
-      console.log("entra a Documento Requerido desde Documento model!!!!!!! ");
       let arrayDocumentacionRequerida = [];
       if (json.length == 0) { return null; }
-  
       for (let i = 0; i < json.length; i++) {
         var documentoRequerido = new DocumentoRequerido();
         documentoRequerido.codigoDocumento = json[i].codigoDocumento;
@@ -34,11 +32,7 @@ export class DocumentoRequerido{
         documentoRequerido.fechaDocRecibido = json[i].fechaDocRecibido;
         documentoRequerido.fechaVencimiento = json[i].fechaVencimiento;
         arrayDocumentacionRequerida.push(documentoRequerido);
-        
       }
-
-      console.log("Retornando array de documentacion requerida");
-      arrayDocumentacionRequerida.forEach(element => console.log("datos array desde el modelo"+element));
       return arrayDocumentacionRequerida;
     }
   }

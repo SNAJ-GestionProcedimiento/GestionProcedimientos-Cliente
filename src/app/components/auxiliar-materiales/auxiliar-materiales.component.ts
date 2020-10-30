@@ -4,8 +4,11 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatTable } from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material/dialog';
 import { VentanaAuxiliarMaterialComponent } from '../ventana-auxiliar-material/ventana-auxiliar-material.component';
-import {MaterialRequerido} from '../../../_models/material.model';
-
+import { MaterialRequerido } from '../../../_models/material.model';
+import { estadoMatClass, obtenerEstadoMat } from '../../../_models/materiales-estado.model';
+import {MaterialesService} from '../../../_services/materiales.service'
+import * as notificationService from 'src/_services/notification.service';
+import { NotificationService } from '../../../_services/notification.service';
 
 @Component({
   selector: 'app-auxiliar-materiales',
@@ -16,30 +19,78 @@ import {MaterialRequerido} from '../../../_models/material.model';
 export class AuxiliarMaterialesComponent implements OnInit {
 
   @Input() codigoProcedimientoObtenido: string="";
+  public tituloTabla="Materiales"
+  estados: estadoMatClass[];
+  arrayMats: MaterialRequerido[]=[];
+  dataMats = null;
+  parrafo = "";
+  estadosMat: estadoMatClass[];
+  varMaterialesRequeridos: MaterialRequerido[];
 
-  mats: MaterialRequerido[] = [new MaterialRequerido(),
-  new MaterialRequerido(), new MaterialRequerido()];
+  //Nombres de las columnas que se van a mostrar en la tabla materiales
+  displayedColumnsMat: string[] = [ 'codigoMaterial', 'nombre', 'estado', 'casaMedica', 'fechaSolicitud', 'fechaEstimada', 'fechaRecibido', 'cantidadMat', 'unidad', 'acciones'];
 
-  displayedColumnsMat: string[] = [ 'codigo', 'nombre', 'estado', 'casa', 'fechaSol', 'fechaCom', 'fechaLlegada', 'cantidad', 'unidad', 'acciones'];
-  dataSourceMat = new MatTableDataSource<MaterialRequerido>(this.mats);
+  dataMaterialesRequeridos: MatTableDataSource<MaterialRequerido>;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  ngAfterViewInit() {
-    this.dataSourceMat.paginator = this.paginator;
-  }
-  openAgregarMaterial() {
-    const dialogoConfig = new MatDialogConfig();
-    //dialogoConfig.disableClose=true;
-    dialogoConfig.autoFocus=true;
-    dialogoConfig.width="60%";
-    this.dialog.open(VentanaAuxiliarMaterialComponent, dialogoConfig);
-  }
+  constructor(
+    private dialog: MatDialog,
+    private materialesService: MaterialesService,
+    private notificationService: NotificationService
+     
+    ) { }
+
+    ngOnInit(): void {
+      this.estadosMat = obtenerEstadoMat.getEstadoObtenido();
+      
+    }
+
+    public validarMateriales(){
+      for (let i = 0; i < this.arrayMats.length; i++) {
+        if(this.arrayMats[i].estado == 'null'){
+          for (let j = 0; j < this.arrayMats.length; j++) {
+            this.arrayMats[i].estado = "Por Solicitar";
+          } 
+        }
+      }  
+    }
+
+
+
+    public listarMaterialesPorCodigoModalidad(){
+      this.materialesService.getMaterialesProcedimiento(Number(this.codigoProcedimientoObtenido),1).subscribe((result: MaterialRequerido[]) => {
+        this.arrayMats=result;
+        this.parrafo="";
+        this.validarMateriales();
+
+        if (this.arrayMats != null) {
+          console.log("Materiales requeridos cargados exitosamente");
+          this.dataMaterialesRequeridos = new MatTableDataSource(this.arrayMats);
+          this.dataMaterialesRequeridos.paginator = this.paginator;
+        } else {
+          this.parrafo = "No hay materiales requeridos para el procedimiento seleccionado";
+          this.notificationService.success(this.parrafo);
+        }
+        
+      })
+    }
+
+
+
+    ngAfterViewInit() {
+    }
+    openAgregarMaterial() {
+      const dialogoConfig = new MatDialogConfig();
+      //dialogoConfig.disableClose=true;
+      dialogoConfig.autoFocus=true;
+      dialogoConfig.width="60%";
+      this.dialog.open(VentanaAuxiliarMaterialComponent, dialogoConfig);
+    }
  
 
-  constructor(private dialog: MatDialog) { }
 
-  ngOnInit(): void {
-  }
+  
 
 }
 
