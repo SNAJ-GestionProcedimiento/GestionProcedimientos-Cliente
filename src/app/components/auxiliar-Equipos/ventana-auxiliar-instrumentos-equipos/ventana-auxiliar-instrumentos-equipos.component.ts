@@ -23,19 +23,23 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
   datosSeleccionador: InstrumentosEquipos[] = [];
   editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los 
   datosAdd: InstrumentosEquipos[] = [];
-  idProcedimiento: string;
+  idProcedimiento: number;
 
   displayedColumns: string[] = ['codigo', 'nombre', 'cantidad', 'descripcion', 'acciones'];
   dataSource = new MatTableDataSource<InstrumentosEquipos>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService,
-    private dialogo: MatDialog, private utilityService: UtilityServiceService) { }
+  constructor(
+    private serviceIntrumentosEquipos: InstrumentosEquiposService, 
+    private notificationService: notificationService.NotificationService,
+    private dialogo: MatDialog, 
+    private utilityService: UtilityServiceService
+    ) { }
 
   ngOnInit(): void {
     this.getAllInstrumentos();
     this.utilityService.customInstrumentoAdd.subscribe(msg => this.datosAdd = msg);
-    this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idProcedimiento = msg);
 
   }
 
@@ -129,7 +133,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
         if (confirmado) {
           this.datosAdd = this.datosSeleccionador;
           for (let i = 0; i < this.datosAdd.length; i++) {
-            this.editInstrument = new editInstrumentosEquipos(this.datosAdd[i].id, parseInt(this.idProcedimiento), this.datosAdd[i].codigoEquipo.toString(), "PEND", this.datosAdd[i].cantidad);
+            this.editInstrument = new editInstrumentosEquipos(this.datosAdd[i].id, this.idProcedimiento, this.datosAdd[i].codigoEquipo.toString(), "PEND", this.datosAdd[i].cantidad);
             let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe();
             if (res != null) {
               this.utilityService.changeIntrumentoAdd(this.datosAdd);

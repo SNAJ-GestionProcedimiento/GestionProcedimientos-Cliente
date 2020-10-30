@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from './http.service';
-import { editarEpecialidadesRequeridas, especialidadesRequeridas } from 'src/_models/modelEspecialista/especialidad.model';
+import { editarEpecialidadesRequeridas, especialidadesPrevisualizar, especialidadesRequeridas } from 'src/_models/modelEspecialista/especialidad.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -21,15 +21,19 @@ export class EspecilidadRequeridaService extends HttpService {
     return this.http.put<editarEpecialidadesRequeridas>(`${this.apiURL}editAgendaEspecialista`, JSON.stringify(especialista));
   }
 
-  getAllEspecialidades(): Observable<especialidadesRequeridas[]> {
-    return this.http.get<especialidadesRequeridas[]>(`${this.apiURL}getAllEspecialidades`);
+  getAllEspecialidades(): Observable<especialidadesPrevisualizar[]> {
+    return this.http.get<especialidadesPrevisualizar[]>(`${this.apiURL}getAllEspecialidades`);
+  }
+
+  addEspecialidad(instrumentEquipo: especialidadesPrevisualizar): Observable<especialidadesPrevisualizar> {
+    return this.http.post<especialidadesPrevisualizar>(`${this.apiURL}addAgendaEspecialista`, instrumentEquipo);
   }
 
   getEspecialidadesRequeridos(idAgendaProcedimiento: number, idModalidad: number): Observable<especialidadesRequeridas[]> {
     return this.http.get<especialidadesRequeridas[]>(`${this.apiURL}getEspecialidadesProc/${idAgendaProcedimiento}/${idModalidad}`);
   }
   
-  deleteInstrumento(idEspecialidad: number): Observable<any> {
+  deleteEspecialidad(idEspecialidad: number): Observable<any> {
     return this.http.delete(`${this.apiURL}deleteAgendaEspecialista/${idEspecialidad}`);
   }
 

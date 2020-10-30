@@ -24,6 +24,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
   parrafo = "";//para colocar que no hay nada en las tablas
   idProcedimiento: string;
+  idAgendaProcedimiento: number;
 
   editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los instrumentos
   estados: estadoClass[];  //variable que tiene el array de estados
@@ -32,6 +33,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   datosAddTabla: InstrumentosEquipos[] = [];
   instrumentosRequeridos: InstrumentosEquipos[] = [];
   idModalidad: string;
+  public idProcedimientoModalidad: string;
 
   displayedColumns: string[] = ['codigo', 'nombre', 'cantidad', 'descripcion', 'estado', 'acciones'];  //las columnas de la tabla asociadas a las propiedades
   dataIntrumentEquip: MatTableDataSource<InstrumentosEquipos>; //variable que contiene los datos que irán en la tabla
@@ -63,13 +65,15 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
       }
     });
     this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
+    this.utilityService.customIdProcedimientoModalidad.subscribe(msg => this.idProcedimientoModalidad = msg);
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
   }
 
   //método para en listar los equipos asociados a un procedimiento
   public listarIntrumentEquip() {
     this.parrafo = "";
-
-    this.serviceIntrumentosEquipos.getInstrumentoEquipo(parseInt(this.idProcedimiento)).subscribe((result: InstrumentosEquipos[]) => {
+    console.log("desde instrumentos: " + this.idAgendaProcedimiento);
+    this.serviceIntrumentosEquipos.getInstrumentoEquipo(this.idAgendaProcedimiento).subscribe((result: InstrumentosEquipos[]) => {
       this.arrayInstrumentos = InstrumentosEquipos.fromJSON(result);
       if (this.arrayInstrumentos != null) {
         this.convertirEstadoLleda(this.arrayInstrumentos);
@@ -87,10 +91,10 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   listarIntrumentosRequeridos() {
     //console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
     //parseInt(this.idModalidad)
-    if(parseInt(this.idModalidad)!=null){
+    if (parseInt(this.idModalidad) != null) {
       this.serviceIntrumentosEquipos.getInstrumentosRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
         (restultado: InstrumentosEquipos[]) => this.instrumentosRequeridos = restultado);
-    }else{
+    } else {
       this.notificationService.success('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
     }
   }

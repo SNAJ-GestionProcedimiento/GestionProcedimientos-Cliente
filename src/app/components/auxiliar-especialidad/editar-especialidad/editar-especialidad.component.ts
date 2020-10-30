@@ -16,7 +16,7 @@ export class EditarEspecialidadComponent implements OnInit {
   datosEspecialidad: especialidadesRequeridas;
   especialidadEditable: editarEpecialidadesRequeridas;
   estados: estadoClass[];
-  idProcedimiento: string;
+  idProcedimiento: number;
   opcionSeleccionado: string = '0';
   verSeleccion = '';
   registroMedico: string;
@@ -30,9 +30,10 @@ export class EditarEspecialidadComponent implements OnInit {
 
   ngOnInit(): void {
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);
-    this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idProcedimiento = msg);
     this.utilityService.customEspecialidad.subscribe(msg => {
       this.datosEspecialidad = msg;
+      this.convertirEstadoLleda(this.datosEspecialidad);
       this.hacerListaEstados();
       this.verSeleccion = this.datosEspecialidad.estado;
     });
@@ -44,7 +45,7 @@ export class EditarEspecialidadComponent implements OnInit {
     this.datosEspecialidad.registroMedico=this.registroMedico;
     this.datosEspecialidad.identificacion=this.identificacionEspecialista;
     this.datosEspecialidad.nombreEspecialista=this.nombreEspecialista;
-    this.especialidadEditable=new editarEpecialidadesRequeridas(especialistaEnviar.id, especialistaEnviar.codigoEspecialidad, especialistaEnviar.nombreEspecialidad, especialistaEnviar.registroMedico, especialistaEnviar.identificacion,especialistaEnviar.nombreEspecialista, especialistaEnviar.estado, parseInt(this.idProcedimiento));
+    this.especialidadEditable=new editarEpecialidadesRequeridas(especialistaEnviar.id, especialistaEnviar.codigoEspecialidad, especialistaEnviar.nombreEspecialidad, especialistaEnviar.registroMedico, especialistaEnviar.identificacion,especialistaEnviar.nombreEspecialista, especialistaEnviar.estado, this.idProcedimiento);
     let res = this.serviceEspecialidadRequerida.editarEspecialidad(this.especialidadEditable).subscribe();
     if (res != null) {
       //this.convertirEstadoLleda(this.datosInstrumento);
@@ -58,6 +59,8 @@ export class EditarEspecialidadComponent implements OnInit {
 
     this.cerrarVentana();
   }
+
+
 
   cerrarVentana() {
     this.dialog.closeAll();
@@ -88,5 +91,12 @@ export class EditarEspecialidadComponent implements OnInit {
     return especialistaAcambiar;
   }
 
+  convertirEstadoLleda(instrumentoAcambiar) {
+    for (let j = 0; j < this.estados.length; j++) {
+      if (instrumentoAcambiar.estado == this.estados[j].valor) {
+        instrumentoAcambiar.estado = this.estados[j].contenido;
+      }
+    }
+  }
 
 }

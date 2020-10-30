@@ -39,6 +39,7 @@ export class AuxiliarProgramacionComponent implements OnInit {
   message:boolean;
   public codigoProcedimiento:string='';
   idProcedimiento: string;
+  idAgendaProcedimiento: number;
 
   constructor(
     private agendaCrearService:AgendaCrearService, private utilityService: UtilityServiceService
@@ -51,14 +52,10 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento=msg);
-  }
-
-  public setIdProcedimiento(){
-    //console.log('Desde el padre:'+this.procedimientoCmp.getCodigoProcedimiento());
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento=msg)
   }
 
   listarInstrumentosDesdeProgramacion(){
-    this.setIdProcedimiento();
     this.listarInstrumentos.listarIntrumentEquip();
     this.listarEspecialidad.listarEspecialidades();
   }
@@ -108,6 +105,11 @@ export class AuxiliarProgramacionComponent implements OnInit {
   /**Peticiones */
   public async crearAgenda(agenda:AgendaCrear){
     let res:any = await this.agendaCrearService.create(agenda).toPromise();
+    this.idAgendaProcedimiento=res.idAgendaProcedimiento;
+    this.utilityService.changeIdAgendaProcedimiento(this.idAgendaProcedimiento);
+    console.log("idAgenda: "+this.idAgendaProcedimiento);
+    this.listarInstrumentosDesdeProgramacion();
+    this.listarDocumentosDesdeProgramacion();
   }
 
 }

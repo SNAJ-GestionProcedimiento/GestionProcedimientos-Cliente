@@ -19,7 +19,6 @@ export class InstrumentosEquiposService extends HttpService {
   }
 
   editarInstrumentoEquipo(instrumentEquipo: editInstrumentosEquipos): Observable<editInstrumentosEquipos> {
-    console.log(JSON.stringify(instrumentEquipo));
     return this.http.put<editInstrumentosEquipos>(`${this.apiURL}editAgendaEquipo`, instrumentEquipo);
   }
 
@@ -28,7 +27,6 @@ export class InstrumentosEquiposService extends HttpService {
   }
 
   addInstrumento(instrumentEquipo: editInstrumentosEquipos): Observable<editInstrumentosEquipos> {
-    console.log(JSON.stringify(instrumentEquipo));
     return this.http.post<editInstrumentosEquipos>(`${this.apiURL}addAgendaEquipo`, instrumentEquipo);
   }
 
@@ -37,9 +35,7 @@ export class InstrumentosEquiposService extends HttpService {
   }
 
   deleteInstrumento(instrumentEquipo: number): Observable<any> {
-    console.log("desde servicio dele llega el id: "+instrumentEquipo);
     const url=this.apiURL+"deleteAgendaEquipo/"+instrumentEquipo.toString();
-    console.log("La url a mostrar es: "+url);
     return this.http.delete(`${url}`);
   }
 
