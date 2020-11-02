@@ -1,25 +1,21 @@
+<!-- Barra de navegacion de programacion -->
 <app-auxiliar-navbar></app-auxiliar-navbar>
-<!-- Container for sidebar(s) + page content -->
+<!-- SideBar -->
 <ng-sidebar-container>
- 
-    <!-- A sidebar -->
+    <!-- Contenido del Sidebar -->
     <ng-sidebar opened="true" mode="push">
-      <button type="button" class="btn btn-info mr-auto" (click)="mostrarAgenda()">Gestion de programación</button>
+      <button type="button" class="btn btn-info mr-auto" (click)="gestionOnclick()">Gestion de programación</button>
     </ng-sidebar>
 
-    <!-- Page content -->
+    <!-- Contenido de la pagina -->
     <div ng-sidebar-content>
         <div class="container">
-            <!-- Agenda del auxiliar-->
-            <div id="agenda">
-              <app-auxiliar-agenda></app-auxiliar-agenda>
-            </div>
-            <div id="programacion">
-              <app-auxiliar-programacion></app-auxiliar-programacion>
-            </div>
-            <div class="ml-auto">
-              <button type="button" class="btn btn-info mr-auto" id="nuevoPro" (click)="nuevoProcedimiento()">Agendar procedimiento</button>
-            </div>
+            <!-- VER AGENDA -->
+            <app-auxiliar-agenda *ngIf="selectedOption == OPTIONS.VER_AGENDA"></app-auxiliar-agenda>
+            <!-- CREAR AGENDA -->
+            <app-auxiliar-crear-programacion *ngIf="selectedOption == OPTIONS.CREAR_AGENDA"></app-auxiliar-crear-programacion>
+            <!-- EDITAR AGENDA -->
+            <app-auxiliar-editar-programacion *ngIf="selectedOption == OPTIONS.EDITAR_AGENDA"></app-auxiliar-editar-programacion>
         </div>
     </div>
 

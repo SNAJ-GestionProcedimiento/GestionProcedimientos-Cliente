@@ -1,4 +1,4 @@
-<!-- Programacion de un procedimiento -->
+<!-- Edicion de un procedimiento -->
 <div class="container">
     <!-- datos del paciente -->
     <app-paciente></app-paciente>
@@ -13,11 +13,6 @@
     <app-hora-fecha></app-hora-fecha>
     <hr>
     <br>
-    <!-- PROCEDIMIENTO ACCIONES -->
-    <button type="button" class="btn btn-danger mr-3">Cancelar agendamiento</button>
-    <button type="button" class="btn btn-info" (click)="crearAgendaonClick()">Crear agenda de procedimiento</button>
-    <hr>
-    <br>
     <!-- documentacion -->
     <app-auxiliar-documentacion [codigoProcedimientoObtenido]="codigoProcedimiento"></app-auxiliar-documentacion>
     <!-- materiales -->
@@ -26,4 +21,11 @@
     <app-auxiliar-instrumentos-equipos [codigoProcedimientoObtenido]="codigoProcedimiento"></app-auxiliar-instrumentos-equipos>
     <!-- Especialistas -->
     <app-auxiliar-especialista [codigoProcedimientoObtenido]="codigoProcedimiento"></app-auxiliar-especialista>
+    <!-- PROCEDIMIENTO ACCIONES -->
+    <div class="row justify-content-end mt-4 mb-4">
+        <div class="col-auto">
+            <button type="button" class="btn btn-danger" (click)="cancelarOnclick()">Cancelar</button>
+            <button type="button" class="btn btn-info ml-3" (click)="editarOnclick()">Editar Agenda</button>
+        </div>
+    </div>
 </div>

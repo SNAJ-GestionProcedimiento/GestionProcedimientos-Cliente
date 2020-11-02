@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Datos del procedimiento agendado</h1>
+<h1> {{paciente.identificacion}} - {{paciente.nombre}} - {{agendaVer.nombreProc}} - {{agendaVer.estadoFecha}}</h1>
+<div class="mat-dialog-content">
+    <!--Datos del Paciente-->
+    <h3>Datos del procedimiento</h3>
+    <label for="Name">Codigo del procedimiento: {{agendaVer.idProc}}</label> <br>
+    <label for="Name">Nombre del procedimiento: {{agendaVer.nombreProc}}</label> <br>
+    <label for="Name">Cama UCI: {{agendaVer.camaUci}}</label> <br>
+    <label for="Name">Estado cama UCI: {{agendaVer.estadoCama}}</label> <br>
+    <label for="Name">Banco de sangre: {{agendaVer.bancoSangre}}</label> <br>
+    <label for="Name">Codigo de sala: {{agendaVer.idSala}}</label> <br>
+    <label for="Name">Sala: {{agendaVer.nombreSala}}</label> <br>
+    <label for="Name">Estado de la sala: {{agendaVer.estadoSala}}</label> <br>
+    <label for="Name">Fecha agendada: {{agendaVer.fecha}}</label> <br>
+    <label for="Name">Hora agendada: {{agendaVer.hora}}</label> <br>
+    <hr>
+    <!--Datos del Paciente-->
+    <h3>Datos del paciente</h3>
+    <label for="Name">Nombre del paciente: {{paciente.nombre}}</label> <br>
+    <label for="Name">Tipo de identificacion: {{paciente.tipoIdentificacion}}</label> <br>
+    <label for="Name">Identificación: {{paciente.identificacion}}</label> <br>
+    <label for="Name">Fecha de nacimiento: {{paciente.fechaNacimiento}}</label> <br>
+    <label for="Name">Edad del paciente: {{paciente.edad}}</label> <br>
+    <label for="Name">Genero del paciente: {{paciente.genero}}</label> <br>
+    <label for="Name">Correo del paciente: {{paciente.correo}}</label> <br>
+    <label for="Name">Dirección del paciente: {{paciente.direccion}}</label> <br>
+    <label for="Name">Telefono del paciente: {{paciente.telefono}}</label> <br>
+    <hr>
+    <!--Datos del Acudiente-->
+    <h3>Datos del acudiente</h3>
+    <label for="Name">Nombre del acudiente: {{acudiente.nombre}}</label> <br>
+    <label for="Name">Tipo de identificacion: {{acudiente.tipoIdentificacion}}</label> <br>
+    <label for="Name">Identificación: {{acudiente.identificacion}}</label> <br>
+    <label for="Name">Fecha de nacimiento: {{acudiente.fechaNacimiento}}</label> <br>
+    <label for="Name">Edad del acudiente: {{acudiente.edad}}</label> <br>
+    <label for="Name">Genero del acudiente: {{acudiente.genero}}</label> <br>
+    <label for="Name">Correo del acudiente: {{acudiente.correo}}</label> <br>
+    <label for="Name">Dirección del acudiente: {{acudiente.direccion}}</label> <br>
+    <label for="Name">Telefono del acudiente: {{acudiente.telefono}}</label> <br>
+    <hr>
+    <!--Datos del Procedimiento-->
+    <!--Datos de la fecha y hora del procedimiento-->
+    <!--Datos del Tablas-->
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Editar</button>
+</div>

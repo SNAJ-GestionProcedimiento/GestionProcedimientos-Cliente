@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { AuxiliarAgendaComponent } from './components/auxiliar-agenda/auxiliar-agenda.component';
-import { AuxiliarProgramacionComponent } from './components/auxiliar-programacion/auxiliar-programacion.component';
+import { AuxiliarCrearProgramacionComponent } from './components/auxiliar-crear-programacion/auxiliar-crear-programacion.component';
 import { PacienteService } from './../_services/paciente.service';
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { AcudienteComponent } from './components/acudiente/acudiente.component';
@@ -26,7 +26,7 @@ import { ProcedimientoComponent } from './components/procedimiento/procedimiento
 import { InstrumentosEquiposService } from '../_services/serviciosInstrumentos/instrumentos-equipos.service';
 import { EspecilidadRequeridaService }  from '../_services/especilidad-requerida.service';
 import { NotificationService } from 'src/_services/notification.service';
-import { PacienteAcudienteService } from 'src/_services/paciente-acudiente.service';
+import { PacienteAcudienteService } from 'src/_services/serviciosComponentes/paciente-acudiente.service';
 
 import { MaterialModule } from './material/material.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
@@ -37,6 +37,7 @@ import { VentanaAuxiliarInstrumentosEquiposComponent } from './components/auxili
 import { AuxiliarDocumentacionComponent } from './components/auxiliar-documentacion/auxiliar-documentacion.component';
 import { AuxiliarMaterialesComponent } from './components/auxiliar-materiales/auxiliar-materiales.component';
 import { HoraFechaComponent } from './components/hora-fecha/hora-fecha.component';
+import { AgendaInfoComponent } from './components/auxiliar-agenda/agenda-info/agenda-info.component';
 import { VentanaAuxiliarDocumentacionComponent } from './components/ventana-auxiliar-documentacion/ventana-auxiliar-documentacion.component';
 import { DocumentoService } from '../_services/documentacion.service';
 import { VentanaAuxiliarMaterialComponent } from './components/ventana-auxiliar-material/ventana-auxiliar-material.component';
@@ -47,6 +48,7 @@ import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialida
 import { VentanaAuxiliarEspecialidadComponent } from './components/auxiliar-especialidad/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/editar-especialidad/editar-especialidad.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { AuxiliarEditarProgramacionComponent } from './components/auxiliar-editar-programacion/auxiliar-editar-programacion.component';
 
 
 @NgModule({
@@ -56,7 +58,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     AuxiliarNavbarComponent,
     PacienteComponent,
     AuxiliarAgendaComponent,
-    AuxiliarProgramacionComponent,
+    AuxiliarCrearProgramacionComponent,
     AcudienteComponent,
     ProcedimientoComponent,
     AuxiliarInstrumentosEquiposComponent,
@@ -66,11 +68,13 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     AuxiliarDocumentacionComponent,
     AuxiliarMaterialesComponent,
     HoraFechaComponent,
+    AgendaInfoComponent,
     VentanaAuxiliarDocumentacionComponent,
     VentanaAuxiliarMaterialComponent,
     VentanaEditarInstrumentoEquipoComponent,
     EditarEspecialidadComponent,
     ConfirmationDialogComponent,
+    AuxiliarEditarProgramacionComponent,
   ],
   imports: [
     BrowserModule,
