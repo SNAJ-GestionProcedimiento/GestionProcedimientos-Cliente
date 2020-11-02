@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+//import {HTTP_INTERCEPTORS } from '@angular/common/http';
+//import {BaseURLInterceptor} from './services/base-url.interceptor';
+//import {HttpErrorInterceptor} from './services/http-error.interceptor';
 
 import { AppComponent } from './app.component';
 import { AuxiliarHomeComponent } from './components/auxiliar-home/auxiliar-home.component';
@@ -92,6 +95,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     DocumentoService,
     EstadoSalaService ,
     UtilityServiceService,
+    //{provide: HTTP_INTERCEPTORS, useClass: BaseURLInterceptor, multi: true},
     ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, ConfirmationDialogComponent]

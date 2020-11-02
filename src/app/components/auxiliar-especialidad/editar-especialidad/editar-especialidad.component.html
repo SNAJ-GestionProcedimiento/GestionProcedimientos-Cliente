@@ -1,6 +1,12 @@
 <div class="mat-elevation-z8">
     <h2>Especialidad a editar</h2>
     <br>
+    <div *ngIf="mensajeError" class="alert alert-danger animated fadeIn">
+        <h3>Error</h3>
+        <p>
+            {{mensajeError}}
+        </p>
+    </div>
     <div class="modal-body row">
         <div class="col-md-6 ContenedorTitulo">
             <label>Código: </label>

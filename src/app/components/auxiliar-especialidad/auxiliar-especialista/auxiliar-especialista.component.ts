@@ -32,6 +32,8 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   especialidadBandera: especialidadesRequeridas;
   especialidadesRequeridas: especialidadesRequeridas[] = [];
 
+  mensajeError: string="";
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
@@ -62,14 +64,23 @@ export class AuxiliarEspecialistaComponent implements OnInit {
     this.serviceEspecialidadRequerida.getEspecialidadRequerida(this.idAgendaProcedimiento).subscribe((rest: especialidadesRequeridas[]) => {
       //console.log("estado desde especialidad, " + this.estados[0].contenido);
       this.especialidadAsociada = especialidadesRequeridas.fromJSON(rest);
+      //console.log("estado desde especialidad, " + JSON.stringify(this.especialidadAsociada));
       if (this.especialidadAsociada != null) {
+        this.parrafo = "";
         this.convertirEstadoLleda(this.especialidadAsociada);
         this.listarEspecialidadesRequeridos();
       } else {
+        this.especialidadAsociada = [];
         this.parrafo = "No hay especialidad asociado al procedimiento";
         this.notificationService.success('No hay especialistas asociados al procedimiento!');
       }
-    });
+      this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada);
+      this.dataEspecialidad.paginator = this.paginator;
+    }, (errorServicio)=>{
+      console.log(errorServicio);
+      this.mensajeError= errorServicio.console.error.error.message;
+    }
+    );
 
   }
 

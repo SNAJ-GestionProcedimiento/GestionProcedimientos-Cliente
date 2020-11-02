@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from './http.service';
 import { editarEpecialidadesRequeridas, especialidadesPrevisualizar, especialidadesRequeridas } from 'src/_models/modelEspecialista/especialidad.model';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -38,3 +39,20 @@ export class EspecilidadRequeridaService extends HttpService {
   }
 
 }
+
+    /*.pipe(
+      catchError(error=>{
+        let errorMensaje='';
+        if (error instanceof ErrorEvent){
+          //error en el cliente
+          errorMensaje=`Client-side error: ${error.error.message}`;
+        }else{
+          //error del back
+          errorMensaje=`Server-side error: ${error.status} ${error.message}`;
+        }
+
+        //mensaje fijo en la pantalla
+        console.log("error del back: "+errorMensaje);
+        return throwError(errorMensaje);
+      })
+    )*/
