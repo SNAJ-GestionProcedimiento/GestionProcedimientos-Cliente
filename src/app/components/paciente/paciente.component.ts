@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
@@ -7,7 +7,8 @@ import { TipoId } from 'src/_models/tipoId.model';
 
 import { PacienteService } from 'src/_services/paciente.service';
 import { TipoIdService } from 'src/_services/tipo-id.service';
-import { PacienteAcudienteService } from 'src/_services/paciente-acudiente.service';
+import { PacienteAcudienteService } from 'src/_services/serviciosComponentes/paciente-acudiente.service';
+import { EditarComponentesService } from 'src/_services/serviciosComponentes/editar-componentes.service';
 
 import { DateHelper } from 'src/_helpers/date.helper';
 import { GenderHelper } from 'src/_helpers/gender.helper';
@@ -22,7 +23,7 @@ export class PacienteComponent implements OnInit {
 
   public tiposIdentidicacion:Array<TipoId>;
 
-  public paciente: Paciente;
+  public paciente: Paciente = new Paciente();
   public pacienteId:string;
   public idAcudiente:string;
   public observacionPaciente:string;
@@ -36,7 +37,8 @@ export class PacienteComponent implements OnInit {
     private formBuilder:FormBuilder,
     private pacienteService: PacienteService,
     private tipoIdService: TipoIdService,
-    private pacienteAcudienteService:PacienteAcudienteService
+    private pacienteAcudienteService:PacienteAcudienteService,
+    private editarComponentesService:EditarComponentesService
     ) {
       this.buildpacienteForm();
   }
@@ -44,17 +46,30 @@ export class PacienteComponent implements OnInit {
   ngOnInit(): void {  
     this.setTiposID();
     this.pacienteAcudienteService.idAcudiente.subscribe(value=> this.idAcudiente = value);
+    this.editarComponentesService.idPaciente.subscribe(value=>{
+      if(value!=''){
+        this.pacienteId=value;
+        this.pacienteForm.get('id').setValue(this.pacienteId);
+        this.pacienteForm.get('id').disable();
+      }
+    });
+    this.editarComponentesService.observacion.subscribe(value => {
+      if(value!=''){
+        this.observacionPaciente=value;
+        this.pacienteForm.get('observation').setValue(this.observacionPaciente);
+      }
+    })
   }
-
+  /** Gets */
   public getObjPaciente(){
     return this.paciente;
   }
-
   public getObservacion(){
     return this.observacionPaciente;
   }
 
-  private buildpacienteForm(){
+  /**Metodo que crea el formulario */
+  private  buildpacienteForm(){
     this.pacienteForm = this.formBuilder.group({
       documentType:['',[Validators.required]],
       id:['',[Validators.required]],
@@ -82,7 +97,6 @@ export class PacienteComponent implements OnInit {
       }else{
         this.pacAcudiente = true;
         this.paciente=null;
-        this.deleteForm();
       }
     });
     this.pacienteForm.get("documentType").valueChanges
@@ -181,15 +195,15 @@ export class PacienteComponent implements OnInit {
     let res = await this.pacienteService.get(this.pacienteId).toPromise();
     this.paciente = Paciente.fromJSON(res);
     if (this.paciente != null){
-      if(this.pacienteForm.get('id').value == this.paciente.identificacion){
+      if(this.pacienteId == this.paciente.identificacion){
         this.completeForm();
         this.disableForm();
+      }else{
+        this.deleteForm();
+        this.paciente = new Paciente();
+        this.paciente.identificacion = this.pacienteId;
+        this.enableForm();
       }
-    }else{
-      this.deleteForm();
-      this.paciente = new Paciente();
-      this.paciente.identificacion = this.pacienteId;
-      this.enableForm();
     }
   }
 
@@ -199,9 +213,6 @@ export class PacienteComponent implements OnInit {
   }
 
   /**Envios */
-  async createAgenda(){
-    
-  }
 
   public cambiarIdPaciente(){
     this.pacienteAcudienteService.cambiarIdPaciente(this.pacienteId);

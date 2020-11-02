@@ -6,20 +6,37 @@ import { editInstrumentosEquipos, InstrumentosEquipos } from '../../_models/mode
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class InstrumentosEquiposService extends HttpService{
+export class InstrumentosEquiposService extends HttpService {
 
   urlGeneral: string;
-  constructor(protected http: HttpClient) { 
+  constructor(protected http: HttpClient) {
     super(http);
   }
 
 
-  getInstrumentoEquipo(idAgendaProcedimiento: number): Observable<InstrumentosEquipos[]>{
+  getInstrumentoEquipo(idAgendaProcedimiento: number): Observable<InstrumentosEquipos[]> {
     return this.http.get<InstrumentosEquipos[]>(`${this.apiURL}listAgendaEquipo/${idAgendaProcedimiento}`);
   }
 
-  editarInstrumentoEquipo(instrumentEquipo: editInstrumentosEquipos): Observable<editInstrumentosEquipos>{
-    console.log("desde servicio: "+instrumentEquipo);
+  editarInstrumentoEquipo(instrumentEquipo: editInstrumentosEquipos): Observable<editInstrumentosEquipos> {
     return this.http.put<editInstrumentosEquipos>(`${this.apiURL}editAgendaEquipo`, instrumentEquipo);
   }
+
+  getAllIntrumentos(): Observable<InstrumentosEquipos[]> {
+    return this.http.get<InstrumentosEquipos[]>(`${this.apiURL}getAllEquipos`);
+  }
+
+  addInstrumento(instrumentEquipo: editInstrumentosEquipos): Observable<editInstrumentosEquipos> {
+    return this.http.post<editInstrumentosEquipos>(`${this.apiURL}addAgendaEquipo`, instrumentEquipo);
+  }
+
+  getInstrumentosRequeridos(idAgendaProcedimiento: number, idModalidad: number): Observable<InstrumentosEquipos[]> {
+    return this.http.get<InstrumentosEquipos[]>(`${this.apiURL}getEquiposProc/${idAgendaProcedimiento}/${idModalidad}`);
+  }
+
+  deleteInstrumento(instrumentEquipo: number): Observable<any> {
+    const url=this.apiURL+"deleteAgendaEquipo/"+instrumentEquipo.toString();
+    return this.http.delete(`${url}`);
+  }
+
 }

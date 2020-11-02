@@ -11,7 +11,7 @@ export class ProcedimientoService extends HttpService {
     protected http: HttpClient
   ) { 
     super(http);
-    this.apiURL += 'getProcedimiento'
+    this.apiURL += 'getProcedimiento';
   }
 
   /**

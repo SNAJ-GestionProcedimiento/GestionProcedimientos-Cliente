@@ -1,3 +1,4 @@
+import { DateHelper } from 'src/_helpers/date.helper';
 export class Acudiente{
     /**
      * Identificador del objeto Persona
@@ -35,6 +36,10 @@ export class Acudiente{
      * Genero del acudiente
      */
     public genero : string;
+    /**
+     * Edad del paciente
+     */
+    public edad : number;
 
     constructor(){  }
 
@@ -55,6 +60,7 @@ export class Acudiente{
         acudiente.direccion = json.personas[0].direccion;
         acudiente.nombre = json.personas[0].nombre;
         acudiente.genero = json.personas[0].genero;
+        acudiente.edad = DateHelper.getAge(new Date(json.personas[0].fechaNacimiento));
         
         return acudiente;
     }

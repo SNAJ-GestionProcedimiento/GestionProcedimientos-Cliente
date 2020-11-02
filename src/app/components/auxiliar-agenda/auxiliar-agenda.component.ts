@@ -1,13 +1,20 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AgendaInfoComponent } from 'src/app/components/auxiliar-agenda/agenda-info/agenda-info.component';
 
-import { ProcedimientoAgenda } from 'src/_models/procedimiento-agenda.model';
+import { ProcedimientoAgenda } from 'src/_models/models_Agenda/procedimiento-agenda.model';
 
-import { AgendaProcedimientoService } from 'src/_services/agenda-procedimiento.service';
+import { AgendaListarService } from 'src/_services/serviciosAgenda/agenda-listar.service';
 
 import { DateHelper } from 'src/_helpers/date.helper';
+import { AgendaObtenerService } from 'src/_services/serviciosAgenda/agenda-obtener.service';
+import { AgendaInfoService } from 'src/_services/serviciosComponentes/agenda-info.service';
+import { AuxiliarEditarProgramacionComponent } from '../auxiliar-editar-programacion/auxiliar-editar-programacion.component';
+
 
 @Component({
   selector: 'app-auxiliar-agenda',
@@ -32,15 +39,17 @@ export class AuxiliarAgendaComponent implements OnInit {
     'tipoIdPac',
     'idPac',
     'edadPac',
-    'acciones'
+    'acciones',
     ];
   public dataSource;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private agendaProcedimientoService:AgendaProcedimientoService,
-    private formBuilder:FormBuilder
+    private matDialog: MatDialog,
+    private agendaProcedimientoService:AgendaListarService,
+    private formBuilder:FormBuilder,
+    private router:Router
     ) { 
       this.buildbusquedaForm();
     }
@@ -56,12 +65,19 @@ export class AuxiliarAgendaComponent implements OnInit {
       name:['',[]],
     });
   }
+  /**Eventos del buscador */
   selectEvent(item) {}
   onChangeSearch($event){}
 
   /**Eventos */
-  public editarAgenda(element){
-    console.log(element);
+  public verAgenda(idAgenda:string, idPaciente:string){
+    AgendaInfoComponent.idPaciente = idPaciente;
+    AgendaInfoComponent.idAgendaProcedimiento = idAgenda;
+
+    const dialogoConfig = new MatDialogConfig();
+    dialogoConfig.autoFocus = true;
+    dialogoConfig.width = "60%";
+    this.matDialog.open(AgendaInfoComponent,dialogoConfig);
   }
 
   /**Peticiones */
@@ -69,23 +85,22 @@ export class AuxiliarAgendaComponent implements OnInit {
     let res:any = await this.agendaProcedimientoService.list().toPromise();
     if(res!=null){
       this.agenda = new Array<ProcedimientoAgenda>();
-      console.log(res)
       res.forEach(element => {
-        let procAgenda = new ProcedimientoAgenda(
-          element.fechaHora,
-          element.fechaHora,
-          element.codigoProcedimiento,
-          element.nombreProcedimiento,
-          element.tipoProcedimiento,
-          '',
-          '',
-          element.identificacionPac,
-          ''
-        );
+        let procAgenda = ProcedimientoAgenda.fromJSON(element);
         this.agenda.push(procAgenda);
       });
       this.dataSource = new MatTableDataSource<any>(this.agenda);
       this.dataSource.paginator = this.paginator;
     }
   }
+
+  public editarAgenda(element){
+    AuxiliarEditarProgramacionComponent.recibido = element;
+    this.router.navigateByUrl('programacion/editar');
+  }
+
+  public agendarOnclick(){
+    this.router.navigateByUrl('programacion/crear');
+  }
+
 }

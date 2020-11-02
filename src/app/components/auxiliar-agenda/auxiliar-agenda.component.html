@@ -46,7 +46,7 @@
         <!-- Columna de Hora del procedimiento -->
         <ng-container matColumnDef="horaProc">
           <th mat-header-cell *matHeaderCellDef> Hora </th>
-          <td mat-cell *matCellDef="let element"> {{element.fechaProc}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.horaProc}} </td>
         </ng-container>
         <!-- Columna de Codigo del procedimiento-->
         <ng-container matColumnDef="codigoProc">
@@ -81,21 +81,19 @@
         <!-- Columna de  Edad del paciente-->
         <ng-container matColumnDef="edadPac">
           <th mat-header-cell *matHeaderCellDef> Edad </th>
-          <td mat-cell *matCellDef="let element"> 25 </td>
+          <td mat-cell *matCellDef="let element"> {{element.edadPac}} </td>
         </ng-container>
 
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef> Acciones </th>
           <td mat-cell *matCellDef="let element">
-              <button mat-raised-button type="button" matTooltip="Ver" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" (click)="editarEspecialidad(element)">
+              <button mat-raised-button type="button" matTooltip="Ver" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" 
+              (click)="verAgenda(element.idAgendaProcedimiento,element.idPac)">
                 <i class="material-icons">visibility</i>
               </button>
-              <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" (click)="editarEspecialidad(element)">
+              <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" (click)="editarAgenda(element)">
                   <i class="material-icons">edit</i>
               </button>
-              <button mat-raised-button type="button" matTooltip="Eliminar" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" (click)="editarEspecialidad(element)">
-                <i class="material-icons">delete_forever</i>
-            </button>
       </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -103,6 +101,12 @@
       </table>
     
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+  <!--Boton de agregar nueva programacion-->
+  <div class="row justify-content-end mt-4">
+    <div class="col-auto">
+      <button type="button" class="btn btn-info" (click)="agendarOnclick()">Agendar procedimiento</button>
     </div>
   </div>
 </div>

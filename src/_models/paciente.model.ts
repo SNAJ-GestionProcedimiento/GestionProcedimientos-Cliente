@@ -1,4 +1,4 @@
-import { newArray } from '@angular/compiler/src/util';
+import { DateHelper } from 'src/_helpers/date.helper';
 
 export class Paciente{
     /**
@@ -37,6 +37,10 @@ export class Paciente{
      * Genero del paciente
      */
     public genero : string;
+    /**
+     * Edad del paciente
+     */
+    public edad : number;
 
     constructor(){  }
 
@@ -57,28 +61,9 @@ export class Paciente{
         paciente.direccion = json.personas[0].direccion;
         paciente.nombre = json.personas[0].nombre;
         paciente.genero = json.personas[0].genero;
+        paciente.edad = DateHelper.getAge(new Date(json.personas[0].fechaNacimiento));
         
         return paciente;
-    }
-
-    public static listPaciente(json):Paciente[]{
-        if (json.personas.length == 0) { return null;}
-        let pacientes=new Array<Paciente>();
-        json.personas.forEach(element => {
-            var paciente  =new Paciente();
-            paciente.idPersona = element.idPersona;
-            paciente.identificacion = element.identificacion;
-            paciente.tipoIdentificacion = element.tipoIdentificacion;
-            paciente.fechaNacimiento = element.fechaNacimiento;
-            paciente.correo = element.correo;
-            paciente.telefono = element.telefono;
-            paciente.direccion = element.direccion;
-            paciente.nombre = element.nombre;
-            paciente.genero = element.genero;
-
-            pacientes.push(paciente);
-        });
-        return pacientes;
     }
 }
 

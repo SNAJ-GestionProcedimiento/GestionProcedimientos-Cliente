@@ -7,7 +7,8 @@ import { TipoId } from 'src/_models/tipoId.model';
 
 import { AcudienteService } from '../../../_services/acudiente.service';
 import { TipoIdService } from 'src/_services/tipo-id.service'; 
-import { PacienteAcudienteService } from 'src/_services/paciente-acudiente.service';
+import { PacienteAcudienteService } from 'src/_services/serviciosComponentes/paciente-acudiente.service';
+import { EditarComponentesService } from 'src/_services/serviciosComponentes/editar-componentes.service';
 
 import { DateHelper } from 'src/_helpers/date.helper';
 import { GenderHelper } from 'src/_helpers/gender.helper';
@@ -18,8 +19,10 @@ import { GenderHelper } from 'src/_helpers/gender.helper';
   styleUrls: ['./acudiente.component.css']
 })
 export class AcudienteComponent implements OnInit {
+
   public tiposIdentidicacion:Array<TipoId>;
-  public acudiente:Acudiente;
+
+  public acudiente:Acudiente = new Acudiente();
   public acudienteId:string;
   public pacienteId:string;
   public fecNacMaxima:string;
@@ -33,7 +36,8 @@ export class AcudienteComponent implements OnInit {
     private formBuilder:FormBuilder,
     private acudienteService: AcudienteService,
     private tipoIdService: TipoIdService,
-    private pacienteAcudienteService:PacienteAcudienteService
+    private pacienteAcudienteService:PacienteAcudienteService,
+    private editarComponentesService:EditarComponentesService
     ) { 
     this.buildacudienteForm();
   }
@@ -41,6 +45,12 @@ export class AcudienteComponent implements OnInit {
   ngOnInit(): void {
     this.setTiposID();
     this.pacienteAcudienteService.idPaciente.subscribe(value=> this.pacienteId = value);
+    this.editarComponentesService.idAcudiente.subscribe(value => {
+      if(value!=''){
+        this.acudienteId=value;
+        this.acudienteForm.get('id').setValue(this.acudienteId);
+      }
+    });
     this.fecNacMaxima = DateHelper.dateToStr(DateHelper.getMaxDate(new Date()));
   }
 
@@ -167,22 +177,24 @@ export class AcudienteComponent implements OnInit {
     let res = await this.acudienteService.get(this.acudienteId).toPromise();
     this.acudiente = Acudiente.fromJSON(res);
     if (this.acudiente != null){
-      let edad = DateHelper.getAge(new Date(this.acudiente.fechaNacimiento));
-      console.log(edad);
-      if(edad > 18){
-        this.completeForm();
-        this.disableForm();
-        this.acuMenor=false;
-      }else{
-        this.acuMenor=true;
-        this.acudiente=null;
-        this.deleteForm();
+      if(this.acudienteId == this.acudiente.identificacion){
+        let edad = DateHelper.getAge(new Date(this.acudiente.fechaNacimiento));
+        if(edad > 18){
+          this.completeForm();
+          this.disableForm();
+          this.acuMenor=false;
+        }else{
+          this.acuMenor=true;
+          this.acudiente=null;
+          this.deleteForm();
+        }
       }
-    }else{
-      this.deleteForm();
-      this.acudiente = new Acudiente();
-      this.acudiente.identificacion = this.acudienteId;
-      this.enableForm();
+      else{
+        this.deleteForm();
+        this.acudiente = new Acudiente();
+        this.acudiente.identificacion = this.acudienteId;
+        this.enableForm();
+      }
     }
   }
 

@@ -1,0 +1,31 @@
+<!-- Edicion de un procedimiento -->
+<div class="container">
+    <!-- datos del paciente -->
+    <app-paciente></app-paciente>
+    <hr>
+    <!-- datos del acudiente si es necesario-->
+    <app-acudiente></app-acudiente>
+    <hr>
+    <!-- datos del procedimiento -->
+    <app-procedimiento></app-procedimiento>
+    <hr>
+    <!-- Fecha hora procedimiento -->
+    <app-hora-fecha></app-hora-fecha>
+    <hr>
+    <br>
+    <!-- documentacion -->
+    <app-auxiliar-documentacion [codigoProcedimientoObtenido]="codigoProcedimiento"></app-auxiliar-documentacion>
+    <!-- materiales -->
+    <app-auxiliar-materiales [codigoProcedimientoObtenido]="codigoProcedimiento"></app-auxiliar-materiales>
+    <!-- instrumentos y equipos -->
+    <app-auxiliar-instrumentos-equipos [codigoProcedimientoObtenido]="codigoProcedimiento"></app-auxiliar-instrumentos-equipos>
+    <!-- Especialistas -->
+    <app-auxiliar-especialista [codigoProcedimientoObtenido]="codigoProcedimiento"></app-auxiliar-especialista>
+    <!-- PROCEDIMIENTO ACCIONES -->
+    <div class="row justify-content-end mt-4 mb-4">
+        <div class="col-auto">
+            <button type="button" class="btn btn-danger" (click)="cancelarOnclick()">Cancelar</button>
+            <button type="button" class="btn btn-info ml-3" (click)="editarOnclick()">Editar Agenda</button>
+        </div>
+    </div>
+</div>
