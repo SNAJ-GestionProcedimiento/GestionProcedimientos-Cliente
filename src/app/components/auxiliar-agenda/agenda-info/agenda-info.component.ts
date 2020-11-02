@@ -51,8 +51,6 @@ export class AgendaInfoComponent implements OnInit {
     this.agendaVer = AgendaVer.fromJSON(res);
     this.idAcudiente = this.agendaVer.idAcu;
     this.setAcudiente();
-    console.log(res);
-    console.log(this.agendaVer);
   }
   public async setPaciente(idPaciente:string){
     let res = await this.pacienteService.get(idPaciente).toPromise();

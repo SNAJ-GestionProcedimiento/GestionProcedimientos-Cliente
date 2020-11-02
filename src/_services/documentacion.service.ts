@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from '../_services/http.service';
 import { DocumentoRequerido } from '../_models/documento.model';
 import { Observable } from 'rxjs';
-import {ProcedimientoModalidad} from '../_models/procedimientoModalidad.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,5 @@ export class DocumentoService extends HttpService{
   getDocumentosProcedimiento(idProcedimiento: number, idModalidad: number): Observable<DocumentoRequerido[]>{
     return this.http.get<DocumentoRequerido[]>(`${this.apiURL}getDocumentosProc/${idProcedimiento}/${idModalidad}`);
   }
- 
- 
  
 }

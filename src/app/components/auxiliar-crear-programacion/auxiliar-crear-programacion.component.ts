@@ -7,12 +7,14 @@ import { AcudienteComponent } from 'src/app/components/acudiente/acudiente.compo
 import { HoraFechaComponent } from 'src/app/components/hora-fecha/hora-fecha.component';
 import { AgendaCrear } from 'src/_models/models_Agenda/agenda-crear.model';
 import { AgendaCrearService } from 'src/_services/serviciosAgenda/agenda-crear.service';
-import {AuxiliarDocumentacionComponent} from '../auxiliar-documentacion/auxiliar-documentacion.component';
+import {AuxiliarDocumentacionComponent} from '../../components/auxiliar-documentacion/auxiliar-documentacion.component';
+import {AuxiliarMaterialesComponent} from '../../components/auxiliar-materiales/auxiliar-materiales.component'
 
 import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-Equipos/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from '../auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
 import { EditarComponentesService } from 'src/_services/serviciosComponentes/editar-componentes.service';
+
 
 @Component({
   selector: 'app-auxiliar-crear-programacion',
@@ -24,6 +26,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   @ViewChild(AuxiliarInstrumentosEquiposComponent) listarInstrumentos: AuxiliarInstrumentosEquiposComponent;
   @ViewChild(AuxiliarEspecialistaComponent) listarEspecialidad: AuxiliarEspecialistaComponent;
   @ViewChild(AuxiliarDocumentacionComponent) listarDocumentos: AuxiliarDocumentacionComponent; 
+  @ViewChild(AuxiliarMaterialesComponent) listarMateriales: AuxiliarMaterialesComponent;
   @ViewChild(ProcedimientoComponent) procedimientoCmp: ProcedimientoComponent;
   @ViewChild(PacienteComponent) pacienteCmp: PacienteComponent;
   @ViewChild(AcudienteComponent) acudienteCmp: AcudienteComponent;
@@ -57,7 +60,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
 
   receiveMessage($event) {
     this.message = $event
-    //console.log($event);
+    //($event);
   }
 
   ngOnInit(): void {
@@ -72,8 +75,12 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   }
 
   listarDocumentosDesdeProgramacion(){
-    this.listarDocumentos.listarDocumentosRequeridos();
+    //this.listarDocumentos.listarDocumentosRequeridos();
     this.listarDocumentos.listarDocumentosPorCodigoModalidad();
+  }
+
+  listarMaterialesDesdeProgramacion(){
+    this.listarMateriales.listarMaterialesPorCodigoModalidad();
   }
 
   crearAgendaonClick(){
@@ -91,8 +98,11 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     /**Creacion del modelo */
     let agenda:AgendaCrear = AgendaCrear.fromOBJECTS(paciente,acudiente,procedimiento,agendamiento,observacion,estadoCama,'1');
 
-    console.log(agenda.parseToJSON());
     this.crearAgenda(agenda);
+    this.listarInstrumentosDesdeProgramacion();
+    this.listarDocumentosDesdeProgramacion();
+    this.listarMaterialesDesdeProgramacion();
+    
     
   }
 
@@ -100,7 +110,6 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   public async crearAgenda(agenda:AgendaCrear){
     let res:any = await this.agendaCrearService.create(agenda).toPromise();
     if(res!=null){
-      console.log(res);
       this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
       this.listarInstrumentosDesdeProgramacion();
     }

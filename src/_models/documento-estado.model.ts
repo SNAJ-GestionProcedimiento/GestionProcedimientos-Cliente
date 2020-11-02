@@ -1,4 +1,3 @@
-
 export interface estadoDocClass {
     valor: string;
     contenido: string;

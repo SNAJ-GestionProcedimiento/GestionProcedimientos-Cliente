@@ -71,7 +71,6 @@ export class HoraFechaComponent implements OnInit {
     });
     this.horafechaForm.get('hour').valueChanges
     .subscribe(value =>{
-      console.log(typeof(value));
       this.agendamiento.hora = value;
     });
     this.horafechaForm.get('stateSchedule').valueChanges
@@ -123,7 +122,6 @@ export class HoraFechaComponent implements OnInit {
   public async setAgendamiento(idAgendaProcedimiento:string){
     let res = await this.agendaObtenerService.get(idAgendaProcedimiento).toPromise();
     this.agendamiento = Agendamiento.fromJSON(res);
-    console.log(this.agendamiento);
     if(this.agendamiento!=null){
       this.CompleteForm();
     }
