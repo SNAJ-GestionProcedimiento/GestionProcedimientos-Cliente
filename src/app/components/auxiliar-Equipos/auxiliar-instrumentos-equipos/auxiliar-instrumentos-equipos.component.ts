@@ -76,6 +76,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.serviceIntrumentosEquipos.getInstrumentoEquipo(this.idAgendaProcedimiento).subscribe((result: InstrumentosEquipos[]) => {
       this.arrayInstrumentos = InstrumentosEquipos.fromJSON(result);
       if (this.arrayInstrumentos != null) {
+        this.parrafo = "";
         this.convertirEstadoLleda(this.arrayInstrumentos);
         this.listarIntrumentosRequeridos();
       } else {

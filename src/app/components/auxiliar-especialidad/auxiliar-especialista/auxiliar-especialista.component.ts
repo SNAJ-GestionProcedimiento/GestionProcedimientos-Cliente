@@ -87,9 +87,13 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   listarEspecialidadesRequeridos() {
     //console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
     //parseInt(this.idModalidad)
+    //console.log("desde listar");
     if (parseInt(this.idModalidad) != null) {
       this.serviceEspecialidadRequerida.getEspecialidadesRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
-        (restultado: especialidadesRequeridas[]) => this.especialidadesRequeridas = restultado);
+        (restultado: especialidadesRequeridas[]) => {
+          this.especialidadesRequeridas = restultado;
+        //console.log("resultado devuelto desde especialidad requerido: "+JSON.stringify(restultado))
+      });
     } else {
       this.notificationService.success('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
     }
@@ -107,8 +111,15 @@ export class AuxiliarEspecialistaComponent implements OnInit {
 
   validarEspecialidadRequerido(especialidad: especialidadesRequeridas): Boolean {
     let res = false;
+    let bandera1;
+    let bandera2;
+    //console.log("entre!");
     for (let i = 0; i < this.especialidadesRequeridas.length; i++) {
+      //console.log("requerida: "+this.especialidadesRequeridas[i].nombreEspecialidad+ " especialidad: "+especialidad.nombreEspecialidad);
       if (this.especialidadesRequeridas[i].nombreEspecialidad == especialidad.nombreEspecialidad) {
+        bandera1=this.especialidadesRequeridas[i].nombreEspecialidad;
+        bandera2=this.especialidadesRequeridas[i].cantidad;
+        //console.log("cantidad desde especialidad: "+bandera2);
         res = true;
         break;
       }

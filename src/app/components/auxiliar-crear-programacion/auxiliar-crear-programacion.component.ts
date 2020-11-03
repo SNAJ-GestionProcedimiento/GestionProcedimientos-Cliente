@@ -111,6 +111,10 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     let res:any = await this.agendaCrearService.create(agenda).toPromise();
     if(res!=null){
       this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
+      //console.log("desde crear agenda, código que se recibe: "+JSON.stringify(res.idAgendaProcedimiento));
+      this.idAgendaProcedimiento=res.idAgendaProcedimiento;
+      //console.log("desde crear agenda, código que se recibe: "+this.idAgendaProcedimiento);
+      this.utilityService.changeIdAgendaProcedimiento(this.idAgendaProcedimiento);
       this.listarInstrumentosDesdeProgramacion();
     }
   }

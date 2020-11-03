@@ -31,7 +31,9 @@ export class especialidadesRequeridas {
    */
   public estado: string;
 
-  public static cant: number;
+  
+  public cantidad: number;
+
   constructor() {
   }
 
