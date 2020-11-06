@@ -39,20 +39,3 @@ export class EspecilidadRequeridaService extends HttpService {
   }
 
 }
-
-    /*.pipe(
-      catchError(error=>{
-        let errorMensaje='';
-        if (error instanceof ErrorEvent){
-          //error en el cliente
-          errorMensaje=`Client-side error: ${error.error.message}`;
-        }else{
-          //error del back
-          errorMensaje=`Server-side error: ${error.status} ${error.message}`;
-        }
-
-        //mensaje fijo en la pantalla
-        console.log("error del back: "+errorMensaje);
-        return throwError(errorMensaje);
-      })
-    )*/

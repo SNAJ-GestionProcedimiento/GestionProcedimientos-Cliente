@@ -126,3 +126,12 @@ export class especialidadesPrevisualizar {
     this.estado=estado;
   }
 }
+
+export class conteoRequeridos {
+  especialidad: especialidadesRequeridas;
+  conteo: number;
+  constructor(especialidad: especialidadesRequeridas){
+    this.especialidad=especialidad;
+    this.conteo=0;
+  }
+}

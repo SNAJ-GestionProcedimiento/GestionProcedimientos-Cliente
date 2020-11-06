@@ -1,17 +1,19 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { EspecilidadRequeridaService } from 'src/_services/especilidad-requerida.service';
-import { especialidadesRequeridas } from 'src/_models/modelEspecialista/especialidad.model';
+import { conteoRequeridos, especialidadesRequeridas } from 'src/_models/modelEspecialista/especialidad.model';
 import * as notificationService from 'src/_services/notification.service';
 import { estadoClass, obtenerEstado } from 'src/_models/modelInstrumento/instrumentos-equipos-estado.model';
 import { VentanaAuxiliarEspecialidadComponent } from '../ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { EditarEspecialidadComponent } from '../editar-especialidad/editar-especialidad.component';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { startWith, tap } from 'rxjs/operators';
 
 @Component({
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-auxiliar-especialista',
   templateUrl: './auxiliar-especialista.component.html',
   styleUrls: ['./auxiliar-especialista.component.css']
@@ -31,16 +33,21 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   idModalidad: string;
   especialidadBandera: especialidadesRequeridas;
   especialidadesRequeridas: especialidadesRequeridas[] = [];
+  contadoresRequeridos: conteoRequeridos[] = [];
+  bandera: number = 0;
+  posicion: number=0;
 
-  mensajeError: string="";
+  mensajeError: string = "";
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+
 
   constructor(
     private dialogo: MatDialog,
     private serviceEspecialidadRequerida: EspecilidadRequeridaService,
     private notificationService: notificationService.NotificationService,
-    private utilityService: UtilityServiceService
+    private utilityService: UtilityServiceService,
   ) { }
 
   ngOnInit(): void {
@@ -51,12 +58,20 @@ export class AuxiliarEspecialistaComponent implements OnInit {
     this.utilityService.customEspecialidadAdd.subscribe(msg => {
       this.especialidadBandera = msg;
       if (this.idProcedimiento != "") {
+        //this.colocarContadoresCeros();
         this.listarEspecialidades();
       }
     });
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
     this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
   }
+
+  /* ngAfterViewInit() {
+     this.paginator.page
+       .pipe(
+         tap(() => this.dataEspecialidad.MatTableDataSource(this.especialidadAsociada))
+       ).subscribe();
+   }*/
 
   //método para en listar los equipos asociados a un procedimiento
   listarEspecialidades() {
@@ -68,6 +83,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
       if (this.especialidadAsociada != null) {
         this.parrafo = "";
         this.convertirEstadoLleda(this.especialidadAsociada);
+        //this.colocarContadoresCeros();
         this.listarEspecialidadesRequeridos();
       } else {
         this.especialidadAsociada = [];
@@ -76,26 +92,36 @@ export class AuxiliarEspecialistaComponent implements OnInit {
       }
       this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada);
       this.dataEspecialidad.paginator = this.paginator;
-    }, (errorServicio)=>{
+    }, (errorServicio) => {
       console.log(errorServicio);
-      this.mensajeError= errorServicio.console.error.error.message;
+      this.mensajeError = errorServicio.console.error.error.message;
     }
     );
-
   }
 
   listarEspecialidadesRequeridos() {
-    //console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
-    //parseInt(this.idModalidad)
-    //console.log("desde listar");
     if (parseInt(this.idModalidad) != null) {
       this.serviceEspecialidadRequerida.getEspecialidadesRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
         (restultado: especialidadesRequeridas[]) => {
           this.especialidadesRequeridas = restultado;
-        //console.log("resultado devuelto desde especialidad requerido: "+JSON.stringify(restultado))
-      });
+          this.contadoresRequeridos = [];
+          this.rellenarContador();
+          //console.log("resultado devuelto desde especialidad requerido: " + JSON.stringify(restultado))
+        });
     } else {
       this.notificationService.success('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
+    }
+  }
+
+  rellenarContador() {
+    for (let i = 0; i < this.especialidadesRequeridas.length; i++) {
+      this.contadoresRequeridos.push(new conteoRequeridos(this.especialidadesRequeridas[i]));
+    }
+  }
+
+  colocarContadoresCeros() {
+    for (let i = 0; i < this.contadoresRequeridos.length; i++) {
+      this.contadoresRequeridos[i].conteo = 0;
     }
   }
 
@@ -111,20 +137,22 @@ export class AuxiliarEspecialistaComponent implements OnInit {
 
   validarEspecialidadRequerido(especialidad: especialidadesRequeridas): Boolean {
     let res = false;
-    let bandera1;
-    let bandera2;
-    //console.log("entre!");
-    for (let i = 0; i < this.especialidadesRequeridas.length; i++) {
+    for (let i = 0; i < this.contadoresRequeridos.length; i++) {
       //console.log("requerida: "+this.especialidadesRequeridas[i].nombreEspecialidad+ " especialidad: "+especialidad.nombreEspecialidad);
-      if (this.especialidadesRequeridas[i].nombreEspecialidad == especialidad.nombreEspecialidad) {
-        bandera1=this.especialidadesRequeridas[i].nombreEspecialidad;
-        bandera2=this.especialidadesRequeridas[i].cantidad;
-        //console.log("cantidad desde especialidad: "+bandera2);
-        res = true;
-        break;
+      if (this.contadoresRequeridos[i].especialidad.codigoEspecialidad == especialidad.codigoEspecialidad) {
+        if (this.contadoresRequeridos[i].especialidad.cantidad > this.contadoresRequeridos[i].conteo) {
+          //console.log("cantidad desde especialidad: "+bandera2);
+          res = true;
+          this.bandera++;
+          this.posicion = i;
+          break;
+        }
       }
     }
     return res;
+  }
+  cambiarContador(posicion: number) {
+    this.contadoresRequeridos[posicion].conteo = this.contadoresRequeridos[posicion].conteo + 1;
   }
 
   eliminarDato(especialidad: especialidadesRequeridas) {

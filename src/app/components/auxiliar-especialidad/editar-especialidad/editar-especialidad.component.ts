@@ -8,7 +8,6 @@ import { EspecilidadRequeridaService } from 'src/_services/especilidad-requerida
 import { PacienteService } from 'src/_services/paciente.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Paciente } from 'src/_models/paciente.model';
-import { GenderHelper } from 'src/_helpers/gender.helper';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -18,7 +17,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class EditarEspecialidadComponent implements OnInit {
 
-  public paciente: Paciente = new Paciente();
+  paciente: Paciente = new Paciente();
   datosEspecialidad: especialidadesRequeridas;
   especialidadEditable: editarEpecialidadesRequeridas;
   estados: estadoClass[];
@@ -97,10 +96,11 @@ export class EditarEspecialidadComponent implements OnInit {
   /**Peticiones */
   async setPaciente() {
     let res = await this.pacienteService.get(this.identificacionEspecialista).toPromise();
-    console.log(JSON.stringify(res));
-    if (res != null) {
-      console.log("arreglo desde el if: " + JSON.stringify(res.personas[0].nombre));
-      this.nombreEspecialista = res.personas[0].nombre;
+    //console.log(JSON.stringify(res));
+    this.paciente = Paciente.fromJSON(res);
+    if (this.paciente != null){
+      //console.log("arreglo desde el if: " + this.paciente.nombre);
+      this.nombreEspecialista = this.paciente.nombre;
       //this.registroMedico="123";
       this.completeForm();
       this.disableForm();
