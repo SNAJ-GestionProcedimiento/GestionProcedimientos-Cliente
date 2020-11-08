@@ -157,7 +157,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
             }
 
           }
-          //this.utilityService.changeIntrumentoAdd(this.datosAdd);
+          this.utilityService.changeEspecialidadAdd(this.especialidadBandera);
           this.dialogo.closeAll();
         }
       });

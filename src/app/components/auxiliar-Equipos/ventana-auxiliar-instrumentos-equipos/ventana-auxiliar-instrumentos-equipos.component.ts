@@ -138,7 +138,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
               this.editInstrument = new editInstrumentosEquipos(this.datosSeleccionador[i].id, this.idProcedimiento, this.datosSeleccionador[i].codigoEquipo.toString(), "PEND", this.datosSeleccionador[i].cantidad);
               let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe();
             }else{ //si esta el instrimento al agregar en la lista de la agenda, se edita
-              this.editInstrument = new editInstrumentosEquipos(resultado.id, this.idProcedimiento, resultado.codigoEquipo.toString(), "PEND", resultado.cantidad+1);
+              this.editInstrument = new editInstrumentosEquipos(resultado.id, this.idProcedimiento, resultado.codigoEquipo.toString(), "PEND", parseInt(resultado.cantidad.toString())+1);
               let res = this.serviceIntrumentosEquipos.editarInstrumentoEquipo(this.editInstrument).subscribe();
             }
             this.utilityService.changeIntrumentoAdd(this.datosAdd);
