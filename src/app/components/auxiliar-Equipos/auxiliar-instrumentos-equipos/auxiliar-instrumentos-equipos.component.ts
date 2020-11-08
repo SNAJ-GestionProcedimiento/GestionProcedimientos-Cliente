@@ -61,6 +61,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.utilityService.customInstrumentoAdd.subscribe(msg => {
       this.datosAddTabla = msg;
       if (this.idProcedimiento != "") {
+        //this.aumentarCantidad();
         this.listarIntrumentEquip()
       }
     });
@@ -89,12 +90,10 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   }
 
   listarIntrumentosRequeridos() {
-    //console.log("idProcedimiento " + this.idProcedimiento + " idModalidad: " + this.idModalidad);
-    //parseInt(this.idModalidad)
     if (parseInt(this.idModalidad) != null) {
       this.serviceIntrumentosEquipos.getInstrumentosRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
         (restultado: InstrumentosEquipos[]) => this.instrumentosRequeridos = restultado);
-        
+
     } else {
       this.notificationService.warn('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
     }
@@ -104,8 +103,6 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   editarIntrumentoEquipo(Instrument: InstrumentosEquipos): void {
     this.instrumentoEditable = Instrument;
     this.utilityService.changeIntrumento(this.instrumentoEditable);
-
-
     const dialogoConfig = new MatDialogConfig();
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
@@ -154,6 +151,8 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     //dialogoConfig.disableClose=true;
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
+    this.datosAddTabla=this.arrayInstrumentos;
+    this.utilityService.changeIntrumentoAdd(this.datosAddTabla);
     this.dialogo.open(VentanaAuxiliarInstrumentosEquiposComponent, dialogoConfig);
   }
 
