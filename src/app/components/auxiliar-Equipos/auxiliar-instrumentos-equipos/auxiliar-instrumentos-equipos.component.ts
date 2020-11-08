@@ -72,7 +72,6 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   //método para en listar los equipos asociados a un procedimiento
   public listarIntrumentEquip() {
     this.parrafo = "";
-    console.log("desde instrumentos: " + this.idAgendaProcedimiento);
     this.serviceIntrumentosEquipos.getInstrumentoEquipo(this.idAgendaProcedimiento).subscribe((result: InstrumentosEquipos[]) => {
       this.arrayInstrumentos = InstrumentosEquipos.fromJSON(result);
       if (this.arrayInstrumentos != null) {
@@ -82,7 +81,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
       } else {
         this.arrayInstrumentos = [];
         this.parrafo = "No hay instrumentos y/o equipos asociado al procedimiento";
-        this.notificationService.success('No hay instrumentos y/o equipos asociados al procedimiento!');
+        this.notificationService.warn('No hay instrumentos y/o equipos asociados al procedimiento!');
       }
       this.dataIntrumentEquip = new MatTableDataSource(this.arrayInstrumentos); //se le envia los datos a la tabla. 
       this.dataIntrumentEquip.paginator = this.paginator;
@@ -95,8 +94,9 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     if (parseInt(this.idModalidad) != null) {
       this.serviceIntrumentosEquipos.getInstrumentosRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
         (restultado: InstrumentosEquipos[]) => this.instrumentosRequeridos = restultado);
+        
     } else {
-      this.notificationService.success('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
+      this.notificationService.warn('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
     }
   }
 

@@ -130,6 +130,7 @@ export class EditarEspecialidadComponent implements OnInit {
         this.convertirEstadoLleda(this.datosEspecialidad);
       }
     );
+    this.utilityService.changeEspecialidad(this.datosEspecialidad);
   }
 
 

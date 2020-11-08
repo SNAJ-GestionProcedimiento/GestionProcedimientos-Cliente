@@ -34,6 +34,8 @@ export class especialidadesRequeridas {
   
   public cantidad: number;
 
+  public requerido: boolean;
+
   constructor() {
   }
 
@@ -54,6 +56,8 @@ export class especialidadesRequeridas {
       especialidadRequerida.identificacion = json[i].identificacion;
       especialidadRequerida.nombreEspecialista = json[i].nombreEspecialista;
       especialidadRequerida.estado = json[i].estado;
+      especialidadRequerida.cantidad=json[i].cantidad;
+      especialidadRequerida.requerido=json[i].requerido;
       arrayEspecialidades.push(especialidadRequerida);
     }
     return arrayEspecialidades;
@@ -124,14 +128,5 @@ export class especialidadesPrevisualizar {
     this.nombre=nombre;
     this.cantidad=cantidad;
     this.estado=estado;
-  }
-}
-
-export class conteoRequeridos {
-  especialidad: especialidadesRequeridas;
-  conteo: number;
-  constructor(especialidad: especialidadesRequeridas){
-    this.especialidad=especialidad;
-    this.conteo=0;
   }
 }
