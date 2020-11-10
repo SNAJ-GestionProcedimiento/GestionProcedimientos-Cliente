@@ -5,3 +5,8 @@ table th {
 table td {
     font-size:11px;
 }
+
+.error{
+    font-size: small;
+    color: red;
+}

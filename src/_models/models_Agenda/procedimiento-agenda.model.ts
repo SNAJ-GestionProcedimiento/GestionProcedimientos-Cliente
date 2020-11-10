@@ -64,9 +64,9 @@ export class ProcedimientoAgenda{
         procedimientoAgenda.nombreProc = json.nombreProcedimiento;
         procedimientoAgenda.tipoProc = json.tipoProcedimiento;
         procedimientoAgenda.nombrePac = json.nombrePac;
-        procedimientoAgenda.tipoIdPac = json.tipoIdPac;
-        procedimientoAgenda.idPac = json.identificacionPac;
-        procedimientoAgenda.edadPac = DateHelper.getAge(new Date(json.edadPacfechaNacPac)).toString();
+        procedimientoAgenda.tipoIdPac = json.tipoIdentificacionPac;
+        procedimientoAgenda.idPac = json.identificacionPac;     
+        procedimientoAgenda.edadPac = DateHelper.getAge(new Date(json.fechaNacPac)).toString();
         procedimientoAgenda.idAcu = json.identificacionAcu;
         procedimientoAgenda.observacion = json.observacion;
 
