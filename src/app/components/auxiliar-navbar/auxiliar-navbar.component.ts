@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones.service';
 
 @Component({
   selector: 'app-auxiliar-navbar',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuxiliarNavbarComponent implements OnInit {
 
-  constructor() { }
+  numeroNotificaciones:number;
+
+  constructor(
+    private numNotificacion: NumeroNotificacionesService
+    ) { }
 
   ngOnInit(): void {
+    this.numNotificacion.customNumeroNotificaciones.subscribe(msg=>this.numeroNotificaciones=msg);
   }
 
 }

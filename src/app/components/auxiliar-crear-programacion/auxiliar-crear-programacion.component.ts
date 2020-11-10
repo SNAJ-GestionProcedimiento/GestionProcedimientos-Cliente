@@ -14,6 +14,7 @@ import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-Equipos/auxili
 import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from '../auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
 import { EditarComponentesService } from 'src/_services/serviciosComponentes/editar-componentes.service';
+import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones.service';
 
 
 @Component({
@@ -52,10 +53,13 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
 
   public iniciarComp:boolean=true;
 
+  bandera: number;
+
   constructor(
     private agendaCrearService:AgendaCrearService, 
     private utilityService: UtilityServiceService,
-    private editarComponentesService:EditarComponentesService
+    private editarComponentesService:EditarComponentesService,
+    private numNotificacion: NumeroNotificacionesService
   ) { }
 
   receiveMessage($event) {
@@ -66,7 +70,8 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   ngOnInit(): void {
     this.actualizarIds();
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento=msg);
-    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento=msg)
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento=msg);
+    this.numNotificacion.customBandera.subscribe(msg=>this.bandera=msg);
   } 
 
   listarInstrumentosDesdeProgramacion(){
@@ -115,6 +120,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
       this.idAgendaProcedimiento=res.idAgendaProcedimiento;
       //console.log("desde crear agenda, código que se recibe: "+this.idAgendaProcedimiento);
       this.utilityService.changeIdAgendaProcedimiento(this.idAgendaProcedimiento);
+      this.numNotificacion.changeBandera(this.bandera);
       this.listarInstrumentosDesdeProgramacion();
     }
   }

@@ -27,6 +27,7 @@ import { InstrumentosEquiposService } from '../_services/serviciosInstrumentos/i
 import { EspecilidadRequeridaService }  from '../_services/especilidad-requerida.service';
 import { NotificationService } from 'src/_services/notification.service';
 import { PacienteAcudienteService } from 'src/_services/serviciosComponentes/paciente-acudiente.service';
+import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones.service';
 
 import { MaterialModule } from './material/material.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
@@ -49,6 +50,7 @@ import { VentanaAuxiliarEspecialidadComponent } from './components/auxiliar-espe
 import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/editar-especialidad/editar-especialidad.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { AuxiliarEditarProgramacionComponent } from './components/auxiliar-editar-programacion/auxiliar-editar-programacion.component';
+import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 
 
 @NgModule({
@@ -75,6 +77,7 @@ import { AuxiliarEditarProgramacionComponent } from './components/auxiliar-edita
     EditarEspecialidadComponent,
     ConfirmationDialogComponent,
     AuxiliarEditarProgramacionComponent,
+    NotificacionesComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +102,7 @@ import { AuxiliarEditarProgramacionComponent } from './components/auxiliar-edita
     DocumentoService,
     EstadoSalaService ,
     UtilityServiceService,
-    //{provide: HTTP_INTERCEPTORS, useClass: BaseURLInterceptor, multi: true},
+    NumeroNotificacionesService,
     ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, ConfirmationDialogComponent]
