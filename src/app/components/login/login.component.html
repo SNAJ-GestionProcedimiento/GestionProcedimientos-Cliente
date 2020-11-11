@@ -1,9 +1,9 @@
-<div class="aligner">
+<div class="aligner divC">
     <mat-card class="aligner-center-item">
         <i class="material-icons" style="font-size: 50px">perm_identity</i>
         <br><br>
         <mat-card-title>
-            Login
+            Iniciar sesión
         </mat-card-title>
         <br>
         <mat-card-content>
@@ -11,26 +11,29 @@
             <form id="login-form" #lForm="ngForm" [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
 
                 <md-input-container style="width: 100%; margin-bottom: 10px;" [ngClass]="{'mat-input-invalid': submitted && error?.code == 1}">
-                    <input mdInput type="text" formControlName="username" placeholder="Username" />
-                    <md-hint style="color: red;" *ngIf="submitted && error?.code == 1 && !loginForm.controls.username.hasError('required')">{{error.message}}</md-hint>
-                    <md-hint style="color: red;" *ngIf="submitted && loginForm.controls.username.hasError('required')">Field is mandatory</md-hint>
+                    <input mdInput type="text" formControlName="username" placeholder="Usuario" />
+                    <div>
+                        <md-hint style="color: red;" *ngIf="submitted && error?.code == 1 && !loginForm.controls.username.hasError('required')">{{error.message}}</md-hint>
+                        <md-hint style="color: red;" *ngIf="submitted && loginForm.controls.username.hasError('required')">*Campo requerido</md-hint>
+                    </div>
                 </md-input-container>
-            </form><br> Password
+            </form><br> Contraseña
             <form id="login-form2" #lForm="ngForm" [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
                 <md-input-container style="width: 100%;" [ngClass]="{'mat-input-invalid': submitted && error?.code == 2}">
-                    <input mdInput type="password" formControlName="password" placeholder="Password" />
-                    <md-hint style="color: red;" *ngIf="submitted && error?.code == 2 && !loginForm.controls.password.hasError('required')">{{error.message}}</md-hint>
-                    <md-hint style="color: red;" *ngIf="submitted && loginForm.controls.password.hasError('required')">Field is mandatory</md-hint>
+                    <input mdInput type="password" formControlName="password" placeholder="Contraseña" />
+                    <div>
+                        <md-hint style="color: red;" *ngIf="submitted && error?.code == 2 && !loginForm.controls.password.hasError('required')">{{error.message}}</md-hint>
+                        <md-hint style="color: red;" *ngIf="submitted && loginForm.controls.password.hasError('required')">*Campo requerido</md-hint>
+                    </div>
                 </md-input-container>
             </form><br>
             <a href="#">¿olvido la contraseña?</a>
         </mat-card-content>
         <mat-card-actions>
-            <button md-raised-button type="submit " form="login-form ">Iniciar sesión</button>
+            <button md-raised-button type="submit" form="login-form" class="btn btn-info mr-auto"> Ingresar</button>
         </mat-card-actions>
     </mat-card>
 </div>
-
 <!--
     <mat-card class="aligner-center-item ">
         <mat-card-title>
