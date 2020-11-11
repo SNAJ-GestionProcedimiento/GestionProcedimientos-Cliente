@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuxiliarHomeComponent } from './components/auxiliar-home/auxiliar-home.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   //Rutas de logueo
+  { path: 'login', component: LoginComponent },
   //Rutas de programacion
   { path: 'programacion/home', component: AuxiliarHomeComponent },
   { path: 'programacion/crear', component: AuxiliarHomeComponent},

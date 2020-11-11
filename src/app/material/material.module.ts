@@ -8,6 +8,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon'
 
 @NgModule({
   declarations: [],
@@ -20,6 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     MatSnackBarModule,
     MatButtonModule,
+    MatCardModule,
+    MatIconModule
   ],
 
   exports: [
@@ -30,6 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     MatSnackBarModule,
     MatButtonModule,
+    MatCardModule,
+    MatIconModule
   ]
 })
 export class MaterialModule { }

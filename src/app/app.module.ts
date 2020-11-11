@@ -51,6 +51,7 @@ import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { AuxiliarEditarProgramacionComponent } from './components/auxiliar-editar-programacion/auxiliar-editar-programacion.component';
 import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { NotificacionesComponent } from './components/notificaciones/notificacio
     ConfirmationDialogComponent,
     AuxiliarEditarProgramacionComponent,
     NotificacionesComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
