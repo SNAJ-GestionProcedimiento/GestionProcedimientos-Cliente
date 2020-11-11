@@ -18,10 +18,11 @@ export class NotificacionesComponent implements OnInit {
 
   agenda: Array<ProcedimientoAgenda>;
   agendaDeHoy: Array<ProcedimientoAgenda>;
-  agendaDeManana: Array<ProcedimientoAgenda> ;
-  agendaDePasadoManana: Array<ProcedimientoAgenda> ;
+  agendaDeManana: Array<ProcedimientoAgenda>;
+  agendaDePasadoManana: Array<ProcedimientoAgenda>;
 
   fechaActual: string = "";
+  horaActual: string = ""
   fechaManana: string = "";
   fechaPasadoManana: string = "";
 
@@ -79,11 +80,30 @@ export class NotificacionesComponent implements OnInit {
     const fechaFormateada = this.miDatePipe.transform(f, 'yyyy-MM-dd');
     this.fechaActual = fechaFormateada;
   }
+
   agendaHoy() {
+    let horaActual = new Date();
+    const fechaFormateada = this.miDatePipe.transform(horaActual, 'h:mm a');
+    this.horaActual = fechaFormateada;
+    let sacarPmAm = this.horaActual.split(" ");
+    let sacarHora = sacarPmAm[0].split(":");
+    let Hora1 = parseInt(sacarHora[0]);
+    let min1 = parseInt(sacarHora[1]);
+
 
     for (let i = 0; i < this.agenda.length; i++) {
+      let sacarPmAm2 = this.agenda[i].horaProc.split(" ");
+      let sacarHora2 = sacarPmAm2[0].split(":");
+      let Hora2 = parseInt(sacarHora2[0]);
+      let min2 = parseInt(sacarHora2[1]);
       if (this.agenda[i].fechaProc == this.fechaActual) {
-        this.agendaDeHoy.push(this.agenda[i]);
+        if (Hora1 <= Hora2) {
+          if (min1 <= min2) {
+            if (sacarPmAm[1] == sacarPmAm2[1]) {
+              this.agendaDeHoy.push(this.agenda[i]);
+            }
+          }
+        }
       }
     }
     this.dataSourceHoy = new MatTableDataSource<any>(this.agendaDeHoy);
@@ -149,19 +169,26 @@ export class NotificacionesComponent implements OnInit {
     return res;
   }
 
-  ver(procedimiento: ProcedimientoAgenda){
+  ver(procedimiento: ProcedimientoAgenda) {
     AgendaInfoComponent.idPaciente = procedimiento.idPac;
     AgendaInfoComponent.idAgendaProcedimiento = procedimiento.idAgendaProcedimiento;
     const dialogoConfig = new MatDialogConfig();
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
-    this.matDialog.open(AgendaInfoComponent,dialogoConfig);
+    this.matDialog.open(AgendaInfoComponent, dialogoConfig);
   }
 
-  pasarCursor(event: any){
-    console.log("estoy aquí!");
-    var stylo=document.getElementById("cajon");
-    //stylo.className+=" border border-info";
-    stylo.style.cursor="pointer";
+  pasarCursor() {
+    var stylo = document.getElementById("cajon");
+    stylo.style.cursor = "pointer";
+  }
+
+  enableDisableRule(elem) {
+    const colorOne = "rgb(90, 102, 104)";
+    const colorTwo = "rgb(143, 155, 166)";
+    console.log("=>"+elem.className);
+    if (elem.getElementById !== "visitas")
+    { elem = elem.closest('.visitas'); }
+    elem.style.backgroundColor = (elem.style.backgroundColor == colorOne) ? colorTwo : colorOne;
   }
 }

@@ -8,14 +8,18 @@ import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones
 })
 export class AuxiliarNavbarComponent implements OnInit {
 
-  numeroNotificaciones:number;
+  numeroNotificaciones: number;
 
   constructor(
     private numNotificacion: NumeroNotificacionesService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-    this.numNotificacion.customNumeroNotificaciones.subscribe(msg=>this.numeroNotificaciones=msg);
+    this.numNotificacion.customNumeroNotificaciones.subscribe(msg => this.numeroNotificaciones = msg);
+  }
+
+  clickNotificacion() {
+    this.numNotificacion.changeBandera(this.numeroNotificaciones);
   }
 
 }

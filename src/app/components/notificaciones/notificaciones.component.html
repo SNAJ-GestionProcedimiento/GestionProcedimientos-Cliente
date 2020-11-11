@@ -1,8 +1,9 @@
 <div class="container">
-    <h1 class="formatoLetra">{{fechaActual}}</h1>
+    <h1 class="formatoLetra">{{fechaActual}} </h1>
+    <h1 class="formatoLetra">{{horaActual}}</h1>
     <div *ngIf="!validarProcedimientoHoy()">
         <div class="row equal centrar border-bottom">
-            <p style="text-align: center;">No hay procedimientos programados para esta fecha</p>
+            <p style="text-align: center;">No hay procedimientos programados para esta fecha y la hora actual</p>
         </div>
     </div>
     <div *ngIf="validarProcedimientoHoy()">
@@ -24,21 +25,21 @@
             </div>
 
         </div>
-        <div class="row equal border-bottom" id="cajon2" *ngFor="let dato of agendaDeHoy" (click)="ver(dato)" (mouseover)="pasarCursor($event)">
-
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+        <div class="row equal border-bottom" *ngFor="let dato of
+            agendaDeHoy" (click)="ver(dato)" id="cajon" (mouseover)="pasarCursor()">
+            <div class=" col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.horaProc}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.nombrePac}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.idPac}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.nombreProc}}</label>
             </div>
         </div>
@@ -46,47 +47,47 @@
 
 </div>
 <br>
-<div class="container">
-    <h1 class="formatoLetra">{{fechaManana}}</h1>
-    <div *ngIf="!validarProcedimientoManana()">
-        <div class="row equal centrar border-bottom">
-            <p style="text-align: center;">No hay procedimientos programados para esta fecha</p>
+<div class="container ">
+    <h1 class="formatoLetra ">{{fechaManana}}</h1>
+    <div *ngIf="!validarProcedimientoManana() ">
+        <div class="row equal centrar border-bottom ">
+            <p style="text-align: center; ">No hay procedimientos programados para esta fecha</p>
         </div>
     </div>
-    <div *ngIf="validarProcedimientoManana()">
-        <div class="row equal formatoLetra">
-            <div class="col-xs-6 col-sm-3">
+    <div *ngIf="validarProcedimientoManana() ">
+        <div class="row equal formatoLetra ">
+            <div class="col-xs-6 col-sm-3 ">
                 <label>Hora</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3">
+            <div class="col-xs-6 col-sm-3 ">
                 <label>Nombre paciente</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3">
+            <div class="col-xs-6 col-sm-3 ">
                 <label>Identificación paciente</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3">
+            <div class="col-xs-6 col-sm-3 ">
                 <label>Nombre procedimiento</label>
             </div>
 
         </div>
-        <div class="row equal border-bottom" id="cajon" *ngFor="let dato of agendaDeManana" (click)="ver(dato)" (mouseover)="pasarCursor($event)">
+        <div class="row equal border-bottom " *ngFor="let dato of agendaDeManana " (click)="ver(dato)" id="cajon" (mouseover)="pasarCursor()">
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.horaProc}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.nombrePac}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.idPac}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.nombreProc}}</label>
             </div>
         </div>
@@ -94,47 +95,47 @@
 
 </div>
 <br>
-<div class="container">
-    <h1 class="formatoLetra">{{fechaPasadoManana}}</h1>
-    <div *ngIf="!validarProcedimientoPasadoManana()">
-        <div class="row equal centrar border-bottom">
+<div class="container ">
+    <h1 class="formatoLetra ">{{fechaPasadoManana}}</h1>
+    <div *ngIf="!validarProcedimientoPasadoManana() ">
+        <div class="row equal centrar border-bottom ">
             <p>No hay procedimientos programados para esta fecha</p>
         </div>
     </div>
-    <div *ngIf="validarProcedimientoPasadoManana()">
-        <div class="row equal formatoLetra">
-            <div class="col-xs-6 col-sm-3">
+    <div *ngIf="validarProcedimientoPasadoManana() ">
+        <div class="row equal formatoLetra ">
+            <div class="col-xs-6 col-sm-3 ">
                 <label>Hora</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3">
+            <div class="col-xs-6 col-sm-3 ">
                 <label>Nombre paciente</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3">
+            <div class="col-xs-6 col-sm-3 ">
                 <label>Identificación paciente</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3">
+            <div class="col-xs-6 col-sm-3 ">
                 <label>Nombre procedimiento</label>
             </div>
 
         </div>
-        <div class="row equal border-bottom" *ngFor="let dato of agendaDePasadoManana" (click)="ver(dato)">
+        <div class="row equal border-bottom " *ngFor="let dato of agendaDePasadoManana " (click)="ver(dato)" id="cajon" (mouseover)="pasarCursor()">
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.horaProc}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.nombrePac}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.idPac}}</label>
             </div>
 
-            <div class="col-xs-6 col-sm-3 mt-auto mb-auto">
+            <div class="col-xs-6 col-sm-3 mt-auto mb-auto ">
                 <label>{{dato.nombreProc}}</label>
             </div>
         </div>

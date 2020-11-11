@@ -1,21 +1,25 @@
-        .equal,
-        .equal>div[class*='col-'] {
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            flex: 1 0 auto;
-            width: 675px !important;
-            justify-content: center;
-            /*border: black 1px solid;*/
-        }
-        
-        .formatoLetra {
-            font-weight: bold;
-            text-align: center;
-        }
-        
-        .centrar {
-            text-align: center;
-        }
+            .equal,
+            .equal>div[class*='col-'] {
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                flex: 1 0 auto;
+                width: 675px !important;
+                justify-content: center;
+                /*border: black 1px solid;*/
+            }
+            
+            .formatoLetra {
+                font-weight: bold;
+                text-align: center;
+            }
+            
+            .centrar {
+                text-align: center;
+            }
+            
+            .visitas {
+                background-color: rgb(143, 155, 166);
+            }
