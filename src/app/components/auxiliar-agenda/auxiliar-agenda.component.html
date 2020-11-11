@@ -1,114 +1,122 @@
 <div class="container">
-  <h1>Agenda de procedimientos</h1>
-  <!--Formulario de busqueda-->
-  <form class="form-inline" [formGroup]="busquedaForm">
-    Buscar agenda:
-    <div class="form-group mb-2">
-        <!-- filtro de busqueda-->
-        <select class="form-control form-control-sm ml-2" formControlName="searchType">
+    <h1>Agenda de procedimientos</h1>
+    <!--Formulario de busqueda-->
+    <form class="form-inline" [formGroup]="busquedaForm">
+        Buscar agenda:
+        <div class="form-group mb-2">
+            <!-- filtro de busqueda-->
+            <select class="form-control form-control-sm ml-2" formControlName="searchType">
             <option value="" selected disabled hidden>Seleccione</option>
             <option value="1">Fecha</option>
             <option value="2">Codigo agenda</option>
             <option value="3">Identificacion paciente</option>
         </select>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <!-- input de busqueda-->
+            <input class="form-control form-control-sm" type="text" placeholder="ingrese el valor de busqueda" formControlName="value" *ngIf="!filtroFecha">
+            <label *ngIf="filtroFecha">desde:</label>
+            <input class="form-control form-control-sm ml-2" type="date" *ngIf="filtroFecha" formControlName="sinceDate">
+            <label class="ml-2" *ngIf="filtroFecha">hasta:</label>
+            <input class="form-control form-control-sm ml-2" type="date" *ngIf="filtroFecha" formControlName="toDate">
+            <button type="button" class="btn btn-info ml-2" (click)="buscarOnclick()">Buscar</button>
+        </div>
+        <!--Boton de agregar nueva programacion-->
+        <div class="ml-auto float-right">
+            <button mat-mini-fab color="info" type="button" class="btn btn-info ml-2" (click)="agendarOnclick()" matTooltip="Agendar procedimiento" [matTooltipPosition]="'above'">
+            <i class="material-icons">add</i>
+          </button>
+        </div>
+    </form>
+    <!--errores-->
+    <div class="error">
+        <p *ngIf="!filtroSeleccionado">*Seleccione el tipo de busqueda</p>
+        <p *ngIf="!campoIngresado">*Ingrese el dato que desea buscar</p>
+        <p *ngIf="!campoIngresado && datofecha1==''">*Ingrese la fecha inicial</p>
+        <p *ngIf="!campoIngresado && datofecha2==''">*Ingrese la fecha final</p>
     </div>
-    <div class="form-group mx-sm-3 mb-2">
-      <!-- input de busqueda-->
-      <input class="form-control form-control-sm" type="text" placeholder="ingrese el valor de busqueda" formControlName="value" *ngIf="!filtroFecha">
-      <label *ngIf="filtroFecha">desde:</label>
-      <input class="form-control form-control-sm ml-2" type="date" *ngIf="filtroFecha" formControlName="sinceDate">
-      <label class="ml-2" *ngIf="filtroFecha">hasta:</label>
-      <input class="form-control form-control-sm ml-2" type="date" *ngIf="filtroFecha" formControlName="toDate">
-      <button type="button" class="btn btn-info ml-2" (click)="buscarOnclick()">Buscar</button>
-    </div>
-  </form>
-  <!--errores-->
-  <div class="error">
-    <p *ngIf="!filtroSeleccionado">*Seleccione el tipo de busqueda</p>
-    <p *ngIf="!campoIngresado">*Ingrese el dato que desea buscar</p>
-    <p *ngIf="!campoIngresado && datofecha1==''">*Ingrese la fecha inicial</p>
-    <p *ngIf="!campoIngresado && datofecha2==''">*Ingrese la fecha final</p>
-  </div>
-  <!--Tabla de agenda-->
-  <div class="mt-3">
-    <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8
+
+    <!--Tabla de agenda-->
+    <div class="mt-3">
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8
       table-bordered table-responsive-sm">
 
-        <!-- Columna de codigo de la agenda -->
-        <ng-container matColumnDef="codigoAgenda">
-          <th mat-header-cell *matHeaderCellDef> Codigo Agenda </th>
-          <td mat-cell *matCellDef="let element"> {{element.idAgendaProcedimiento}} </td>
-        </ng-container>
-        <!-- Columna de Fecha del procedimiento -->
-        <ng-container matColumnDef="fechaProc">
-          <th mat-header-cell *matHeaderCellDef> Fecha </th>
-          <td mat-cell *matCellDef="let element"> {{element.fechaProc}} </td>
-        </ng-container>
-        <!-- Columna de Hora del procedimiento -->
-        <ng-container matColumnDef="horaProc">
-          <th mat-header-cell *matHeaderCellDef> Hora </th>
-          <td mat-cell *matCellDef="let element"> {{element.horaProc}} </td>
-        </ng-container>
-        <!-- Columna de Codigo del procedimiento-->
-        <ng-container matColumnDef="codigoProc">
-          <th mat-header-cell *matHeaderCellDef> Codigo </th>
-          <td mat-cell *matCellDef="let element"> {{element.codigoProc}} </td>
-        </ng-container>
-        <!-- Columna de Nombre del procedimiento -->
-        <ng-container matColumnDef="nombreProc">
-          <th mat-header-cell *matHeaderCellDef> Procedimiento </th>
-          <td mat-cell *matCellDef="let element"> {{element.nombreProc}} </td>
-        </ng-container>
-        <!-- Columna de  Tipo del procedimiento-->
-        <ng-container matColumnDef="tipoProc">
-          <th mat-header-cell *matHeaderCellDef> Tipo </th>
-          <td mat-cell *matCellDef="let element"> {{element.tipoProc}} </td>
-        </ng-container>
-        <!-- Columna de  Nombre del paciente-->
-        <ng-container matColumnDef="nombrePac">
-          <th mat-header-cell *matHeaderCellDef> Nombre del paciente </th>
-          <td mat-cell *matCellDef="let element"> {{element.nombrePac}} </td>
-        </ng-container>
-        <!-- Columna de  Tipo id del paciente-->
-        <ng-container matColumnDef="tipoIdPac">
-          <th mat-header-cell *matHeaderCellDef> Tipo identificacion </th>
-          <td mat-cell *matCellDef="let element"> {{element.tipoIdPac}} </td>
-        </ng-container>
-        <!-- Columna de  Identificacion del paciente-->
-        <ng-container matColumnDef="idPac">
-          <th mat-header-cell *matHeaderCellDef> Identificación </th>
-          <td mat-cell *matCellDef="let element"> {{element.idPac}} </td>
-        </ng-container>
-        <!-- Columna de  Edad del paciente-->
-        <ng-container matColumnDef="edadPac">
-          <th mat-header-cell *matHeaderCellDef> Edad </th>
-          <td mat-cell *matCellDef="let element"> {{element.edadPac}} </td>
-        </ng-container>
+                <!-- Columna de codigo de la agenda -->
+                <ng-container matColumnDef="codigoAgenda">
+                    <th mat-header-cell *matHeaderCellDef> Codigo Agenda </th>
+                    <td mat-cell *matCellDef="let element"> {{element.idAgendaProcedimiento}} </td>
+                </ng-container>
+                <!-- Columna de Fecha del procedimiento -->
+                <ng-container matColumnDef="fechaProc">
+                    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fechaProc}} </td>
+                </ng-container>
+                <!-- Columna de Hora del procedimiento -->
+                <ng-container matColumnDef="horaProc">
+                    <th mat-header-cell *matHeaderCellDef> Hora </th>
+                    <td mat-cell *matCellDef="let element"> {{element.horaProc}} </td>
+                </ng-container>
+                <!-- Columna de Codigo del procedimiento-->
+                <ng-container matColumnDef="codigoProc">
+                    <th mat-header-cell *matHeaderCellDef> Codigo </th>
+                    <td mat-cell *matCellDef="let element"> {{element.codigoProc}} </td>
+                </ng-container>
+                <!-- Columna de Nombre del procedimiento -->
+                <ng-container matColumnDef="nombreProc">
+                    <th mat-header-cell *matHeaderCellDef> Procedimiento </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nombreProc}} </td>
+                </ng-container>
+                <!-- Columna de  Tipo del procedimiento-->
+                <ng-container matColumnDef="tipoProc">
+                    <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                    <td mat-cell *matCellDef="let element"> {{element.tipoProc}} </td>
+                </ng-container>
+                <!-- Columna de  Nombre del paciente-->
+                <ng-container matColumnDef="nombrePac">
+                    <th mat-header-cell *matHeaderCellDef> Nombre del paciente </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nombrePac}} </td>
+                </ng-container>
+                <!-- Columna de  Tipo id del paciente-->
+                <ng-container matColumnDef="tipoIdPac">
+                    <th mat-header-cell *matHeaderCellDef> Tipo identificacion </th>
+                    <td mat-cell *matCellDef="let element"> {{element.tipoIdPac}} </td>
+                </ng-container>
+                <!-- Columna de  Identificacion del paciente-->
+                <ng-container matColumnDef="idPac">
+                    <th mat-header-cell *matHeaderCellDef> Identificación </th>
+                    <td mat-cell *matCellDef="let element"> {{element.idPac}} </td>
+                </ng-container>
+                <!-- Columna de  Edad del paciente-->
+                <ng-container matColumnDef="edadPac">
+                    <th mat-header-cell *matHeaderCellDef> Edad </th>
+                    <td mat-cell *matCellDef="let element"> {{element.edadPac}} </td>
+                </ng-container>
 
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef> Acciones </th>
-          <td mat-cell *matCellDef="let element">
-              <button mat-raised-button type="button" matTooltip="Ver" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" 
-              (click)="verAgenda(element.idAgendaProcedimiento,element.idPac)">
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-raised-button type="button" matTooltip="Ver" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" (click)="verAgenda(element.idAgendaProcedimiento,element.idPac)">
                 <i class="material-icons">visibility</i>
               </button>
-              <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" (click)="editarAgenda(element)">
+                        <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon" (click)="editarAgenda(element)">
                   <i class="material-icons">edit</i>
               </button>
-      </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
     </div>
-  </div>
-  <!--Boton de agregar nueva programacion-->
-  <div class="row justify-content-end mt-4">
-    <div class="col-auto">
-      <button type="button" class="btn btn-info" (click)="agendarOnclick()">Agendar procedimiento</button>
+    <!--Boton de agregar nueva programacion-->
+    <!--
+    <div class="row justify-content-end mt-4">
+        <div class="col-auto">
+            <button type="button" class="btn btn-info" (click)="agendarOnclick()">Agendar procedimiento</button>
+        </div>
     </div>
-  </div>
+    -->
 </div>
