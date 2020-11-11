@@ -4,12 +4,20 @@
 <ng-sidebar-container>
     <!-- Contenido del Sidebar -->
     <ng-sidebar opened="true" mode="push">
-      <button type="button" class="btn btn-info mr-auto" (click)="gestionOnclick()">Gestion de programación</button>
+        <button type="button" class="btn btn-info mr-auto" (click)="gestionOnclick()">Gestion de programación</button>
     </ng-sidebar>
 
     <!-- Contenido de la pagina -->
     <div ng-sidebar-content>
         <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/programacion">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedOption == OPTIONS.VER_AGENDA">Ver agenda</li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedOption == OPTIONS.CREAR_AGENDA">Crear agenda</li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedOption == OPTIONS.EDITAR_AGENDA">Editar agenda</li>
+                </ol>
+            </nav>
             <!-- VER AGENDA -->
             <app-auxiliar-agenda *ngIf="selectedOption == OPTIONS.VER_AGENDA"></app-auxiliar-agenda>
             <!-- CREAR AGENDA -->
@@ -19,4 +27,4 @@
         </div>
     </div>
 
-  </ng-sidebar-container>
+</ng-sidebar-container>
