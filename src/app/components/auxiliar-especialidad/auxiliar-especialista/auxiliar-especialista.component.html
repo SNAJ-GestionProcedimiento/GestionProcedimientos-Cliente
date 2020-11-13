@@ -47,12 +47,12 @@
             <td mat-cell *matCellDef="let element">
                 <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn
                     btn-link
-                    btn-sm btn-just-icon" (click)="editarEspecialidad(element)">
+                    btn-sm btn-just-icon" (click)="editarEspecialidad(element)" [disabled]="objBanderaRequerido">
                     <i class="material-icons">edit</i>
                 </button>
                 <button mat-raised-button type="button" matTooltip="Eliminar" [matTooltipPosition]="'above'" class="btn
                     btn-link  btn-danger
-                    btn-sm btn-just-icon" *ngIf="!validarEspecialidadRequerido(element)" (click)="eliminarDato(element)">
+                    btn-sm btn-just-icon" *ngIf="!validarEspecialidadRequerido(element)" (click)="eliminarDato(element)" [disabled]="objBanderaRequerido">
                     <i class=" material-icons ">delete_forever</i>
                 </button>
         </ng-container>
@@ -61,6 +61,6 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
 </div>
-<button type="button" class="btn btn-info" (click)="openAgregarEspecialidad()">Añadir especialidad</button>
+<button type="button" class="btn btn-info" (click)="openAgregarEspecialidad()" [disabled]="objBanderaRequerido">Añadir especialidad</button>
 <br>
 <hr>
