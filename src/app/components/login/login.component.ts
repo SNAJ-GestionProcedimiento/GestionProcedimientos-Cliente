@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import jwtDecode from 'jwt-decode';
-import jwt_decode from 'jwt-decode';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Usuario } from 'src/_models/modelsLogin/usuario.model';
 
 import { AuthService } from 'src/_services/auth.service';
 import { UsuarioGrupoService } from 'src/_services/usuarios/usuario-grupo.service';
 import { UsuarioCrearService } from 'src/_services/usuarios/usuario-crear.service';
+
+import { AuthHelper } from 'src/_helpers/auth.helper';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +29,9 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService:AuthService,
     private usuarioCrearService:UsuarioCrearService,
-    public usuarioGrupoService:UsuarioGrupoService
+    private usuarioGrupoService:UsuarioGrupoService,
+    private router:Router,
+    private snackBar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
@@ -44,6 +48,12 @@ export class LoginComponent implements OnInit {
       this.constrasena = value;
     })
   }
+  /**Eventos */
+  public openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
 
   public async submitLogin(){
     this.submitted = true;
@@ -54,7 +64,19 @@ export class LoginComponent implements OnInit {
       let res:any = await this.authService.login(this.usuario,this.constrasena).toPromise();
       /**Obtener el grupo al que pertenece el usuario */
       let userGroup:any = await this.usuarioGrupoService.getGroup(res.token).toPromise();
-      console.log(userGroup);
+      AuthHelper.setLoggedToken(res);
+      //Mensaje de bienvenida con nombre de usuario
+      this.openSnackBar('Bienvenido ',userGroup.username);
+      switch(userGroup.group_id){
+        /**Grupo 1:Administrador */
+        case 1:
+          this.router.navigateByUrl('admin');
+          break;
+        /**Grupo 2:Auxiliar de programación */
+        case 2:
+          this.router.navigateByUrl('admin');
+          break;
+      }
     } catch (error) {
       console.log(error);
     }

@@ -1,26 +1,23 @@
 export class Usuario{
-    public username:string = "lc"; 
-    public password:string = "lc"; 
-    public first_name:string = "l";
-    public last_name:string = "c";
-    public email:string = "lcruiz@unicauca.edu.co";
-    public groups:string[] = [];
+    public id:string; 
+    public username:string;
+    public password:string;
+    public first_name:string;
+    public last_name:string;
+    public email:string;
+    public groups:string[];
 
     public parseToJSON():JSON{
         return JSON.parse(JSON.stringify(this));
     }
 
-    public static fromJSON(json):Usuario{
-        if(json==null){return null;}
-        var usuario = new Usuario();
-
-        usuario.username = json.username ;
-        usuario.password = json.password;
-        usuario.first_name = json.first_name ;
-        usuario.last_name = json.last_name ;
-        usuario.email = json.email;
-        usuario.groups = json.groups;
-        
-        return usuario
+    constructor(id:string, username:string, password:string, first_name:string, last_name:string, email:string, groups:string[]){
+        this.id = id;
+        this.username = username; 
+        this.password = password; 
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.groups = groups;
     }
 }

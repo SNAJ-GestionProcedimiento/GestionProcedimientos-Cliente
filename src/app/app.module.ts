@@ -52,6 +52,11 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { AuxiliarEditarProgramacionComponent } from './components/auxiliar-editar-programacion/auxiliar-editar-programacion.component';
 import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 import { LoginComponent } from './components/login/login.component';
+import { LoginGuard } from './login.guard';
+import { AdminComponent } from 'src/app/components/admin/admin.component';
+import { AdminNavbarComponent } from 'src/app/components/admin-navbar/admin-navbar.component';
+import { AdminUsuariosComponent } from 'src/app/components/admin-usuarios/admin-usuarios.component';
+import { AdminGuard } from './admin.guard';
 
 
 @NgModule({
@@ -80,6 +85,9 @@ import { LoginComponent } from './components/login/login.component';
     AuxiliarEditarProgramacionComponent,
     NotificacionesComponent,
     LoginComponent,
+    AdminComponent,
+    AdminNavbarComponent,
+    AdminUsuariosComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,6 +113,8 @@ import { LoginComponent } from './components/login/login.component';
     EstadoSalaService ,
     UtilityServiceService,
     NumeroNotificacionesService,
+    LoginGuard,
+    AdminGuard
     ],
   bootstrap: [AppComponent],
   entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, ConfirmationDialogComponent]

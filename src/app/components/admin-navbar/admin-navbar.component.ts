@@ -1,31 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones.service';
+import { UsuarioTokenService } from 'src/_services/usuarios/usuario-token.service';
 import { UsuarioGrupoService } from 'src/_services/usuarios/usuario-grupo.service';
 
 @Component({
-  selector: 'app-auxiliar-navbar',
-  templateUrl: './auxiliar-navbar.component.html',
-  styleUrls: ['./auxiliar-navbar.component.css']
+  selector: 'app-admin-navbar',
+  templateUrl: './admin-navbar.component.html',
+  styleUrls: ['./admin-navbar.component.css']
 })
-export class AuxiliarNavbarComponent implements OnInit {
-
-  numeroNotificaciones: number;
+export class AdminNavbarComponent implements OnInit {
   public nombreUsuario:string='';
 
   constructor(
-    private numNotificacion: NumeroNotificacionesService,
+    private usuarioTokenService:UsuarioTokenService,
     private usuarioGrupoService:UsuarioGrupoService
   ) { }
 
   ngOnInit(): void {
-    this.numNotificacion.customNumeroNotificaciones.subscribe(msg => this.numeroNotificaciones = msg);
     this.actualizarNombre();
   }
-
-  clickNotificacion() {
-    this.numNotificacion.changeBandera(this.numeroNotificaciones);
-  }
-
   public async actualizarNombre(){
     let token = localStorage.getItem('token');
     let userGroup:any = await this.usuarioGrupoService.getGroup(token).toPromise();

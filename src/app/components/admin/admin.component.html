@@ -1,0 +1,18 @@
+<!-- Barra de navegacion de administrador -->
+<app-admin-navbar></app-admin-navbar>
+<!-- SideBar -->
+<ng-sidebar-container>
+    <!-- Contenido del Sidebar -->
+    <ng-sidebar opened="true" mode="push">
+        <div class="container">
+            <button type="button" class="btn btn-info mr-auto">Gestion de procedimientos</button>
+            <button type="button" class="btn btn-info mr-auto mt-2">Gestion de usuarios</button>
+        </div>
+    </ng-sidebar>
+    <!-- Contenido de la pagina -->
+    <div ng-sidebar-content>
+        <div class="container">
+            <app-admin-usuarios></app-admin-usuarios>
+        </div>
+    </div>
+</ng-sidebar-container>

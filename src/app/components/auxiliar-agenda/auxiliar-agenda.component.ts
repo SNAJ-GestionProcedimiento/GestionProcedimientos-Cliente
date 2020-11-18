@@ -17,6 +17,7 @@ import { AgendaInfoService } from 'src/_services/serviciosComponentes/agenda-inf
 import { AuxiliarEditarProgramacionComponent } from '../auxiliar-editar-programacion/auxiliar-editar-programacion.component';
 import { AgendaObtenerFechaService } from 'src/_services/serviciosAgenda/agenda-obtener-fecha.service';
 import { AgendaObtenerIdpacService } from 'src/_services/serviciosAgenda/agenda-obtener-idpac.service';
+import { AuthHelper } from 'src/_helpers/auth.helper';
 
 
 
@@ -73,6 +74,7 @@ export class AuxiliarAgendaComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    let token = AuthHelper.getLoggedToken();
     this.getAgendas();
   }
   /**Formulario de busqueda */

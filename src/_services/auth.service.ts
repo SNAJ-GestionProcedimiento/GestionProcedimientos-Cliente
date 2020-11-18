@@ -22,6 +22,6 @@ export class AuthService extends HttpService{
         password:contra
       },{
         headers:this.headers
-      } );
+      });
    }
 }
