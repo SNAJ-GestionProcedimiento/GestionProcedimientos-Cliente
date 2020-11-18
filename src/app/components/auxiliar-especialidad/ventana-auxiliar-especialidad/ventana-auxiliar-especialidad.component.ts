@@ -68,7 +68,10 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
   //Captura el nombre seleccionado
   capturar() {
     this.verSeleccion = this.opcionSeleccionado;
+    console.log(this.verSeleccion);
     this.agregarDatoTabla();
+    this.opcionSeleccionado='0';
+    document.getElementById("caja").onchange;
   }
 
   //agrega la especialidad a la tabla de la vista previa

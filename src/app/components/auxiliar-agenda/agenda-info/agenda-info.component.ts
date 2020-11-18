@@ -63,4 +63,5 @@ export class AgendaInfoComponent implements OnInit {
   public async setProcedimiento(Codigo:string){
 
   }
+
 }

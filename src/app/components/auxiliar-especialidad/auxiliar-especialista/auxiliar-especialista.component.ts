@@ -42,6 +42,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   mensajeError: string = "";
   parrafo = "";
   objBanderaRequerido: Boolean;
+  banderaBotonAnadir: Boolean;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -62,6 +63,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
         this.listarEspecialidadesRequeridos();
       }
     });
+    this.utilityService.customBanderaBotonAnadir.subscribe(msg=>this.banderaBotonAnadir=msg);
     this.utilityService.customEspecialidad.subscribe(msg => this.especialidadEditable = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
     this.utilityService.customEspecialidadAdd.subscribe(msg => {
@@ -152,7 +154,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   eliminarDato(especialidad: especialidadesRequeridas) {
     this.dialogo
       .open(ConfirmationDialogComponent, {
-        data: `¿Seguro que desea eliminar el instrumento o equipo?`
+        data: `¿Seguro que desea eliminar la especialidad?`
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {

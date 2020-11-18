@@ -35,6 +35,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   idModalidad: string;
   idProcedimientoModalidad: string;
   objBanderaRequerido: Boolean;
+  banderaBotonAnadir: Boolean;
 
   displayedColumns: string[] = ['codigo', 'nombre', 'cantidad', 'descripcion', 'estado', 'acciones'];  //las columnas de la tabla asociadas a las propiedades
   dataIntrumentEquip: MatTableDataSource<InstrumentosEquipos>; //variable que contiene los datos que irán en la tabla
@@ -60,6 +61,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
         this.listarIntrumentosRequeridos();
       }
     });
+    this.utilityService.customBanderaBotonAnadir.subscribe(msg=>this.banderaBotonAnadir=msg);
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
     //console.log("idProcedimiento desde instrumento: " + this.idProcedimiento);
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);

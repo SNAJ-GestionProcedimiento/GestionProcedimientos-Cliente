@@ -21,6 +21,7 @@ export class UtilityServiceService {
   private objIntrumentoAdd = new BehaviorSubject<InstrumentosEquipos[]>(null);
   private objIdModalidad = new BehaviorSubject<string>("");
   private objBanderaRequerido = new BehaviorSubject<Boolean>(false);
+  private objBanderaBotonAnadir = new BehaviorSubject<Boolean>(false);
 
   public customInstrumento = this.objIntrumento.asObservable();
   public customEstados = this.objEstados.asObservable();
@@ -32,6 +33,7 @@ export class UtilityServiceService {
   public customInstrumentoAdd = this.objIntrumentoAdd.asObservable();
   public customIdModalidad = this.objIdModalidad.asObservable();
   public customBanderaRequerido = this.objBanderaRequerido.asObservable();
+  public customBanderaBotonAnadir = this.objBanderaBotonAnadir.asObservable();
 
     public changeIntrumento(msg: InstrumentosEquipos): void {
       this.objIntrumento.next(msg);
@@ -62,5 +64,8 @@ export class UtilityServiceService {
     }
     public changeBanderaRequerido(msg: boolean): void {
       this.objBanderaRequerido.next(msg);
+    }
+    public changeBanderaBotonAnadir(msg: boolean): void {
+      this.objBanderaBotonAnadir.next(msg);
     }
 }
