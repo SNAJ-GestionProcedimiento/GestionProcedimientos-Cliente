@@ -52,6 +52,8 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   public idAgendaProcedimiento: number;
 
   public iniciarComp:boolean=true;
+  public banderaRequerido: Boolean;
+  public banderaBotonAnadir: Boolean;
 
   bandera: number;
 
@@ -72,6 +74,9 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento=msg);
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento=msg);
     this.numNotificacion.customBandera.subscribe(msg=>this.bandera=msg);
+    this.utilityService.customBanderaRequerido.subscribe(msg => this.banderaRequerido = msg);
+    this.utilityService.customBanderaBotonAnadir.subscribe(msg=>this.banderaBotonAnadir=msg);
+    this.utilityService.changeBanderaBotonAnadir(true);
   } 
 
   listarInstrumentosDesdeProgramacion(){
@@ -120,6 +125,8 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
       this.idAgendaProcedimiento=res.idAgendaProcedimiento;
       //console.log("desde crear agenda, código que se recibe: "+this.idAgendaProcedimiento);
       this.utilityService.changeIdAgendaProcedimiento(this.idAgendaProcedimiento);
+      this.utilityService.changeBanderaRequerido(false);
+      this.utilityService.changeBanderaBotonAnadir(false);
       this.numNotificacion.changeBandera(this.bandera);
       this.listarInstrumentosDesdeProgramacion();
     }

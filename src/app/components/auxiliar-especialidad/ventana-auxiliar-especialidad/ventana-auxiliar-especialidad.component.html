@@ -5,18 +5,23 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item my-2 my-sm-0">
-                    <select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
+        <div id="caja">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item my-2 my-sm-0">
+                        <select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
                         <option value="0" selected>--Seleccione una especialidad--</option>
-                        <option *ngFor="let dato of arrayEspecialidadesCantidad">
+                        <option *ngFor="let dato of arrayEspecialidadesCantidad" value="{{dato.nombre}}">
                             {{dato.nombre}}
                         </option>
-                    </select>
-                </li>
-            </ul>
+                        <!-- <select ngControl="myDropdown">
+       <option *ngFor="let eachObj of myArray" selected="eachObj==={{myDefault}}"
+               value="{{eachObj}}">{{eachObj.myText}}</option>
+     </select>-->
+                        </select>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8

@@ -37,10 +37,12 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   idProcedimiento: string;
   idAgendaProcedimiento: number;
   idModalidad: string;
-  
-//variable para mostrar mensaje de error si lo hay
+
+  //variable para mostrar mensaje de error si lo hay
   mensajeError: string = "";
   parrafo = "";
+  objBanderaRequerido: Boolean;
+  banderaBotonAnadir: Boolean;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -55,6 +57,13 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   ngOnInit(): void {
     this.utilityService.customEstados.subscribe(msg => { this.estados = msg });
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
+    this.utilityService.customBanderaRequerido.subscribe(msg => {
+      this.objBanderaRequerido = msg;
+      if (this.objBanderaRequerido == true) {
+        this.listarEspecialidadesRequeridos();
+      }
+    });
+    this.utilityService.customBanderaBotonAnadir.subscribe(msg=>this.banderaBotonAnadir=msg);
     this.utilityService.customEspecialidad.subscribe(msg => this.especialidadEditable = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
     this.utilityService.customEspecialidadAdd.subscribe(msg => {
@@ -97,6 +106,16 @@ export class AuxiliarEspecialistaComponent implements OnInit {
       this.serviceEspecialidadRequerida.getEspecialidadesRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
         (restultado: especialidadesRequeridas[]) => {
           this.especialidadesRequeridas = restultado;
+          if (this.objBanderaRequerido == true) {
+            for (let i = 0; i < this.especialidadesRequeridas.length; i++) {
+              this.especialidadesRequeridas[i].registroMedico = "";
+              this.especialidadesRequeridas[i].nombreEspecialista = "";
+              this.especialidadesRequeridas[i].identificacion = "";
+              this.especialidadesRequeridas[i].estado = "";
+            }
+            this.dataEspecialidad = new MatTableDataSource(this.especialidadesRequeridas);
+            this.dataEspecialidad.paginator = this.paginator;
+          }
         });
     } else {
       this.notificationService.warn('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
@@ -116,11 +135,15 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   //valida si la especialidad de una fila es requerida o no para que aparezca el botón de eliminar
   validarEspecialidadRequerido(especialidad: especialidadesRequeridas): Boolean {
     let res = false;
-    for (let i = 0; i < this.especialidadesRequeridas.length; i++) {
-      if (this.especialidadesRequeridas[i].codigoEspecialidad == especialidad.codigoEspecialidad) {
-        if (especialidad.requerido == true) {
-          res = true;
-          return res;
+    if (this.objBanderaRequerido == true) {
+      return true;
+    } else {
+      for (let i = 0; i < this.especialidadesRequeridas.length; i++) {
+        if (this.especialidadesRequeridas[i].codigoEspecialidad == especialidad.codigoEspecialidad) {
+          if (especialidad.requerido == true) {
+            res = true;
+            return res;
+          }
         }
       }
     }
@@ -131,7 +154,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   eliminarDato(especialidad: especialidadesRequeridas) {
     this.dialogo
       .open(ConfirmationDialogComponent, {
-        data: `¿Seguro que desea eliminar el instrumento o equipo?`
+        data: `¿Seguro que desea eliminar la especialidad?`
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
@@ -150,7 +173,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
       });
   }
 
-//abre la ventana para agregar una especialidad
+  //abre la ventana para agregar una especialidad
   openAgregarEspecialidad() {
     const dialogoConfig = new MatDialogConfig();
     //dialogoConfig.disableClose=true;

@@ -33,7 +33,9 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   datosAddTabla: InstrumentosEquipos[] = [];
   instrumentosRequeridos: InstrumentosEquipos[] = [];
   idModalidad: string;
-  public idProcedimientoModalidad: string;
+  idProcedimientoModalidad: string;
+  objBanderaRequerido: Boolean;
+  banderaBotonAnadir: Boolean;
 
   displayedColumns: string[] = ['codigo', 'nombre', 'cantidad', 'descripcion', 'estado', 'acciones'];  //las columnas de la tabla asociadas a las propiedades
   dataIntrumentEquip: MatTableDataSource<InstrumentosEquipos>; //variable que contiene los datos que irán en la tabla
@@ -53,6 +55,13 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.utilityService.customInstrumento.subscribe(msg => {
       this.instrumentoEditable = msg;
     });
+    this.utilityService.customBanderaRequerido.subscribe(msg => {
+      this.objBanderaRequerido = msg;
+      if (this.objBanderaRequerido == true) {
+        this.listarIntrumentosRequeridos();
+      }
+    });
+    this.utilityService.customBanderaBotonAnadir.subscribe(msg=>this.banderaBotonAnadir=msg);
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
     //console.log("idProcedimiento desde instrumento: " + this.idProcedimiento);
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);
@@ -91,8 +100,18 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
   listarIntrumentosRequeridos() {
     if (parseInt(this.idModalidad) != null) {
+      this.instrumentosRequeridos = [];
       this.serviceIntrumentosEquipos.getInstrumentosRequeridos(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
-        (restultado: InstrumentosEquipos[]) => this.instrumentosRequeridos = restultado);
+        (restultado: InstrumentosEquipos[]) => {
+          this.instrumentosRequeridos = restultado;
+          if (this.objBanderaRequerido == true) {
+            for (let i = 0; i < this.instrumentosRequeridos.length; i++) {
+              this.instrumentosRequeridos[i].estado = "";
+            }
+            this.dataIntrumentEquip = new MatTableDataSource(this.instrumentosRequeridos); //se le envia los datos a la tabla. 
+            this.dataIntrumentEquip.paginator = this.paginator;
+          }
+        });
 
     } else {
       this.notificationService.warn('No hay una modalidad creada, por favor verifica la creación del procedimiento!');
@@ -119,6 +138,8 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     }
     return res;
   }
+
+
 
   eliminarDato(Instrument: InstrumentosEquipos) {
     this.dialogo
@@ -151,7 +172,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     //dialogoConfig.disableClose=true;
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
-    this.datosAddTabla=this.arrayInstrumentos;
+    this.datosAddTabla = this.arrayInstrumentos;
     this.utilityService.changeIntrumentoAdd(this.datosAddTabla);
     this.dialogo.open(VentanaAuxiliarInstrumentosEquiposComponent, dialogoConfig);
   }

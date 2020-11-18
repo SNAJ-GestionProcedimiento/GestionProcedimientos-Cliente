@@ -30,8 +30,8 @@ export class InstrumentosEquiposService extends HttpService {
     return this.http.post<editInstrumentosEquipos>(`${this.apiURL}addAgendaEquipo`, instrumentEquipo);
   }
 
-  getInstrumentosRequeridos(idAgendaProcedimiento: number, idModalidad: number): Observable<InstrumentosEquipos[]> {
-    return this.http.get<InstrumentosEquipos[]>(`${this.apiURL}getEquiposProc/${idAgendaProcedimiento}/${idModalidad}`);
+  getInstrumentosRequeridos(codigoProcedimiento: number, idModalidad: number): Observable<InstrumentosEquipos[]> {
+    return this.http.get<InstrumentosEquipos[]>(`${this.apiURL}getEquiposProc/${codigoProcedimiento}/${idModalidad}`);
   }
 
   deleteInstrumento(instrumentEquipo: number): Observable<any> {
