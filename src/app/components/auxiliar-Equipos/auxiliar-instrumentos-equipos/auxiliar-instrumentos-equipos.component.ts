@@ -23,8 +23,8 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   @Input() codigoProcedimientoObtenido: string = "";//Codigo del procedimiento seleccionado
 
   parrafo = "";//para colocar que no hay nada en las tablas
-  idProcedimiento: string;
-  idAgendaProcedimiento: number;
+  idProcedimiento: string ='';
+  idAgendaProcedimiento: number=0;
 
   editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los instrumentos
   estados: estadoClass[];  //variable que tiene el array de estados
@@ -32,7 +32,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
   instrumentoEditable: InstrumentosEquipos;
   datosAddTabla: InstrumentosEquipos[] = [];
   instrumentosRequeridos: InstrumentosEquipos[] = [];
-  idModalidad: string;
+  idModalidad: string='';
   idProcedimientoModalidad: string;
   objBanderaRequerido: Boolean;
   banderaBotonAnadir: Boolean;
@@ -58,7 +58,11 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.utilityService.customBanderaRequerido.subscribe(msg => {
       this.objBanderaRequerido = msg;
       if (this.objBanderaRequerido == true) {
-        this.listarIntrumentosRequeridos();
+        if (this.idProcedimiento != "") {
+          if (this.idModalidad != ""){
+            this.listarIntrumentosRequeridos();
+          }
+        }
       }
     });
     this.utilityService.customBanderaBotonAnadir.subscribe(msg=>this.banderaBotonAnadir=msg);
@@ -76,7 +80,13 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     });
     this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
     this.utilityService.customIdProcedimientoModalidad.subscribe(msg => this.idProcedimientoModalidad = msg);
-    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg =>{
+      this.idAgendaProcedimiento = msg;
+      if (this.idProcedimiento != "") {
+        //this.aumentarCantidad();
+        this.listarIntrumentEquip()
+      }
+    });
   }
 
   //método para en listar los equipos asociados a un procedimiento

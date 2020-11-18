@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { Agendamiento } from 'src/_models/agendamiento.models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AgendaEditar } from 'src/_models/models_Agenda/agenda-editar.model';
+import { UtilityServiceService } from 'src/_services/utility-service.service';
 
 @Component({
   selector: 'app-auxiliar-editar-programacion',
@@ -41,8 +42,11 @@ export class AuxiliarEditarProgramacionComponent implements OnInit {
   public idAgendaProcedimiento:string='';
   public observacion:string='';
 
+  public banderaRequerido:Boolean;
+
   /**Elemento recibido desde ver agendamiento */
   public static recibido:ProcedimientoAgenda = new ProcedimientoAgenda();
+  public static idModalidad:number = 0;
 
   /**Elementos para la pagina editar */
   public agendamiento:Agendamiento;
@@ -55,7 +59,8 @@ export class AuxiliarEditarProgramacionComponent implements OnInit {
     private router:Router,
     private editarComponentesService:EditarComponentesService,
     private snackBar: MatSnackBar,
-    private agendaEditarService:AgendaEditarService
+    private agendaEditarService:AgendaEditarService,
+    private utilityService: UtilityServiceService,
     ) { }
 
   ngOnInit(): void {
@@ -64,7 +69,6 @@ export class AuxiliarEditarProgramacionComponent implements OnInit {
       this.router.navigateByUrl('programacion');
     }else{
       /**Cargar los datos a ver o editar */
-      console.log(AuxiliarEditarProgramacionComponent.recibido.observacion)
       if(AuxiliarEditarProgramacionComponent.recibido!=null){
         this.idPacienteAgendado = AuxiliarEditarProgramacionComponent.recibido.idPac;
         this.idAcudienteAgendado = AuxiliarEditarProgramacionComponent.recibido.idAcu;
@@ -119,5 +123,8 @@ export class AuxiliarEditarProgramacionComponent implements OnInit {
     this.editarComponentesService.cambiarIdProc(this.codigoProcedimiento);
     this.editarComponentesService.cambiaridAgendaProc(this.idAgendaProcedimiento);
     this.editarComponentesService.cambiarObservacion(this.observacion);
+    this.utilityService.changeIdProcedimiento(this.codigoProcedimiento);
+    console.log('idAgenda'+parseInt(this.idAgendaProcedimiento));
+    this.utilityService.changeIdAgendaProcedimiento(parseInt(this.idAgendaProcedimiento));
   }
 }

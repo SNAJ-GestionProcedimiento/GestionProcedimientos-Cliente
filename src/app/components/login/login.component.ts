@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
           break;
         /**Grupo 2:Auxiliar de programación */
         case 2:
-          this.router.navigateByUrl('admin');
+          this.router.navigateByUrl('programacion');
           break;
       }
     } catch (error) {

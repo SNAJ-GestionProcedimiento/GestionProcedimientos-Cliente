@@ -29,7 +29,6 @@ export class AuxiliarNavbarComponent implements OnInit {
   public async actualizarNombre(){
     let token = localStorage.getItem('token');
     let userGroup:any = await this.usuarioGrupoService.getGroup(token).toPromise();
-    console.log(userGroup);
     this.nombreUsuario = userGroup.username;
     //let res:any = await this.usuarioTokenService.getUser(userGroup.username).toPromise();
     //console.log(res);

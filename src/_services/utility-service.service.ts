@@ -62,10 +62,10 @@ export class UtilityServiceService {
     public changeIdModalidad(msg: string): void {
       this.objIdModalidad.next(msg);
     }
-    public changeBanderaRequerido(msg: boolean): void {
+    public changeBanderaRequerido(msg: Boolean): void {
       this.objBanderaRequerido.next(msg);
     }
-    public changeBanderaBotonAnadir(msg: boolean): void {
+    public changeBanderaBotonAnadir(msg: Boolean): void {
       this.objBanderaBotonAnadir.next(msg);
     }
 }

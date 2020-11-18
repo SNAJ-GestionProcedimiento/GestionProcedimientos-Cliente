@@ -77,6 +77,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     this.utilityService.customBanderaRequerido.subscribe(msg => this.banderaRequerido = msg);
     this.utilityService.customBanderaBotonAnadir.subscribe(msg=>this.banderaBotonAnadir=msg);
     this.utilityService.changeBanderaBotonAnadir(true);
+    this.utilityService.changeBanderaRequerido(true);
   } 
 
   listarInstrumentosDesdeProgramacion(){

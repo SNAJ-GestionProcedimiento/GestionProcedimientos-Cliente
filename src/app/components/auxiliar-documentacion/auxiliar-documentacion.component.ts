@@ -45,7 +45,6 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
     ngOnInit(): void {
       this.estadosDoc = obtenerEstadoDoc.getEstadoObtenido();
-      this.estadosDoc.forEach(element => console.log(element));
       //console.log("Codigo de procedimiento desde documentos: "+this.codigoProcedimientoObtenido)
     }
 
@@ -86,7 +85,6 @@ export class AuxiliarDocumentacionComponent implements OnInit {
       this.validarEstados();
 
       if (this.arrayDocs != null) {
-        console.log("Documentos requeridos cargados exitosamente");
         this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocs);
         this.dataDocumentosRequeridos.paginator = this.paginator;
       } else {

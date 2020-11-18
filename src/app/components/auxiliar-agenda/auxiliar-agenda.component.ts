@@ -10,6 +10,7 @@ import { AgendaInfoComponent } from 'src/app/components/auxiliar-agenda/agenda-i
 import { ProcedimientoAgenda } from 'src/_models/models_Agenda/procedimiento-agenda.model';
 
 import { AgendaListarService } from 'src/_services/serviciosAgenda/agenda-listar.service';
+import { ProcedimientoService } from 'src/_services/procedimiento.service';
 
 import { DateHelper } from 'src/_helpers/date.helper';
 import { AgendaObtenerService } from 'src/_services/serviciosAgenda/agenda-obtener.service';
@@ -18,6 +19,7 @@ import { AuxiliarEditarProgramacionComponent } from '../auxiliar-editar-programa
 import { AgendaObtenerFechaService } from 'src/_services/serviciosAgenda/agenda-obtener-fecha.service';
 import { AgendaObtenerIdpacService } from 'src/_services/serviciosAgenda/agenda-obtener-idpac.service';
 import { AuthHelper } from 'src/_helpers/auth.helper';
+import { Procedimiento } from 'src/_models/procedimiento.model';
 
 
 
@@ -68,7 +70,8 @@ export class AuxiliarAgendaComponent implements OnInit {
     private agendaObtenerFechaService:AgendaObtenerFechaService,
     private agendaObtenerIdpacService:AgendaObtenerIdpacService,
     private formBuilder:FormBuilder,
-    private router:Router
+    private router:Router,
+    private procedimientoService:ProcedimientoService
     ) { 
       this.buildbusquedaForm();
     }
@@ -211,6 +214,7 @@ export class AuxiliarAgendaComponent implements OnInit {
 
 
   public editarAgenda(element){
+    console.log('enviado:'+JSON.stringify(element));
     AuxiliarEditarProgramacionComponent.recibido = element;
     this.router.navigateByUrl('programacion/editar');
   }

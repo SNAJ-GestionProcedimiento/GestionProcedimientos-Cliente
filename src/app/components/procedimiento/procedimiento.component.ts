@@ -27,7 +27,7 @@ export class ProcedimientoComponent implements OnInit {
   public filtroBusqueda: string = '';
   public valorBusqueda: string = '';
   public codigoProc: string = '';
-  public estadoCama: string;
+  public estadoCama: string='';
 
   /**Valriables de control */
   public inputInactivo: string = "false";
@@ -70,6 +70,7 @@ export class ProcedimientoComponent implements OnInit {
         this.inputInactivo = "true";
         this.busquedaForm.get('searchType').disable();
         this.setProcedimiento();
+        console.log('deberia editar');
       }
     })
   }
@@ -127,7 +128,6 @@ export class ProcedimientoComponent implements OnInit {
 
   private updateBusquedaForm() {
     this.busquedaForm.get('code').setValue(this.procedimiento.codigoProcedimiento);
-    console.log("codigo desde update: " + this.codigoProc);
 
     this.busquedaForm.get('name').setValue(this.procedimiento.nombre);
     if (this.procedimiento.modalidades.length > 0) {
@@ -213,7 +213,7 @@ export class ProcedimientoComponent implements OnInit {
         this.idProcedimientoModalidad = this.procedimiento.modalidades[0].idProcedimientoModalidad.toString();
         this.utilityService.changeIdProcedimiento(this.codigoProc);
         this.utilityService.changeIdModalidad(this.idModalidad);
-        this.utilityService.changeBanderaRequerido(true);
+        this.utilityService.changeBanderaRequerido(this.banderaRequerido);
       }
       this.procedimientos = new Array<Procedimiento>();
     } else {

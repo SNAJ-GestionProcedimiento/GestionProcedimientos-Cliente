@@ -34,9 +34,9 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   especialidadesRequeridas: especialidadesRequeridas[] = [];
 
   //variables para obtener el idProcedimiento, idAgendaProcedimiento y idModalidad
-  idProcedimiento: string;
-  idAgendaProcedimiento: number;
-  idModalidad: string;
+  idProcedimiento: string='';
+  idAgendaProcedimiento: number=0;
+  idModalidad: string='';
 
   //variable para mostrar mensaje de error si lo hay
   mensajeError: string = "";
@@ -60,7 +60,11 @@ export class AuxiliarEspecialistaComponent implements OnInit {
     this.utilityService.customBanderaRequerido.subscribe(msg => {
       this.objBanderaRequerido = msg;
       if (this.objBanderaRequerido == true) {
-        this.listarEspecialidadesRequeridos();
+        if (this.idProcedimiento != "") {
+          if (this.idModalidad != ""){
+            this.listarEspecialidadesRequeridos();
+          }
+        }
       }
     });
     this.utilityService.customBanderaBotonAnadir.subscribe(msg=>this.banderaBotonAnadir=msg);
@@ -72,7 +76,13 @@ export class AuxiliarEspecialistaComponent implements OnInit {
         this.listarEspecialidades();
       }
     });
-    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg =>{
+      this.idAgendaProcedimiento = msg
+      if (this.idProcedimiento != "") {
+        //this.aumentarCantidad();
+        this.listarEspecialidades();
+      }
+    });
     this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
   }
 
@@ -80,6 +90,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   //método para en listar los equipos asociados a un procedimiento
   listarEspecialidades() {
     this.parrafo = "";
+    console.log('idAgenDAS:'+this.idAgendaProcedimiento);
     this.serviceEspecialidadRequerida.getEspecialidadRequerida(this.idAgendaProcedimiento).subscribe((rest: especialidadesRequeridas[]) => {
       this.especialidadAsociada = especialidadesRequeridas.fromJSON(rest);
       if (this.especialidadAsociada != null) {
