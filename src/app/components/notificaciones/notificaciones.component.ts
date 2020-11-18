@@ -96,10 +96,23 @@ export class NotificacionesComponent implements OnInit {
       let sacarHora2 = sacarPmAm2[0].split(":");
       let Hora2 = parseInt(sacarHora2[0]);
       let min2 = parseInt(sacarHora2[1]);
+      //console.log("fecha a comparar: " + this.fechaActual + "fecha en la lista: " + this.agenda[i].fechaProc);
       if (this.agenda[i].fechaProc == this.fechaActual) {
+        //console.log("son fechas iguales");
+        //console.log("hora1 comparar: " + Hora1 + " hora2 de la lista: " + Hora2);
         if (Hora1 <= Hora2) {
-          if (min1 <= min2) {
+          //console.log("min1 comparar: " + min1 + " min2 de la lista: " + min2);
+          if (Hora1 == Hora2) {
+            if (min1 <= min2) {
+              //console.log("PMAM1 comparar: " + sacarPmAm[1] + " PMAM2 de la lista: " + sacarPmAm2[1]);
+              if (sacarPmAm[1] == sacarPmAm2[1]) {
+                //console.log("entro!");
+                this.agendaDeHoy.push(this.agenda[i]);
+              }
+            }
+          } else {
             if (sacarPmAm[1] == sacarPmAm2[1]) {
+              //console.log("entro!");
               this.agendaDeHoy.push(this.agenda[i]);
             }
           }
@@ -186,9 +199,8 @@ export class NotificacionesComponent implements OnInit {
   enableDisableRule(elem) {
     const colorOne = "rgb(90, 102, 104)";
     const colorTwo = "rgb(143, 155, 166)";
-    console.log("=>"+elem.className);
-    if (elem.getElementById !== "visitas")
-    { elem = elem.closest('.visitas'); }
+    console.log("=>" + elem.className);
+    if (elem.getElementById !== "visitas") { elem = elem.closest('.visitas'); }
     elem.style.backgroundColor = (elem.style.backgroundColor == colorOne) ? colorTwo : colorOne;
   }
 }
