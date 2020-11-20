@@ -10,6 +10,7 @@ import { UsuarioGrupoService } from 'src/_services/usuarios/usuario-grupo.servic
 import { UsuarioCrearService } from 'src/_services/usuarios/usuario-crear.service';
 
 import { AuthHelper } from 'src/_helpers/auth.helper';
+import { AdminGuard } from '../../admin.guard';
 
 @Component({
   selector: 'app-login',
@@ -67,6 +68,7 @@ export class LoginComponent implements OnInit {
       AuthHelper.setLoggedToken(res);
       //Mensaje de bienvenida con nombre de usuario
       this.openSnackBar('Bienvenido ',userGroup.username);
+      AdminGuard.grupo = userGroup.group_id;
       switch(userGroup.group_id){
         /**Grupo 1:Administrador */
         case 1:
