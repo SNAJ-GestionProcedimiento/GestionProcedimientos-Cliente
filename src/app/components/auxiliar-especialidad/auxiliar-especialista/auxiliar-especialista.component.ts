@@ -55,6 +55,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(localStorage.getItem('token'));
     this.utilityService.customEstados.subscribe(msg => { this.estados = msg });
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
     this.utilityService.customBanderaRequerido.subscribe(msg => {
