@@ -57,6 +57,13 @@ import { AdminComponent } from 'src/app/components/admin/admin.component';
 import { AdminNavbarComponent } from 'src/app/components/admin-navbar/admin-navbar.component';
 import { AdminUsuariosComponent } from 'src/app/components/admin-usuarios/admin-usuarios.component';
 import { AdminGuard } from './admin.guard';
+import { ModuloDocumentacionComponent } from './components/admin-crearProcedimiento/modulo-documentacion/modulo-documentacion.component';
+import { ModuloMaterialComponent } from './components/admin-crearProcedimiento/modulo-material/modulo-material.component';
+import { ModuloInstrumentoComponent } from './components/admin-crearProcedimiento/modulo-instrumento/modulo-instrumento.component';
+import { ModuloEspecialidadComponent } from './components/admin-crearProcedimiento/modulo-especialidad/modulo-especialidad.component';
+import { ModuloProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-procedimiento/modulo-procedimiento.component';
+import { ModuloPrincipalCrearProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-principal-crear-procedimiento/modulo-principal-crear-procedimiento.component';
+import { AdminProcedimientosComponent } from './components/admin-procedimientos/admin-procedimientos.component';
 
 
 @NgModule({
@@ -88,6 +95,13 @@ import { AdminGuard } from './admin.guard';
     AdminComponent,
     AdminNavbarComponent,
     AdminUsuariosComponent,
+    ModuloDocumentacionComponent,
+    ModuloMaterialComponent,
+    ModuloInstrumentoComponent,
+    ModuloEspecialidadComponent,
+    ModuloProcedimientoComponent,
+    ModuloPrincipalCrearProcedimientoComponent,
+    AdminProcedimientosComponent,
   ],
   imports: [
     BrowserModule,
