@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpService } from './http.service';
+import { HttpService } from '../http.service';
 
-import { AgendaCrear } from 'src/_models/agenda-crear.model';
+import { AgendaCrear } from 'src/_models/models_Agenda/agenda-crear.model';
 
 @Injectable({
   providedIn: 'root'

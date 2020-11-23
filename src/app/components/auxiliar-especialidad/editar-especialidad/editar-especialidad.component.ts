@@ -5,6 +5,10 @@ import * as notificationService from 'src/_services/notification.service';
 import { MatDialog } from "@angular/material/dialog";
 import { editarEpecialidadesRequeridas, especialidadesRequeridas } from 'src/_models/modelEspecialista/especialidad.model';
 import { EspecilidadRequeridaService } from 'src/_services/especilidad-requerida.service';
+import { PacienteService } from 'src/_services/paciente.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Paciente } from 'src/_models/paciente.model';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-editar-especialidad',
@@ -13,6 +17,7 @@ import { EspecilidadRequeridaService } from 'src/_services/especilidad-requerida
 })
 export class EditarEspecialidadComponent implements OnInit {
 
+  paciente: Paciente = new Paciente();
   datosEspecialidad: especialidadesRequeridas;
   especialidadEditable: editarEpecialidadesRequeridas;
   estados: estadoClass[];
@@ -24,9 +29,19 @@ export class EditarEspecialidadComponent implements OnInit {
   nombreEspecialista: string;
 
   listaEstado: estadoClass[] = [];
+  mensajeError: string = "";
 
-  constructor(private utilityService: UtilityServiceService, private notificationService: notificationService.NotificationService, 
-    private dialog: MatDialog, private serviceEspecialidadRequerida: EspecilidadRequeridaService) { }
+  public especialistaForm: FormGroup;
+
+  constructor(private utilityService: UtilityServiceService,
+    private notificationService: notificationService.NotificationService,
+    private dialog: MatDialog,
+    private serviceEspecialidadRequerida: EspecilidadRequeridaService,
+    private pacienteService: PacienteService,
+    private formBuilder: FormBuilder,
+  ) {
+    this.buildespecialistaForm();
+  }
 
   ngOnInit(): void {
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);
@@ -36,28 +51,86 @@ export class EditarEspecialidadComponent implements OnInit {
       this.convertirEstadoLleda(this.datosEspecialidad);
       this.hacerListaEstados();
       this.verSeleccion = this.datosEspecialidad.estado;
+      this.registroMedico = this.datosEspecialidad.registroMedico;
+      this.identificacionEspecialista = this.datosEspecialidad.identificacion;
+      this.nombreEspecialista = this.datosEspecialidad.nombreEspecialista;
     });
   }
 
-  editar() {
-    this.datosEspecialidad.estado=this.verSeleccion;
-    let especialistaEnviar= this.convertirEstadoSalida(this.datosEspecialidad);
-    this.datosEspecialidad.registroMedico=this.registroMedico;
-    this.datosEspecialidad.identificacion=this.identificacionEspecialista;
-    this.datosEspecialidad.nombreEspecialista=this.nombreEspecialista;
-    this.especialidadEditable=new editarEpecialidadesRequeridas(especialistaEnviar.id, especialistaEnviar.codigoEspecialidad, especialistaEnviar.nombreEspecialidad, especialistaEnviar.registroMedico, especialistaEnviar.identificacion,especialistaEnviar.nombreEspecialista, especialistaEnviar.estado, this.idProcedimiento);
-    let res = this.serviceEspecialidadRequerida.editarEspecialidad(this.especialidadEditable).subscribe();
-    if (res != null) {
-      //this.convertirEstadoLleda(this.datosInstrumento);
-      this.notificationService.success('Se edito la especialidad con código: ' + this.datosEspecialidad.codigoEspecialidad.toString());
-      //console.log("cambio");
-      this.utilityService.changeEspecialidad(this.datosEspecialidad);
-      this.cerrarVentana();
-    } else {
-      //console.log("no cambio");
+  /**Metodo que crea el formulario */
+  private buildespecialistaForm() {
+    this.especialistaForm = this.formBuilder.group({
+      id: ['', [Validators.required]],
+      name: ['', [Validators.required]]
+    });
+
+    /**Cuando escriba el id del paciente lo busca*/
+    this.especialistaForm.get("id").valueChanges
+      .pipe(
+        debounceTime(700)
+      )
+      .subscribe(value => {
+        this.identificacionEspecialista = value;
+        this.setPaciente();
+      });
+  }
+
+
+  /**Completar el formulario*/
+  private completeForm() {
+    this.especialistaForm.get('name').setValue(this.nombreEspecialista);
+  }
+  /**Deshabilita campos del formulario */
+  private disableForm() {
+    this.especialistaForm.get('name').disable();
+  }
+  /**Limpiar el formulario*/
+  private deleteForm(): void {
+    this.especialistaForm.get('name').setValue('');
+  }
+  /**Deshabilita campos del formulario */
+  private enableForm() {
+    this.especialistaForm.get('name').enable();
+  }
+
+  /**Peticiones */
+  async setPaciente() {
+    let res = await this.pacienteService.get(this.identificacionEspecialista).toPromise();
+    //console.log(JSON.stringify(res));
+    this.paciente = Paciente.fromJSON(res);
+    if (this.paciente != null){
+      //console.log("arreglo desde el if: " + this.paciente.nombre);
+      this.nombreEspecialista = this.paciente.nombre;
+      //this.registroMedico="123";
+      this.completeForm();
+      this.disableForm();
     }
 
-    this.cerrarVentana();
+  }
+
+  editar() {
+    this.datosEspecialidad.estado = this.verSeleccion;
+    let especialistaEnviar = this.convertirEstadoSalida(this.datosEspecialidad);
+    this.datosEspecialidad.registroMedico = this.registroMedico;
+    this.datosEspecialidad.identificacion = this.identificacionEspecialista;
+    this.datosEspecialidad.nombreEspecialista = this.nombreEspecialista;
+    this.especialidadEditable = new editarEpecialidadesRequeridas(especialistaEnviar.id, especialistaEnviar.codigoEspecialidad, especialistaEnviar.nombreEspecialidad, especialistaEnviar.registroMedico, especialistaEnviar.identificacion, especialistaEnviar.nombreEspecialista, especialistaEnviar.estado, this.idProcedimiento);
+    this.serviceEspecialidadRequerida.editarEspecialidad(this.especialidadEditable).subscribe(
+      res => {
+        this.especialidadEditable = res;
+        this.notificationService.success('Se edito la especialidad con código: ' + this.datosEspecialidad.codigoEspecialidad.toString());
+        //console.log("cambio");
+        this.utilityService.changeEspecialidad(this.datosEspecialidad);
+        this.cerrarVentana();
+      },
+      (errorServicio) => {
+        console.log(errorServicio);
+        this.mensajeError = JSON.stringify(errorServicio.error.error);
+        this.notificationService.success('Error! ' + this.mensajeError);
+        this.convertirEstadoLleda(this.datosEspecialidad);
+      }
+    );
+    this.utilityService.changeEspecialidad(this.datosEspecialidad);
   }
 
 

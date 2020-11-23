@@ -25,6 +25,9 @@ export class UtilityServiceService {
   private objEspecialidadAdd= new BehaviorSubject<especialidadesRequeridas>(null);
   private objIntrumentoAdd = new BehaviorSubject<InstrumentosEquipos[]>(null);
   private objIdModalidad = new BehaviorSubject<string>("");
+  private objBanderaRequerido = new BehaviorSubject<Boolean>(false);
+  private objBanderaBotonAnadir = new BehaviorSubject<Boolean>(false);
+
   public customInstrumento = this.objIntrumento.asObservable();
   public customEstados = this.objEstados.asObservable();
   public customIdProcedimiento = this.objIdProcedimiento.asObservable();
@@ -58,33 +61,7 @@ export class UtilityServiceService {
   public customDocumento = this.objDocumento.asObservable();
 
   //Fin materiales 
-  public changeIntrumento(msg: InstrumentosEquipos): void {
-    this.objIntrumento.next(msg);
-  }
-  public changeEstado(msg: estadoClass []): void {
-    this.objEstados.next(msg);
-  }
-  public changeIdProcedimiento(msg: string): void {
-    this.objIdProcedimiento.next(msg);
-  }
-  public changeIdAgendaProcedimiento(msg: number): void {
-    this.objIdAgendaProcedimiento.next(msg);
-  }
-  public changeIdProcedimientoModalidad(msg: string): void {
-    this.objIdProcedimientoModalidad.next(msg);
-  }
-  public changeEspecialidad(msg: especialidadesRequeridas): void {
-    this.objEspecialidad.next(msg);
-  }
-  public changeEspecialidadAdd(msg: especialidadesRequeridas): void {
-    this.objEspecialidadAdd.next(msg);
-  }
-  public changeIntrumentoAdd(msg: InstrumentosEquipos[]): void {
-    this.objIntrumentoAdd.next(msg);
-  }
-  public changeIdModalidad(msg: string): void {
-    this.objIdModalidad.next(msg);
-  }
+
   public changeMaterial(msg: MaterialRequerido): void{
     this.objMateriales.next(msg);
   }
@@ -103,4 +80,40 @@ export class UtilityServiceService {
   public changeDocumentoAdd(msg: DocumentoRequerido[]): void {
     this.objDocumentoAdd.next(msg);
   }
+  public customBanderaRequerido = this.objBanderaRequerido.asObservable();
+  public customBanderaBotonAnadir = this.objBanderaBotonAnadir.asObservable();
+
+    public changeIntrumento(msg: InstrumentosEquipos): void {
+      this.objIntrumento.next(msg);
+    }
+    public changeEstado(msg: estadoClass []): void {
+      this.objEstados.next(msg);
+    }
+    public changeIdProcedimiento(msg: string): void {
+      this.objIdProcedimiento.next(msg);
+    }
+    public changeIdAgendaProcedimiento(msg: number): void {
+      this.objIdAgendaProcedimiento.next(msg);
+    }
+    public changeIdProcedimientoModalidad(msg: string): void {
+      this.objIdProcedimientoModalidad.next(msg);
+    }
+    public changeEspecialidad(msg: especialidadesRequeridas): void {
+      this.objEspecialidad.next(msg);
+    }
+    public changeEspecialidadAdd(msg: especialidadesRequeridas): void {
+      this.objEspecialidadAdd.next(msg);
+    }
+    public changeIntrumentoAdd(msg: InstrumentosEquipos[]): void {
+      this.objIntrumentoAdd.next(msg);
+    }
+    public changeIdModalidad(msg: string): void {
+      this.objIdModalidad.next(msg);
+    }
+    public changeBanderaRequerido(msg: Boolean): void {
+      this.objBanderaRequerido.next(msg);
+    }
+    public changeBanderaBotonAnadir(msg: Boolean): void {
+      this.objBanderaBotonAnadir.next(msg);
+    }
 }

@@ -9,6 +9,7 @@ export class DateHelper{
     }
 
     public static getAge(birthdate:Date){
+        if(birthdate==null){return 0;}
         let currentDate = new Date();
         let age = currentDate.getFullYear() - birthdate.getFullYear();
         let month = currentDate.getMonth() - birthdate.getMonth();
@@ -21,5 +22,12 @@ export class DateHelper{
     public static getMaxDate(actualDate:Date){
         actualDate.setFullYear(actualDate.getFullYear()-18);
         return actualDate;
+    }
+
+    public static getFecha(fechaHora:string){
+        return fechaHora.substr(0,fechaHora.indexOf(' '));
+    }
+    public static getHora(fechaHora:string){
+        return fechaHora.substr(fechaHora.indexOf(' ')+1);
     }
 }

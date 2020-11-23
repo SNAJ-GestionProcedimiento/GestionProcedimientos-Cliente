@@ -123,6 +123,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
     }
   }
 
+  //método para agregar instrumentos
   addInstruments() {
     this.dialogo
       .open(ConfirmationDialogComponent, {
@@ -131,13 +132,16 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          this.datosAdd = this.datosSeleccionador;
-          for (let i = 0; i < this.datosAdd.length; i++) {
-            this.editInstrument = new editInstrumentosEquipos(this.datosAdd[i].id, this.idProcedimiento, this.datosAdd[i].codigoEquipo.toString(), "PEND", this.datosAdd[i].cantidad);
-            let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe();
-            if (res != null) {
-              this.utilityService.changeIntrumentoAdd(this.datosAdd);
+          for (let i = 0; i < this.datosSeleccionador.length; i++) {
+            const resultado = this.datosAdd.find( intrumento => intrumento.codigoEquipo === this.datosSeleccionador[i].codigoEquipo );
+            if(!resultado){  //si no esta el instrimento al agregar en la lista de la agenda, se agrega
+              this.editInstrument = new editInstrumentosEquipos(this.datosSeleccionador[i].id, this.idProcedimiento, this.datosSeleccionador[i].codigoEquipo.toString(), "PEND", this.datosSeleccionador[i].cantidad);
+              let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe();
+            }else{ //si esta el instrimento al agregar en la lista de la agenda, se edita
+              this.editInstrument = new editInstrumentosEquipos(resultado.id, this.idProcedimiento, resultado.codigoEquipo.toString(), "PEND", parseInt(resultado.cantidad.toString())+1);
+              let res = this.serviceIntrumentosEquipos.editarInstrumentoEquipo(this.editInstrument).subscribe();
             }
+            this.utilityService.changeIntrumentoAdd(this.datosAdd);
           }
           this.utilityService.changeIntrumentoAdd(this.datosAdd);
           this.dialogo.closeAll();

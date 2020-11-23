@@ -1,6 +1,7 @@
 <div class="container">
-    <h5>Procedimiento</h5>
+    <h2>Procedimiento</h2>
     <form class="form-inline" [formGroup]="busquedaForm">
+
         Buscar procedimiento:
         <div class="form-group mb-2">
             <select class="form-control form-control-sm ml-2" formControlName="searchType">
@@ -8,6 +9,11 @@
                 <option value="2">Nombre</option>
             </select>
         </div>
+        <!--errores-->
+        <div class="error" *ngIf="!filtroSeleccionado">
+            <p>*Seleccione el tipo de busqueda</p>
+        </div>
+
         <div class="form-group mx-sm-3 mb-2">
             <!-- Buscador autocompletado-->
             <div class="ng-autocomplete">
@@ -17,7 +23,8 @@
                   (selected)='selectEvent($event)'
                   (inputChanged)='onChangeSearch($event)'
                   [itemTemplate]="itemTemplate"
-                  [notFoundTemplate]="notFoundTemplate">                                 
+                  [notFoundTemplate]="notFoundTemplate"
+                  disabled = {{inputInactivo}}>                                 
                 </ng-autocomplete>
                  
                 <ng-template #itemTemplate let-item>
@@ -27,16 +34,11 @@
                 <ng-template #notFoundTemplate let-notFound>
                 <div [innerHTML]=""></div>
                 </ng-template>
-                <div class="error" *ngIf="busquedaForm.get('searchType').errors && this.busquedaForm.get('searchType').touched && !datoBusqueda">
-                    <p>*Seleccione el tipo de busqueda</p>
-                </div>
-                <div class="error" id="campoVacio">
+                <!--errores-->
+                <div class="error" id="campoVacio" *ngIf="!inputVacio">
                     <p>*Campo de busqueda vacío</p>
                 </div>
-                <div class="error" id="tipoBusqueda">
-                    <p>*Campo de busqueda vacío</p>
-                </div>
-                <div class="alert alert-danger mt-3" role="alert" *ngIf="busquedaNula">
+                <div class="alert alert-danger mt-3" role="alert" *ngIf="!busquedaNula">
                     {{this.msjBusquedaNula}}
                 </div>
             </div>
@@ -53,8 +55,8 @@
                 </div>
             </div>
             <div class="form-group col-auto row ml-2">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="uciBed">
-                <label class="form-check-label" for="defaultCheck1">
+                <input class="form-check-input" type="checkbox" value="" id="camaUCI" formControlName="uciBed">
+                <label class="form-check-label" for="camaUCI">
                     Cama UCI
                 </label>
             </div>
@@ -75,8 +77,8 @@
                 </div>
             </div>
             <div class="form-group col-auto row ml-2">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="bloodBank">
-                <label class="form-check-label" for="defaultCheck1">
+                <input class="form-check-input" type="checkbox" value="" id="BancoSangre" formControlName="bloodBank">
+                <label class="form-check-label" for="BancoSangre">
                     Banco de sangre
                 </label>
             </div>

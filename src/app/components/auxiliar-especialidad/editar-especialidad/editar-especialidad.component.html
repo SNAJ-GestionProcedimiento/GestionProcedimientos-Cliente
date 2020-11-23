@@ -1,6 +1,13 @@
 <div class="mat-elevation-z8">
     <h2>Especialidad a editar</h2>
+
     <br>
+    <div *ngIf="mensajeError" class="alert alert-danger animated fadeIn">
+        <h3>Error</h3>
+        <p>
+            {{mensajeError}}
+        </p>
+    </div>
     <div class="modal-body row">
         <div class="col-md-6 ContenedorTitulo">
             <label>Código: </label>
@@ -17,6 +24,7 @@
             <label>{{datosEspecialidad.nombreEspecialidad}}</label>
         </div>
     </div>
+
     <div class="modal-body row">
         <div class="col-md-6 ContenedorTitulo">
             <label>Registro médico: </label>
@@ -25,22 +33,24 @@
             <input type="text" placeholder="{{datosEspecialidad.registroMedico}}" [(ngModel)]="registroMedico">
         </div>
     </div>
-    <div class="modal-body row ">
-        <div class="col-md-6 ContenedorTitulo ">
-            <label>Identificación del especialista: </label>
+    <form [formGroup]="especialistaForm">
+        <div class=" modal-body row ">
+            <div class="col-md-6 ContenedorTitulo ">
+                <label>Identificación del especialista: </label>
+            </div>
+            <div class="col-md-6 ">
+                <input type="number " placeholder="{{datosEspecialidad.identificacion}} " formControlName='id'>
+            </div>
         </div>
-        <div class="col-md-6 ">
-            <input type="number" placeholder="{{datosEspecialidad.identificacion}}" [(ngModel)]="identificacionEspecialista">
+        <div class="modal-body row ">
+            <div class="col-md-6 ContenedorTitulo ">
+                <label>Nombre del especialista: </label>
+            </div>
+            <div class="col-md-6 ">
+                <input type="text " placeholder="{{datosEspecialidad.nombreEspecialista}} " formControlName='name'>
+            </div>
         </div>
-    </div>
-    <div class="modal-body row ">
-        <div class="col-md-6 ContenedorTitulo ">
-            <label>Nombre del especialista: </label>
-        </div>
-        <div class="col-md-6 ">
-            <input type="text" placeholder="{{datosEspecialidad.nombreEspecialista}}" [(ngModel)]="nombreEspecialista">
-        </div>
-    </div>
+    </form>
     <div class=" modal-body row ">
         <div class="col-md-6 ContenedorTitulo ">
             <label>Estado: </label>
@@ -54,6 +64,7 @@
                 </select>
         </div>
     </div>
+
     <hr>
     <div style="text-align: center; ">
         <button type="button " class="btn btn-danger mr-3 " (click)="cerrarVentana() " value=" Cerrar esta ventana ">Cancelar edición</button>

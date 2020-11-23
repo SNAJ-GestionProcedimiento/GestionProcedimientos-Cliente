@@ -31,7 +31,11 @@ export class especialidadesRequeridas {
    */
   public estado: string;
 
-  public static cant: number;
+  
+  public cantidad: number;
+
+  public requerido: boolean;
+
   constructor() {
   }
 
@@ -52,6 +56,8 @@ export class especialidadesRequeridas {
       especialidadRequerida.identificacion = json[i].identificacion;
       especialidadRequerida.nombreEspecialista = json[i].nombreEspecialista;
       especialidadRequerida.estado = json[i].estado;
+      especialidadRequerida.cantidad=json[i].cantidad;
+      especialidadRequerida.requerido=json[i].requerido;
       arrayEspecialidades.push(especialidadRequerida);
     }
     return arrayEspecialidades;

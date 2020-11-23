@@ -68,7 +68,10 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
   //Captura el nombre seleccionado
   capturar() {
     this.verSeleccion = this.opcionSeleccionado;
+    console.log(this.verSeleccion);
     this.agregarDatoTabla();
+    this.opcionSeleccionado='0';
+    document.getElementById("caja").onchange;
   }
 
   //agrega la especialidad a la tabla de la vista previa
@@ -85,26 +88,14 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
     }
   }
 
-  keyPress(event: any, datoACambiar: especialidadesPrevisualizar) {
+  keyPress(event: any) {
     const pattern = /[0-9]/;
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
-    this.onChange(datoACambiar);
   }
 
-  onChange(datoACambiar: especialidadesPrevisualizar) {
-    let int;
-    for (let i = 0; i < this.arrayEspecialidadesCantidad.length; i++) {
-      if (this.arrayEspecialidadesCantidad[i].codigoEspecialidad == datoACambiar.codigoEspecialidad) {
-        this.arrayEspecialidadesCantidad[i].cantidad = this.customertext;
-        int = i;
-        break;
-      }
-    }
-    console.log(JSON.stringify(this.arrayEspecialidadesCantidad[int]));
-  }
   confirmacionLimpiar() {
     this.dialogo
       .open(ConfirmationDialogComponent, {
@@ -158,6 +149,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           //this.datosAdd = this.datosSeleccionador;
+          this.validarCantidadVacia();
           for (let i = 0; i < this.datosSeleccionador.length; i++) {
             for (let j = 0; j < this.datosSeleccionador[i].cantidad; j++) {
               let res = this.serviceEspecialidadRequerida.addEspecialidad(this.datosSeleccionador[i]).subscribe();
@@ -168,10 +160,19 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
             }
 
           }
-          //this.utilityService.changeIntrumentoAdd(this.datosAdd);
+          this.utilityService.changeEspecialidadAdd(this.especialidadBandera);
           this.dialogo.closeAll();
         }
       });
 
   }
+
+  validarCantidadVacia() {
+    for (let i = 0; i < this.arrayEspecialidadesCantidad.length; i++) {
+      if (this.arrayEspecialidadesCantidad[i].cantidad == null) {
+        this.arrayEspecialidadesCantidad[i].cantidad = 1;
+      }
+    }
+  }
+
 }

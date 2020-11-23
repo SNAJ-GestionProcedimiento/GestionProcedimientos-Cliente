@@ -1,0 +1,22 @@
+<!-- Programacion de un procedimiento -->
+<div class="container">
+    <!-- datos del procedimiento -->
+    <app-modulo-procedimiento></app-modulo-procedimiento>
+    <hr>
+    <br>
+    <!-- documentacion -->
+    <app-modulo-documentacion></app-modulo-documentacion>
+    <!-- materiales -->
+    <app-modulo-material></app-modulo-material>
+    <!-- instrumentos y equipos -->
+    <app-modulo-instrumento></app-modulo-instrumento>
+    <!-- Especialistas -->
+    <app-modulo-especialidad></app-modulo-especialidad>
+    <!-- PROCEDIMIENTO ACCIONES -->
+    <button type="button" class="btn btn-danger mr-3">Cancelar creación de procedimiento</button>
+    <button type="button" class="btn btn-info" (click)="crearProcedimientoOnClick()">Crear procedimiento</button>
+    <hr>
+    <br>
+    <!--logo de home-->
+    <button type="button" class="ml-auto" style="float: right;" (clik)="gestionProcedimientoOnclick()"><i class="material-icons" style="font-size: 40px;">home</i></button>
+</div>
