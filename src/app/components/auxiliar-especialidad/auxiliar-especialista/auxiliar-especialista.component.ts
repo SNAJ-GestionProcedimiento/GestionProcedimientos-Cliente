@@ -137,7 +137,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
     this.dialogo.open(VentanaAuxiliarEspecialidadComponent, dialogoConfig);
-  }
+  } 
 
   convertirEstadoLleda(instrumentoAcambiar) {
     for (let i = 0; i < instrumentoAcambiar.length; i++) {

@@ -1,0 +1,60 @@
+<div class="mat-elevation-z8">
+    <h2>Editar Material</h2>
+    <br>
+    <div class="modal-body row">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Código: </label>
+        </div>
+        <div class="col-md-6">
+            <label>{{datosMateriales.codigoMaterial}}</label>
+        </div>
+    </div>
+    <div class="modal-body row">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Nombre: </label>
+        </div>
+        <div class="col-md-6">
+            <label>{{datosMateriales.nombre}}</label>
+        </div>
+    </div>
+
+    <div class="modal-body row ">
+        <div class="col-md-6 ContenedorTitulo ">
+            <label>Fecha estimada: </label>
+        </div>
+        <div class="col-md-6 ">
+            <label>{{datosMateriales.fechaEstimada}}</label>
+        </div>
+    </div>
+    <div class=" modal-body row ">
+        <div class="col-md-6 ContenedorTitulo ">
+            <label>Estado: </label>
+        </div>
+        <div class="col-md-6 ">
+            <select [(ngModel)]="opcionSeleccionada" (change)="capturar() ">
+                <option value="0" selected>{{datosMateriales.estado}}</option>
+                <option *ngFor="let dato of listaEstadosMat">
+                    {{dato.contenido}}
+                </option>
+                </select>
+        </div>
+    </div>
+
+    <div class="modal-body row ">
+        <div class="col-md-6 ContenedorTitulo ">
+            <label>Solicitado a: </label>
+        </div>
+        <div class="col-md-6 ">
+            <input type="text" placeholder="{{datosMateriales.casaMedica}}" [(ngModel)]="casaMedicaEdit">
+        </div>
+
+    </div>
+
+
+    <!--<p [hidden]="opcionSeleccionado=='0' ">Haz seleccionado la opción # {{verSeleccion}}</p>-->
+    <hr>
+    <div style="text-align: center; ">
+        <button type="button " class="btn btn-danger mr-3 " (click)="cerrarVentana() " value=" Cerrar esta ventana ">Cancelar edición</button>
+        <button type="button " class="btn btn-info " (click)="editar() ">Editar</button>
+    </div>
+</div>

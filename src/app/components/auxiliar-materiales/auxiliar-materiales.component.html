@@ -24,29 +24,33 @@
                 <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
             </ng-container>
 
-            <!-- archivo Column -->
+            <!-- Casa médica Column -->
             <ng-container matColumnDef="casaMedica">
                 <th mat-header-cell *matHeaderCellDef> Casa médica </th>
                 <td mat-cell *matCellDef="let element"> {{element.casaMedica}} </td>
             </ng-container>
 
-            <!-- fecha solicitud Column -->
+
+            <!-- fecha solicitud Column 
             <ng-container matColumnDef="fechaSolicitud">
                 <th mat-header-cell *matHeaderCellDef> Fecha solicitud </th>
                 <td mat-cell *matCellDef="let element"> {{element.fechaSolicitud}} </td>
             </ng-container>
+            -->
 
-            <!-- Fecha compromiso Column -->
+            <!-- Fecha compromiso Column 
             <ng-container matColumnDef="fechaEstimada">
                 <th mat-header-cell *matHeaderCellDef> Fecha Compromiso </th>
                 <td mat-cell *matCellDef="let element"> {{element.fechaEstimada}} </td>
             </ng-container>
+            -->
 
-            <!-- Fecha llegada Column -->
+            <!-- Fecha llegada Column 
             <ng-container matColumnDef="fechaRecibido">
                 <th mat-header-cell *matHeaderCellDef> Fecha Llegada </th>
                 <td mat-cell *matCellDef="let element"> {{element.fechaRecibido}} </td>
             </ng-container>
+            -->
 
             <!-- Cantidad Column -->
             <ng-container matColumnDef="cantidadMat">
@@ -64,10 +68,15 @@
             <ng-container matColumnDef="acciones">
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn
-                        btn-link
-                        btn-sm btn-just-icon">
+                    <button mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn  
+                        btn-link btn-warning
+                        btn-sm btn-just-icon" (click)="editarMaterial(element)">
                         <i class="material-icons">edit</i>
+                    </button>
+                    <button mat-raised-button type="button" matTooltip="Eliminar" [matTooltipPosition]="'above'" class="btn
+                        btn-link  btn-danger
+                        btn-sm btn-just-icon" *ngIf="!validarMaterialRequerido(element)" (click)="eliminarDatoMat(element)">
+                        <i class=" material-icons ">delete_forever</i>
                     </button>
             </ng-container>
 

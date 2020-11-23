@@ -12,8 +12,8 @@ import { MatDialog } from "@angular/material/dialog";
   styleUrls: ['./ventana-editar-instrumento-equipo.component.css']
 })
 export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
-
-
+ 
+  
   constructor(private utilityService: UtilityServiceService, private serviceIntrumentosEquipos: InstrumentosEquiposService, private notificationService: notificationService.NotificationService, 
     private dialog: MatDialog) {
     }
@@ -65,7 +65,7 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
       this.notificationService.success('Se tomo la cantidad con la que estaba el instrumento o equipo');
     }
     this.editInstrument = new editInstrumentosEquipos(this.datosInstrumento.id, this.idProcedimiento, this.datosInstrumento.codigoEquipo.toString(), instrumetEnviar.estado, this.datosInstrumento.cantidad);
-    let res = this.serviceIntrumentosEquipos.editarInstrumentoEquipo(this.editInstrument).subscribe();
+    let res = this.serviceIntrumentosEquipos.editarInstrumentoEquipo(this.editInstrument).subscribe(); 
     if (res != null) {
       this.convertirEstadoLleda(this.datosInstrumento);
       this.notificationService.success('Se edito el instrumento con código: ' + this.datosInstrumento.codigoEquipo.toString());
@@ -92,10 +92,10 @@ export class VentanaEditarInstrumentoEquipoComponent implements OnInit {
         //console.log("entro en salida");
         instrumentoAcambiar.estado = this.estados[j].valor;
       }
-    }
+    } 
     return instrumentoAcambiar;
   }
-
+ 
   hacerListaEstados() {
     this.listaEstado = [];
     for (let i = 0; i < this.estados.length; i++) {

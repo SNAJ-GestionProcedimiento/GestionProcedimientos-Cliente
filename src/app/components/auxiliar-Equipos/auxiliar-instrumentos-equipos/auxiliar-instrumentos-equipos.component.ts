@@ -47,7 +47,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     private notificationService: notificationService.NotificationService,
     private utilityService: UtilityServiceService
   ) { }
-
+ 
   //la inicialización del componente
   ngOnInit(): void {
     this.utilityService.customInstrumento.subscribe(msg => {
@@ -58,6 +58,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
     this.utilityService.changeEstado(this.estados);
+    
     this.utilityService.customInstrumentoAdd.subscribe(msg => {
       this.datosAddTabla = msg;
       if (this.idProcedimiento != "") {
@@ -104,7 +105,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.instrumentoEditable = Instrument;
     this.utilityService.changeIntrumento(this.instrumentoEditable);
 
-
+ 
     const dialogoConfig = new MatDialogConfig();
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
@@ -138,7 +139,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
               this.serviceIntrumentosEquipos.deleteInstrumento(this.arrayInstrumentos[i].id).subscribe();
               this.listarIntrumentEquip();
               this.listarIntrumentosRequeridos();
-              break;
+              break; 
             }
           }
         }

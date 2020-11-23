@@ -3,7 +3,7 @@ export interface estadoClass {
   valor: string;
   contenido: string;
 }
-
+ 
 export class obtenerEstado{
   estados: estadoClass[] = [];  //variable que tiene el array de estados
   constructor(){};

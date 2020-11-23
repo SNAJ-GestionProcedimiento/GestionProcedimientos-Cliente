@@ -1,0 +1,49 @@
+<div class="mat-elevation-z8">
+    <h2>Documentos a editar</h2>
+    <br>
+    <div class="modal-body row">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Código: </label>
+        </div>
+        <div class="col-md-6">
+            <label>{{datosDocumento.codigoDocumento}}</label>
+        </div>
+    </div>
+    <div class="modal-body row">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Nombre: </label>
+        </div>
+        <div class="col-md-6">
+            <label>{{datosDocumento.nombre}}</label>
+        </div>
+    </div>
+
+    <div class="modal-body row ">
+        <div class="col-md-6 ContenedorTitulo ">
+            <label>Observacion: </label>
+        </div>
+        <div class="col-md-6 ">
+            <input type="text" placeholder="{{datosDocumento.observacion}}" [(ngModel)]="custormertext">
+
+        </div>
+    </div>
+    <div class=" modal-body row ">
+        <div class="col-md-6 ContenedorTitulo ">
+            <label>Estado: </label>
+        </div>
+        <div class="col-md-6 ">
+            <select [(ngModel)]="opcionSeleccionada " (change)="capturar() ">
+                <option value="0" selected>{{datosDocumento.estado}}</option>
+                <option *ngFor="let dato of listaEsdadoDoc ">
+                    {{dato.contenido}}
+                </option>
+                </select>
+        </div>
+    </div>
+    <!--<p [hidden]="opcionSeleccionado=='0' ">Haz seleccionado la opción # {{verSeleccion}}</p>-->
+    <hr>
+    <div style="text-align: center; ">
+        <button type="button " class="btn btn-danger mr-3 " (click)="cerrarVentana() " value=" Cerrar esta ventana ">Cancelar edición</button>
+        <button type="button " class="btn btn-info " (click)="editar() ">Editar</button>
+    </div>
+</div>

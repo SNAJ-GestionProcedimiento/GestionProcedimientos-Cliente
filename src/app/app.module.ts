@@ -44,7 +44,8 @@ import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialida
 import { VentanaAuxiliarEspecialidadComponent } from './components/auxiliar-especialidad/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/editar-especialidad/editar-especialidad.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-
+import { VentanaEditarDocumentacionComponent } from './components/auxiliar-documentacion/ventana-editar-documentacion/ventana-editar-documentacion.component';
+import { VentanaEditarMaterialesComponent } from './components/auxiliar-materiales/ventana-editar-materiales/ventana-editar-materiales.component'
 
 @NgModule({
   declarations: [
@@ -68,6 +69,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     VentanaEditarInstrumentoEquipoComponent,
     EditarEspecialidadComponent,
     ConfirmationDialogComponent,
+    VentanaEditarDocumentacionComponent,
+    VentanaEditarMaterialesComponent,
   ],
   imports: [
     BrowserModule,

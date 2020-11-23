@@ -8,7 +8,7 @@ import { HoraFechaComponent } from 'src/app/components/hora-fecha/hora-fecha.com
 import { AgendaCrear } from 'src/_models/agenda-crear.model';
 import { AgendaCrearService } from 'src/_services/agenda-crear.service';
 import {AuxiliarDocumentacionComponent} from '../../components/auxiliar-documentacion/auxiliar-documentacion.component';
-import {AuxiliarMaterialesComponent} from '../../components/auxiliar-materiales/auxiliar-materiales.component'
+import {AuxiliarMaterialesComponent} from '../../components/auxiliar-materiales/auxiliar-materiales.component' 
 
 import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-Equipos/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
@@ -62,11 +62,13 @@ export class AuxiliarProgramacionComponent implements OnInit {
 
   listarDocumentosDesdeProgramacion(){
     //this.listarDocumentos.listarDocumentosRequeridos();
-    this.listarDocumentos.listarDocumentosPorCodigoModalidad();
+    //this.listarDocumentos.listarDocumentosPorCodigoModalidad();
+    this.listarDocumentos.listarDocumentos();
   }
 
   listarMaterialesDesdeProgramacion(){
-    this.listarMateriales.listarMaterialesPorCodigoModalidad();
+    //this.listarMateriales.listarMaterialesPorCodigoModalidad();
+    this.listarMateriales.listarMateriales();
   }
 
   crearAgendaonClick(){
@@ -110,6 +112,8 @@ export class AuxiliarProgramacionComponent implements OnInit {
     console.log("idAgenda: "+this.idAgendaProcedimiento);
     this.listarInstrumentosDesdeProgramacion();
     this.listarDocumentosDesdeProgramacion();
+    this.listarMaterialesDesdeProgramacion();
+
   }
 
 }
