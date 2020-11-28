@@ -67,7 +67,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   receiveMessage($event) {
     this.message = $event
     //($event);
-  }
+  } 
 
   ngOnInit(): void {
     this.actualizarIds();
@@ -139,6 +139,8 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
       this.utilityService.changeBanderaBotonAnadir(false);
       this.numNotificacion.changeBandera(this.bandera);
       this.listarInstrumentosDesdeProgramacion();
+      this.listarDocumentosDesdeProgramacion();
+
     }
   }
 

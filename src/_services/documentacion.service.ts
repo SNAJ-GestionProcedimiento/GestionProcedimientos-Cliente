@@ -1,13 +1,11 @@
 import { Injectable, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from '../_services/http.service';
-import { DocumentoRequerido, editarDocumentos } from '../_models/documento.model';
+import { DocumentoRequerido, editarDocumentos, previsualizarDocumentos } from '../_models/documento.model';
 import { Observable } from 'rxjs';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DocumentoService extends HttpService{
     constructor(protected http: HttpClient) { 
     super(http);
@@ -41,4 +39,13 @@ export class DocumentoService extends HttpService{
     return this.http.delete(`${url}`);
   }
 
+  generarAcuseRecibido(idAgendaProcedimiento: number): Observable<Blob>{
+    const url=this.apiURL+"generateRecibido/"+idAgendaProcedimiento.toString();
+
+    const options = {
+      responseType: 'blob' as 'json'
+    };
+
+    return this.http.get<any>((`${url}`),options);
+  }
 }

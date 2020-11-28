@@ -219,4 +219,4 @@ export class AuxiliarEspecialistaComponent implements OnInit {
     return instrumentoAcambiar;
   }
 
-}
+} 

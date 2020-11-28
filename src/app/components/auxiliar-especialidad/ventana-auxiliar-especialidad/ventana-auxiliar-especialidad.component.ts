@@ -69,7 +69,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
     });
   }
   //Captura el nombre seleccionado
-  capturar() {
+  capturar() { 
     this.verSeleccion = this.opcionSeleccionado;
     this.agregarDatoTabla();
     $("#mi_select").val("0");
@@ -97,7 +97,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+ 
   confirmacionLimpiar() {
     this.dialogo
       .open(ConfirmationDialogComponent, {

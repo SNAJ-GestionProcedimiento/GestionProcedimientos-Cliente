@@ -65,7 +65,7 @@ export class VentanaEditarDocumentacionComponent implements OnInit {
     }else{
       this.notificationService.success('Campo observación no editado! ')
     }
-    this.editDocumentos = new editarDocumentos(this.datosDocumento.id, this.idProcedimiento, this.datosDocumento.codigoDocumento.toString(), this.datosDocumento.estado, this.datosDocumento.descripcion); 
+    this.editDocumentos = new editarDocumentos(this.datosDocumento.id, this.idProcedimiento, this.datosDocumento.codigoDocumento, this.datosDocumento.estado, this.datosDocumento.descripcion); 
     
     let res = this.documentoService.editarDocumentoServicio(this.editDocumentos).subscribe();
 

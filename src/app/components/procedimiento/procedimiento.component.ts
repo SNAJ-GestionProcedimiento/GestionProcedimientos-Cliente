@@ -153,7 +153,7 @@ export class ProcedimientoComponent implements OnInit {
   selectEvent(item) {
     this.codigoProc = item.id;
     this.setProcedimiento();
-  }
+  } 
 
   onChangeSearch($event) {
     if ($event != '') {
