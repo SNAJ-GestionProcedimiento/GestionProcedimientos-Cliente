@@ -55,6 +55,8 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';  //para que material este en español
+    
     console.log(localStorage.getItem('token'));
     this.utilityService.customEstados.subscribe(msg => { this.estados = msg });
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);

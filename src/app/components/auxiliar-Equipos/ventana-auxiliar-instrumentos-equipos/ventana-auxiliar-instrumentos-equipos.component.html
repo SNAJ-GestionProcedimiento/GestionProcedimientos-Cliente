@@ -8,8 +8,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item my-2 my-sm-0">
-                    <select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
-                        <option value="0" selected>--Seleccione un instrumento o equipo a agregar--</option>
+                    <select id="mi_select" [(ngModel)]="opcionSeleccionado" (change)="capturar()">
+                        <option value="0" selected="selected">--Seleccione un instrumento o equipo a agregar--</option>
                         <option *ngFor="let dato of arrayInstrumentos">
                             {{dato.nombre}}
                         </option>
@@ -68,5 +68,5 @@
 <div class="trans ">
     <button class="btn btn-outline-success btn-responsive btninter centrado " (click)="cerrarVentana() ">Cancelar</button>
     <br>
-    <button class="btn btn-outline-success btn-responsive btninter right centrado" (click)="addInstruments()">Añadir intrumento/equipo</button>
+    <button class="btn btn-outline-success btn-responsive btninter right centrado" (click)="addInstruments()" [disabled]="banderaBotonAnadir">Añadir intrumento/equipo</button>
 </div>
