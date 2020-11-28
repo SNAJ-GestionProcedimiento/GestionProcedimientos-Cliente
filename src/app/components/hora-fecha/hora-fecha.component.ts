@@ -63,7 +63,7 @@ export class HoraFechaComponent implements OnInit {
       state:['',[]],
       room:['',[Validators.required]],
       stateSchedule:['PEND',[]],
-      stateSala:[[],[]]
+      stateSala:['PEND',[]]
     });
     this.horafechaForm.get('date').valueChanges
     .subscribe(value =>{

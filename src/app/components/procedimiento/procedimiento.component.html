@@ -37,14 +37,14 @@
                 <!--errores-->
                 <div class="error" id="campoVacio" *ngIf="!inputVacio">
                     <p>*Campo de busqueda vacío</p>
-                </div>
-                <div class="alert alert-danger mt-3" role="alert" *ngIf="!busquedaNula">
-                    {{this.msjBusquedaNula}}
-                </div>
+                </div>                
             </div>
         </div>
         <button type="button" class="btn btn-info" (click)="buscarClick()">Buscar</button>
     </form>
+    <div class="alert alert-danger mt-3" role="alert" *ngIf="procVacio">
+        No hay procedimientos con ese nombre
+    </div>
 
     <form class="mt-4" [formGroup]="busquedaForm">
         <div class="form-row align-items-center">

@@ -7,10 +7,10 @@
                 Identificación:
                 <input class="form-control" type="number" formControlName='id'>
                 <div class="error" *ngIf="pacienteForm.get('id').errors && this.pacienteForm.get('id').touched">
-                    <p>*Ingrese el numero de documento</p>
+                    <p *ngIf="pacienteForm.get('id').errors.required">*Ingrese el numero de documento</p>
                 </div>
                 <div class="alert alert-danger mt-3" role="alert" *ngIf="this.pacAcudiente">
-                    El paciente no puede ser el acudiente.
+                    El acudiente no puede ser un paciente.
                 </div>
             </div>
             <!--tipo de documento-->
@@ -26,7 +26,7 @@
             <!--Fecha de nacimiento-->
             <div class="col-auto mr-3 mt-1">
                 Fecha de nacimiento
-                <input class="form-control" type="date" formControlName="birthdate">
+                <input class="form-control" type="date" formControlName="birthdate" max="{{this.fechaActual}}">
                 <div class="error" *ngIf="pacienteForm.get('birthdate').errors && this.pacienteForm.get('birthdate').touched">
                     <p>*Ingrese una fecha de nacimiento</p>
                 </div>
@@ -37,8 +37,9 @@
             <div class="col-auto mr-3 mt-1">
                 Nombre:
                 <input type="text" class="form-control" formControlName="name">
-                <div class="error" *ngIf="pacienteForm.get('name').errors && this.pacienteForm.get('name').touched">
-                    <p>*Ingrese el nombre del paciente</p>
+                <div class="error" *ngIf="pacienteForm.get('name').errors">
+                    <p *ngIf="pacienteForm.get('name').errors.required && this.pacienteForm.get('name').touched">*Ingrese el nombre del paciente</p>
+                    <p *ngIf="pacienteForm.get('name').errors.pattern">*No se admiten numeros o caracteres especiales en este campo</p>
                 </div>
             </div>
             <!--Dirección-->
@@ -61,7 +62,7 @@
                 Teléfono:
                 <input type="number" class="form-control" formControlName="phoneNumber">
                 <div class="error" *ngIf="pacienteForm.get('phoneNumber').errors && this.pacienteForm.get('phoneNumber').touched">
-                    <p>*Ingrese el número de teléfono del paciente</p>
+                    <p >*Ingrese el número de teléfono del paciente</p>
                 </div>
             </div>
             <!--Genero-->
@@ -88,9 +89,9 @@
             <!--Observación-->
             <div class="col-auto mr-3 mt-1">
                 Observación: <br/>
-                <textarea class="form-control" cols="30" rows="3" formControlName="observation"></textarea>
-                <div class="error" *ngIf="pacienteForm.get('observation').errors && this.pacienteForm.get('observation').touched">
-                    <p>*Escriba la observación del paciente</p>
+                <textarea class="form-control" ng-pattern="/^[a-zA-Z0-9]*$/"  cols="30" rows="3" formControlName="observation"></textarea>
+                <div class="error" *ngIf="pacienteForm.get('observation').errors">
+                    <p *ngIf="pacienteForm.get('observation').errors.pattern">*No se admiten numeros o caracteres especiales en la observación del paciente</p>
                 </div>
             </div>
         </div>

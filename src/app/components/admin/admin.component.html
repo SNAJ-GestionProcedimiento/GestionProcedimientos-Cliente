@@ -12,7 +12,8 @@
     <!-- Contenido de la pagina -->
     <div ng-sidebar-content>
         <div class="container">
-            <app-admin-usuarios></app-admin-usuarios>
+            <!-- VER USUARIOS -->
+            <app-admin-usuarios *ngIf="selectedOption == OPTIONS.VER_USUARIO"></app-admin-usuarios>
         </div>
     </div>
 </ng-sidebar-container>

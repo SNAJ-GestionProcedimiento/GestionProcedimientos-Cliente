@@ -65,22 +65,21 @@ export class LoginComponent implements OnInit {
       let res:any = await this.authService.login(this.usuario,this.constrasena).toPromise();
       /**Obtener el grupo al que pertenece el usuario */
       let userGroup:any = await this.usuarioGrupoService.getGroup(res.token).toPromise();
-      AuthHelper.setLoggedToken(res);
+      AuthHelper.setLoggedToken(res, userGroup);
       //Mensaje de bienvenida con nombre de usuario
       this.openSnackBar('Bienvenido ',userGroup.username);
-      AdminGuard.grupo = userGroup.group_id;
-      switch(userGroup.group_id){
+      let grupo = AuthHelper.getUserGroup();
+      switch(grupo){
         /**Grupo 1:Administrador */
-        case 1:
-          this.router.navigateByUrl('admin');
+        case "Admin":
+          this.router.navigateByUrl('admin/usuario');
           break;
         /**Grupo 2:Auxiliar de programación */
-        case 2:
+        case "Auxiliar de Programación":
           this.router.navigateByUrl('programacion');
           break;
       }
     } catch (error) {
-      console.log(error);
     }
   }
 

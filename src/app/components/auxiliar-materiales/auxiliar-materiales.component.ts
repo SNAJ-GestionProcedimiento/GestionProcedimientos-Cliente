@@ -65,7 +65,6 @@ export class AuxiliarMaterialesComponent implements OnInit {
         this.validarMateriales();
 
         if (this.arrayMats != null) {
-          console.log("Materiales requeridos cargados exitosamente");
           this.dataMaterialesRequeridos = new MatTableDataSource(this.arrayMats);
           this.dataMaterialesRequeridos.paginator = this.paginator;
         } else {

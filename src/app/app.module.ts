@@ -57,6 +57,7 @@ import { AdminComponent } from 'src/app/components/admin/admin.component';
 import { AdminNavbarComponent } from 'src/app/components/admin-navbar/admin-navbar.component';
 import { AdminUsuariosComponent } from 'src/app/components/admin-usuarios/admin-usuarios.component';
 import { AdminGuard } from './admin.guard';
+import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-crear/usuarios-crear.component';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { AdminGuard } from './admin.guard';
     AdminComponent,
     AdminNavbarComponent,
     AdminUsuariosComponent,
+    UsuariosCrearComponent,
   ],
   imports: [
     BrowserModule,

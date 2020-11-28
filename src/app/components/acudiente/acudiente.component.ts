@@ -65,7 +65,7 @@ export class AcudienteComponent implements OnInit {
       age:['',[]],
       birthdate:['',[Validators.required]],
       email:['',[Validators.required,Validators.email]],
-      name:['',[Validators.required]],
+      name:['',[Validators.required],Validators.pattern(/^[a-zA-Z ]+$/)],
       homeAddress:['',[Validators.required]],
       phoneNumber:['',[Validators.required]],
       gender:['',[Validators.required]],

@@ -77,7 +77,6 @@ export class AuxiliarAgendaComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    let token = AuthHelper.getLoggedToken();
     this.getAgendas();
   }
   /**Formulario de busqueda */
@@ -171,6 +170,7 @@ export class AuxiliarAgendaComponent implements OnInit {
         let procAgenda = ProcedimientoAgenda.fromJSON(element);
         this.agenda.push(procAgenda);
       });
+      console.log(this.agenda);
       this.dataSource = new MatTableDataSource<any>(this.agenda);
       this.dataSource.paginator = this.paginator;
     }

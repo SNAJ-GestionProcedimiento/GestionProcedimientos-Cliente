@@ -12,7 +12,7 @@
                     <i class="material-icons">notifications</i>
                     <span class="notification">{{numeroNotificaciones}}</span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-menu dropdown-menu-left" id="menu-notificaciones" aria-labelledby="navbarDropdownMenuLink">
                     <app-notificaciones></app-notificaciones>
                 </div>
             </li>
@@ -25,8 +25,9 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{nombreUsuario}}
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Cerrar sesion</a>
+                <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Configuración</a>
+                    <button class="dropdown-item" (click)="cerrarSesion()">Cerrar sesion</button>
                 </div>
         </ul>
     </div>

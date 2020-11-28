@@ -17,7 +17,9 @@ export class UsuarioObtenerService extends HttpService{
     */
    getUsers(){
     return this.http.get(`${this.apiURL}`,{
-        headers:this.headers
+        headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+        })
       } );
    }
 }

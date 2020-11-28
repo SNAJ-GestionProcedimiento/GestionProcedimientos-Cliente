@@ -28,8 +28,6 @@ export class EstadoSala{
             colEstados.push(tipoDoc);
         });
 
-        console.log("Estados salas desde el modleo: "+colEstados);
-
         return colEstados;
     }
 }
