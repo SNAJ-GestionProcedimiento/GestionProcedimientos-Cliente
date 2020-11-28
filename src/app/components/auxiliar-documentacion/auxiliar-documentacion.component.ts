@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, Input} from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {DocumentoRequerido} from '../../../_models/documento.model';
+import { DocumentoRequerido, editarDocumentos } from '../../../_models/documento.model';
 import { VentanaAuxiliarDocumentacionComponent } from '../ventana-auxiliar-documentacion/ventana-auxiliar-documentacion.component';
 import { Procedimiento } from '../../../_models/procedimiento.model';
 import { estadoDocClass, obtenerEstadoDoc } from '../../../_models/documento-estado.model';
@@ -21,27 +21,22 @@ import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmat
 })
 export class AuxiliarDocumentacionComponent implements OnInit {
 
-  @Input() codigoProcedimientoObtenido: string="";
-  public tituloTabla = "Documentos";
-  public idProcedimientoModalidad: string;
-
-  mensajeDeNotificacion="";
-  estados: estadoDocClass[];
-  //arrayDocs: DocumentoRequerido[]=[];
-  documentosAsociadosAgenda: DocumentoRequerido[];
-  arrayDocumentos: DocumentoRequerido[];
-
-  documentoEditable: DocumentoRequerido;
-
-  
-  dataDocs = null;
+  @Input() codigoProcedimientoObtenido: String="";
+  public tituloTabla = "Documentacion";
   parrafo="";
-  estadosDoc: estadoDocClass[];
-  varDocumentosRequeridos: DocumentoRequerido[];
   idProcedimiento: string;
   idAgendaProcedimiento: number;
-  idModalidad: string;
+
+  editDocumento: editarDocumentos;
+  estadosDoc: estadoDocClass[];
+  arrayDocumentos: DocumentoRequerido[];
+  documentoEditable: DocumentoRequerido;
   datosAddTablaDoc: DocumentoRequerido[] = [];
+  documentosRequeridos: DocumentoRequerido[] = [];
+  idModalidad: string='';
+  idProcedimientoModalidad: string='';
+  objBanderaRequerido: Boolean;
+  banderaBotonAnadir: Boolean;
 
   displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion', /*'caduca',*/ 'estado', /*'fechaVencimiento' , 'path',*/ 'observacion','acciones'];
 
@@ -58,62 +53,85 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     ) {   }
 
     ngOnInit(): void {
-       //Agenda, modalidad y procedimiento
-       this.utilityService.customIdAgendaProcedimiento.subscribe(element => this.idAgendaProcedimiento = element);
-       this.utilityService.customIdModalidad.subscribe(element => this.idModalidad = element);
-       this.utilityService.customIdProcedimientoModalidad.subscribe(msg => this.idProcedimientoModalidad = msg);
-       this.utilityService.customIdProcedimiento.subscribe(element => this.idProcedimiento = element); 
 
-      
-
-      //EstadosDoc
-      
-      this.utilityService.customEstadosDoc.subscribe(element => this.estadosDoc = element);
-      this.estadosDoc = obtenerEstadoDoc.getEstadoObtenido();   
-      this.utilityService.customDocumento.subscribe(element => {
-        this.documentoEditable = element;
+      this.utilityService.customDocumento.subscribe(msg => {
+        this.documentoEditable = msg;
       });
-      //CHANGE
-      this.utilityService.changeEstadoDocumento(this.estadosDoc);  
-      this.utilityService.customDocumentoAdd.subscribe(element => {
-        this.datosAddTablaDoc = element;
-        if(this.idProcedimiento != ""){
 
+      this.utilityService.customBanderaRequerido.subscribe(msg => {
+        this.objBanderaRequerido = msg;
+        if (this.objBanderaRequerido == true) {
+          if (this.idProcedimiento != "") {
+            if (this.idModalidad != ""){
+              this.listarDocumentosRequeridos();
+            }
+          }
+        }
+      });
+
+      this.utilityService.customBanderaBotonAnadir.subscribe(msg => this.banderaBotonAnadir=msg);
+
+      this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
+
+      this.utilityService.customEstadosDoc.subscribe(msg => this.estadosDoc = msg);
+
+      this.estadosDoc = obtenerEstadoDoc.getEstadoObtenido();
+
+      this.utilityService.changeEstadoDocumento(this.estadosDoc);
+
+      this.utilityService.customDocumentoAdd.subscribe(msg => {
+        this.datosAddTablaDoc = msg;
+        if(this.idProcedimiento != ""){
           this.listarDocumentos();
         }
       });
 
-         
+      this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
 
-    
+      this.utilityService.customIdAgendaProcedimiento.subscribe(msg => {
+        this.idAgendaProcedimiento = msg;
+        if(this.idProcedimiento != ""){
+          this.listarDocumentos();
+        }
+      });
+
 
     }
 
     listarDocumentos(){
       this.parrafo = "";
-      this.documentosService.getDocumentoRequerido(this.idAgendaProcedimiento).subscribe((rest: DocumentoRequerido[]) => {
-        this.documentosAsociadosAgenda  = rest;
-        if(this.documentosAsociadosAgenda != null){
-          this.convertirEstadoLleda(this.documentosAsociadosAgenda);
+      this.documentosService.getDocumentoRequerido(this.idAgendaProcedimiento).subscribe((result: DocumentoRequerido[]) => {
+        this.arrayDocumentos = DocumentoRequerido.fromJSON(result);
+
+        if(this.arrayDocumentos != null){
+          this.parrafo = "";
+          this.convertirEstadoLleda(this.arrayDocumentos);
           this.listarDocumentosRequeridos();
-
-
         }else{
-          this.documentosAsociadosAgenda = [];
+          this.arrayDocumentos = [];
           this.parrafo = "No hay documentos asociados al procedimiento";
-          this.notificationService.success('No hay documentos asociados al procedimiento'); 
-          
+          this.notificationService.warn('No hay Documentos asociados al procedimiento');
         }
-
-        this.dataDocumentosRequeridos = new MatTableDataSource(this.documentosAsociadosAgenda);
+        this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocumentos);
         this.dataDocumentosRequeridos.paginator = this.paginator;
-      })
+      });
     }
 
     listarDocumentosRequeridos(){ 
       if(parseInt(this.idModalidad) != null){
+        this.documentosRequeridos = [];
         this.documentosService.getDocumentosProcedimiento(parseInt(this.idProcedimiento), parseInt(this.idModalidad)).subscribe(
-          (result: DocumentoRequerido[]) => this.documentosAsociadosAgenda = result);
+          (result: DocumentoRequerido[]) => {
+            this.documentosRequeridos = result;
+
+            if(this.objBanderaRequerido == true){
+              for(let i = 0; i < this.documentosRequeridos.length; i++){
+                this.documentosRequeridos[i].estado="";
+              }
+              this.dataDocumentosRequeridos = new MatTableDataSource(this.documentosRequeridos);
+              this.dataDocumentosRequeridos.paginator = this.paginator;
+            }
+          });
       }else{
         this.notificationService.success('No existe modalidad!!');
       }   
@@ -126,13 +144,12 @@ export class AuxiliarDocumentacionComponent implements OnInit {
       dialogoConfig.autoFocus = true;
       dialogoConfig.width = "60%";
       this.dialog.open(VentanaEditarDocumentacionComponent, dialogoConfig);
-
     }
 
     validarDocumentoRequerido(documento: DocumentoRequerido): Boolean{
       let res = false;
-      for (let i = 0; i < this.documentosAsociadosAgenda.length; i++) {
-        if(this.documentosAsociadosAgenda[i].nombre == documento.nombre){
+      for (let i = 0; i < this.documentosRequeridos.length; i++) {
+        if(this.documentosRequeridos[i].nombre == documento.nombre){
           res = true;
           break;
         }        
@@ -142,10 +159,10 @@ export class AuxiliarDocumentacionComponent implements OnInit {
  
 
   public validarEstados(){
-    for (let i = 0; i < this.documentosAsociadosAgenda.length; i++) {
-      if(this.documentosAsociadosAgenda[i].estado == 'null'){
+    for (let i = 0; i < this.documentosRequeridos.length; i++) {
+      if(this.documentosRequeridos[i].estado == 'null'){
         for (let j = 0; j < this.estadosDoc.length; j++) {
-          this.documentosAsociadosAgenda[i].estado = "Pendiente";
+          this.documentosRequeridos[i].estado = "Pendiente";
         } 
       }
     }
@@ -153,12 +170,12 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
   public listarDocumentosPorCodigoModalidad(){
     this.documentosService.getDocumentosProcedimiento(Number(this.codigoProcedimientoObtenido),1).subscribe((result: DocumentoRequerido[]) => {
-      this.documentosAsociadosAgenda=result;
+      this.arrayDocumentos=result;
       this.parrafo="";
       this.validarEstados();
 
-      if (this.documentosAsociadosAgenda != null) {
-        this.dataDocumentosRequeridos = new MatTableDataSource(this.documentosAsociadosAgenda);
+      if (this.arrayDocumentos != null) {
+        this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocumentos);
         this.dataDocumentosRequeridos.paginator = this.paginator;
         this.parrafo = "Documentos requeridos cargados exitosamente";
       } else {
@@ -170,16 +187,16 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     })
   }
 
-  eliminarDatoDoc(Instrument: DocumentoRequerido) {
+  eliminarDatoDoc(documAeliminar: DocumentoRequerido) {
     this.dialog.open(ConfirmationDialogComponent, {
         data: `¿Seguro que desea eliminar el documento?`
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          for (let i = 0; i < this.documentosAsociadosAgenda.length; i++) {
-            if (this.documentosAsociadosAgenda[i].nombre == Instrument.nombre) {
-              this.documentosService.deleteDocumento(this.documentosAsociadosAgenda[i].id).subscribe();
+          for (let i = 0; i < this.arrayDocumentos.length; i++) {
+            if (this.arrayDocumentos[i].nombre == documAeliminar.nombre) {
+              this.documentosService.deleteDocumento(this.arrayDocumentos[i].id).subscribe();
               this.listarDocumentos();
               this.listarDocumentosRequeridos();
               break;
@@ -242,12 +259,22 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     //dialogoConfig.disableClose=true;
     dialogoConfig.autoFocus=true;
     dialogoConfig.width="60%";
+    this.datosAddTablaDoc = this.arrayDocumentos;
+    this.utilityService.changeDocumentoAdd(this.datosAddTablaDoc);
     this.dialog.open(VentanaAuxiliarDocumentacionComponent, dialogoConfig);
     
   }
 
   generarRecibido(){
-    alert("generando recibido . . .");
+
+    this.documentosService.generarAcuseRecibido(this.idAgendaProcedimiento).subscribe(data => {
+
+        const file = new Blob([data], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      
+    });
+    
   }
 
   
@@ -264,7 +291,9 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   }
 
  
+  ngOnDestroy(): void{
   
+  }
 
 
 

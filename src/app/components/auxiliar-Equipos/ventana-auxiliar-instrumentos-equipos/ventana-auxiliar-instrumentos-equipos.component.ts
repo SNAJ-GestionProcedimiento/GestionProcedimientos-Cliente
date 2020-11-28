@@ -30,7 +30,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
-    private serviceIntrumentosEquipos: InstrumentosEquiposService, 
+    private serviceIntrumentosEquipos: InstrumentosEquiposService,  
     private notificationService: notificationService.NotificationService,
     private dialogo: MatDialog, 
     private utilityService: UtilityServiceService
@@ -136,7 +136,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
             const resultado = this.datosAdd.find( intrumento => intrumento.codigoEquipo === this.datosSeleccionador[i].codigoEquipo );
             if(!resultado){  //si no esta el instrimento al agregar en la lista de la agenda, se agrega
               this.editInstrument = new editInstrumentosEquipos(this.datosSeleccionador[i].id, this.idProcedimiento, this.datosSeleccionador[i].codigoEquipo.toString(), "PEND", this.datosSeleccionador[i].cantidad);
-              let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe();
+              let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe(); 
             }else{ //si esta el instrimento al agregar en la lista de la agenda, se edita
               this.editInstrument = new editInstrumentosEquipos(resultado.id, this.idProcedimiento, resultado.codigoEquipo.toString(), "PEND", parseInt(resultado.cantidad.toString())+1);
               let res = this.serviceIntrumentosEquipos.editarInstrumentoEquipo(this.editInstrument).subscribe();

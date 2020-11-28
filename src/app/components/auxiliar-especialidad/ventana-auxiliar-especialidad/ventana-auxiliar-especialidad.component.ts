@@ -66,7 +66,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
     });
   }
   //Captura el nombre seleccionado
-  capturar() {
+  capturar() { 
     this.verSeleccion = this.opcionSeleccionado;
     console.log(this.verSeleccion);
     this.agregarDatoTabla();
@@ -95,7 +95,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+ 
   confirmacionLimpiar() {
     this.dialogo
       .open(ConfirmationDialogComponent, {

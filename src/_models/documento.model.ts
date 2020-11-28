@@ -42,11 +42,11 @@ export class DocumentoRequerido{
   export class editarDocumentos{
     public id: number;
     public idAgendaProcedimiento: number;
-    public codigoDocumento: string;
+    public codigoDocumento: number;
     public estado: string;
     public observacion: string;
     
-    constructor(id: number, idProcedimiento: number, codigoDocumento: string, estado: string, observacion: string){
+    constructor(id: number, idProcedimiento: number, codigoDocumento: number, estado: string, observacion: string){
       this.id=id;
       this.codigoDocumento=codigoDocumento;
       this.estado = estado;
@@ -69,8 +69,29 @@ export class DocumentoRequerido{
 
       return editDocumentos;
     }
+  }
 
+  export class previsualizarDocumentos{
+    idAgendaProcedimiento: number;
+    nombre: string; 
+    codigoDocumento: number;
+    estado: string;
+    observacion: string;
 
+    constructor(
+      idAgendaProcedimiento: number,
+      nombre: string,
+      codigoDocumento: number,
+      estado: string,
+      observacion: string
+    ){
+      this.idAgendaProcedimiento=idAgendaProcedimiento;
+      this.nombre = nombre;
+      this.codigoDocumento = codigoDocumento;
+      this.estado = estado;
+      this.observacion = observacion;
+    }
+    
   }
  
   

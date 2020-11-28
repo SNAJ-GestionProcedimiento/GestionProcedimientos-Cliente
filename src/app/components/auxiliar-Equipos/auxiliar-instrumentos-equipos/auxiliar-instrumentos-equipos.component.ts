@@ -21,13 +21,13 @@ import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirm
 export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
   @Input() codigoProcedimientoObtenido: string = "";//Codigo del procedimiento seleccionado
-
+ 
   parrafo = "";//para colocar que no hay nada en las tablas
   idProcedimiento: string ='';
   idAgendaProcedimiento: number=0;
 
-  editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los instrumentos
-  estados: estadoClass[];  //variable que tiene el array de estados
+  editInstrument: editInstrumentosEquipos;//variable utilizada para editar los instrumentos
+  estados: estadoClass[];  //variable que tiene el array de estados  
   arrayInstrumentos: InstrumentosEquipos[];
   instrumentoEditable: InstrumentosEquipos;
   datosAddTabla: InstrumentosEquipos[] = [];
@@ -149,8 +149,6 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     }
     return res;
   }
-
-
 
   eliminarDato(Instrument: InstrumentosEquipos) {
     this.dialogo

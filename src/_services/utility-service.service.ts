@@ -16,9 +16,15 @@ export class UtilityServiceService {
   constructor() { }
 
   private objIntrumento = new BehaviorSubject<InstrumentosEquipos>(null);
+  private objDocumento = new BehaviorSubject<DocumentoRequerido>(null); 
+  private objMateriales = new BehaviorSubject<MaterialRequerido>(null);
+  private objEstadoMat = new BehaviorSubject<estadoMatClass[]>(null);
+  private objMaterialAdd = new BehaviorSubject<MaterialRequerido[]>(null);
   private objEstados = new BehaviorSubject<estadoClass[]>(null);
   private objIdProcedimiento = new BehaviorSubject<string>("");
   private objIdProcedimientoModalidad = new BehaviorSubject<string>("");
+  private objEstadosDoc = new BehaviorSubject<estadoDocClass[]>(null);
+  private objDocumentoAdd = new BehaviorSubject<DocumentoRequerido[]>(null);
   private objIdAgendaProcedimiento = new BehaviorSubject<number>(0);
   private objEspecialidad= new BehaviorSubject<especialidadesRequeridas>
   (null);
@@ -28,37 +34,26 @@ export class UtilityServiceService {
   private objBanderaRequerido = new BehaviorSubject<Boolean>(false);
   private objBanderaBotonAnadir = new BehaviorSubject<Boolean>(false);
 
+  public customIdAgendaProcedimiento = this.objIdAgendaProcedimiento.asObservable();
   public customInstrumento = this.objIntrumento.asObservable();
+  public customDocumento = this.objDocumento.asObservable();
+  public customDocumentoAdd = this.objDocumentoAdd.asObservable();
+  public customEstadosDoc = this.objEstadosDoc.asObservable();
+
   public customEstados = this.objEstados.asObservable();
   public customIdProcedimiento = this.objIdProcedimiento.asObservable();
-  public customIdAgendaProcedimiento = this.objIdAgendaProcedimiento.asObservable();
   public customIdProcedimientoModalidad = this.objIdProcedimientoModalidad.asObservable();
   public customEspecialidad = this.objEspecialidad.asObservable();
   public customEspecialidadAdd = this.objEspecialidadAdd.asObservable();
   public customInstrumentoAdd = this.objIntrumentoAdd.asObservable();
   public customIdModalidad = this.objIdModalidad.asObservable();
   
-  //Inicio Documentos
-
-  private objDocumento = new BehaviorSubject<DocumentoRequerido>(null); 
-  private objEstadosDoc = new BehaviorSubject<estadoDocClass[]>(null);
-  private objDocumentoAdd = new BehaviorSubject<DocumentoRequerido[]>(null);
 
 
-
-  //Fin Documento
-
-  //Inicio materiales
-
-  private objMateriales = new BehaviorSubject<MaterialRequerido>(null);
-  private objEstadoMat = new BehaviorSubject<estadoMatClass[]>(null);
-  private objMaterialAdd = new BehaviorSubject<MaterialRequerido[]>(null);
+  
   public customMaterial = this.objMateriales.asObservable();
   public customEstadosMat = this.objEstadoMat.asObservable();
   public customMaterialAdd = this.objMaterialAdd.asObservable();
-  public customEstadosDoc = this.objEstadosDoc.asObservable();
-  public customDocumentoAdd = this.objDocumentoAdd.asObservable();
-  public customDocumento = this.objDocumento.asObservable();
 
   //Fin materiales 
 
@@ -74,12 +69,13 @@ export class UtilityServiceService {
   public changeDocumento(msg: DocumentoRequerido): void{
     this.objDocumento.next(msg);
   }
-  public changeEstadoDocumento(msg: estadoDocClass []): void {
-    this.objEstadosDoc.next(msg);
-  }
   public changeDocumentoAdd(msg: DocumentoRequerido[]): void {
     this.objDocumentoAdd.next(msg);
   }
+  public changeEstadoDocumento(msg: estadoDocClass []): void {
+    this.objEstadosDoc.next(msg);
+  }
+  
   public customBanderaRequerido = this.objBanderaRequerido.asObservable();
   public customBanderaBotonAnadir = this.objBanderaBotonAnadir.asObservable();
 
