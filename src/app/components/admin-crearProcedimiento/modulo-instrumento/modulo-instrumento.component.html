@@ -1,0 +1,66 @@
+<div class="mat-elevation-z8">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Intrumento/equipo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item my-2 my-sm-0">
+                    <select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
+                        <option value="0" selected>--Seleccione un instrumento o equipo a agregar--</option>
+                        <option *ngFor="let dato of arrayInstrumentos">
+                            {{dato.nombre}}
+                        </option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8
+        table-bordered table-responsive-sm" #tabla1>
+
+        <!--Columna de código -->
+        <ng-container matColumnDef="codigo">
+            <th mat-header-cell *matHeaderCellDef> Código </th>
+            <td mat-cell *matCellDef="let element"> {{element.codigoEquipo}} </td>
+        </ng-container>
+
+        <!-- Columna de nombre -->
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <!-- Columna de cantidad -->
+        <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"><input type="text" placeholder="{{element.cantidad}}" style="text-align: center;" (keypress)=" keyPress($event)" [(ngModel)]="element.cantidad"></td>
+        </ng-container>
+
+        <!-- Columna de descripción -->
+        <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.descripcion}}
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button type="button" matTooltip="Eliminar" [matTooltipPosition]="'above'" class="btn btn-danger
+                    btn-sm btn-just-icon" (click)="eliminarDato(element)">
+                    <i class=" material-icons ">delete_forever</i>
+                </button>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15] " showFirstLastButtons></mat-paginator>
+</div>
+<br>
+<button type="button " class="btn btn-outline-success " (click)="confirmacionLimpiar()">Limpiar</button>
+<br>
+<hr>

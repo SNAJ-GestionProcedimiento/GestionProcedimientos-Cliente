@@ -8,9 +8,9 @@ export interface estadoMatClass {
     constructor(){};
   
     //Método para obtener los estados.
-    public static getEstadoObtenido(): estadoMatClass[]{
+    public static getEstadoObtenidoMateriales(): estadoMatClass[]{
       var estados = [];
-      let estado = {
+      let estado = { 
         valor: "PSOL", contenido: "Por Solicitar"
       };
       estados.push(estado);

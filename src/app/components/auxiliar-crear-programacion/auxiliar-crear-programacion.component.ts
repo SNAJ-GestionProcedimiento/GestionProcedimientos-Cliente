@@ -8,7 +8,7 @@ import { HoraFechaComponent } from 'src/app/components/hora-fecha/hora-fecha.com
 import { AgendaCrear } from 'src/_models/models_Agenda/agenda-crear.model';
 import { AgendaCrearService } from 'src/_services/serviciosAgenda/agenda-crear.service';
 import {AuxiliarDocumentacionComponent} from '../../components/auxiliar-documentacion/auxiliar-documentacion.component';
-import {AuxiliarMaterialesComponent} from '../../components/auxiliar-materiales/auxiliar-materiales.component'
+import {AuxiliarMaterialesComponent} from '../../components/auxiliar-materiales/auxiliar-materiales.component' 
 
 import { AuxiliarInstrumentosEquiposComponent } from '../auxiliar-Equipos/auxiliar-instrumentos-equipos/auxiliar-instrumentos-equipos.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
@@ -67,7 +67,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   receiveMessage($event) {
     this.message = $event
     //($event);
-  }
+  } 
 
   ngOnInit(): void {
     this.actualizarIds();
@@ -87,11 +87,13 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
 
   listarDocumentosDesdeProgramacion(){
     //this.listarDocumentos.listarDocumentosRequeridos();
-    this.listarDocumentos.listarDocumentosPorCodigoModalidad();
+    //this.listarDocumentos.listarDocumentosPorCodigoModalidad();
+    this.listarDocumentos.listarDocumentos();
   }
 
   listarMaterialesDesdeProgramacion(){
-    this.listarMateriales.listarMaterialesPorCodigoModalidad();
+    //this.listarMateriales.listarMaterialesPorCodigoModalidad();
+    this.listarMateriales.listarMateriales();
   }
 
   crearAgendaonClick(){
@@ -120,6 +122,13 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   /**Peticiones */
   public async crearAgenda(agenda:AgendaCrear){
     let res:any = await this.agendaCrearService.create(agenda).toPromise();
+    this.idAgendaProcedimiento=res.idAgendaProcedimiento;
+    this.utilityService.changeIdAgendaProcedimiento(this.idAgendaProcedimiento);
+    console.log("idAgenda: "+this.idAgendaProcedimiento);
+    this.listarInstrumentosDesdeProgramacion();
+    this.listarDocumentosDesdeProgramacion();
+    this.listarMaterialesDesdeProgramacion();
+
     if(res!=null){
       this.codigoProcedimiento=this.procedimientoCmp.getCodigoProcedimiento();
       //console.log("desde crear agenda, código que se recibe: "+JSON.stringify(res.idAgendaProcedimiento));
@@ -130,6 +139,8 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
       this.utilityService.changeBanderaBotonAnadir(false);
       this.numNotificacion.changeBandera(this.bandera);
       this.listarInstrumentosDesdeProgramacion();
+      this.listarDocumentosDesdeProgramacion();
+
     }
   }
 

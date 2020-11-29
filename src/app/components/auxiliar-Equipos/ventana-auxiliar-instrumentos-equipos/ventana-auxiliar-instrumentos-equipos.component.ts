@@ -8,6 +8,8 @@ import * as notificationService from 'src/_services/notification.service';
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 import { UtilityServiceService } from 'src/_services/utility-service.service';
+//import * as $ from ‘jquery’;
+import { ajax, css } from "jquery";
 
 @Component({
   selector: 'app-ventana-auxiliar-instrumentos-equipos',
@@ -28,19 +30,21 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
   displayedColumns: string[] = ['codigo', 'nombre', 'cantidad', 'descripcion', 'acciones'];
   dataSource = new MatTableDataSource<InstrumentosEquipos>();
 
+  banderaBotonAnadir: Boolean;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
-    private serviceIntrumentosEquipos: InstrumentosEquiposService, 
+    private serviceIntrumentosEquipos: InstrumentosEquiposService,  
     private notificationService: notificationService.NotificationService,
-    private dialogo: MatDialog, 
+    private dialogo: MatDialog,
     private utilityService: UtilityServiceService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getAllInstrumentos();
     this.utilityService.customInstrumentoAdd.subscribe(msg => this.datosAdd = msg);
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idProcedimiento = msg);
-
+    this.banderaBotonAnadir=true;
   }
 
   getAllInstrumentos() {
@@ -65,6 +69,8 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
   capturar() {
     this.verSeleccion = this.opcionSeleccionado;
     this.agregarDatoTabla();
+    $("#mi_select").val("0");
+    this.verificacionDatos();
   }
 
   agregarDatoTabla() {
@@ -89,6 +95,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           this.limpiarLista();
+          this.verificacionDatos();
         }
       });
   }
@@ -108,6 +115,7 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           this.dialogo.closeAll();
+          this.verificacionDatos();
         }
       });
   }
@@ -115,9 +123,11 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
   eliminarDato(datoAEliminar: InstrumentosEquipos) {
     for (let i = 0; i < this.datosSeleccionador.length; i++) {
       if (this.datosSeleccionador[i] == datoAEliminar) {
+
         this.datosSeleccionador.splice(i, 1);
         this.dataSource = new MatTableDataSource(this.datosSeleccionador);
         this.dataSource.paginator = this.paginator;
+        this.verificacionDatos();
         break;
       }
     }
@@ -133,10 +143,10 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           for (let i = 0; i < this.datosSeleccionador.length; i++) {
-            const resultado = this.datosAdd.find( intrumento => intrumento.codigoEquipo === this.datosSeleccionador[i].codigoEquipo );
-            if(!resultado){  //si no esta el instrimento al agregar en la lista de la agenda, se agrega
+            const resultado = this.datosAdd.find(intrumento => intrumento.codigoEquipo === this.datosSeleccionador[i].codigoEquipo);
+            if (!resultado) {  //si no esta el instrimento al agregar en la lista de la agenda, se agrega
               this.editInstrument = new editInstrumentosEquipos(this.datosSeleccionador[i].id, this.idProcedimiento, this.datosSeleccionador[i].codigoEquipo.toString(), "PEND", this.datosSeleccionador[i].cantidad);
-              let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe();
+              let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe(); 
             }else{ //si esta el instrimento al agregar en la lista de la agenda, se edita
               this.editInstrument = new editInstrumentosEquipos(resultado.id, this.idProcedimiento, resultado.codigoEquipo.toString(), "PEND", parseInt(resultado.cantidad.toString())+1);
               let res = this.serviceIntrumentosEquipos.editarInstrumentoEquipo(this.editInstrument).subscribe();
@@ -148,6 +158,14 @@ export class VentanaAuxiliarInstrumentosEquiposComponent implements OnInit {
         }
       });
 
+  }
+
+  verificacionDatos(){
+    if( this.datosSeleccionador.length>0){
+      this.banderaBotonAnadir=false;
+    }else{
+      this.banderaBotonAnadir=true;
+    }
   }
 
 }

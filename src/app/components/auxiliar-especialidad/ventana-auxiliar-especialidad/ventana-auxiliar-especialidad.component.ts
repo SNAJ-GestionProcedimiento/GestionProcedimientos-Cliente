@@ -28,6 +28,8 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
   datosSeleccionador: especialidadesPrevisualizar[] = [];
   idAgendaProcedimiento: number;
 
+  banderaBotonAnadir: Boolean;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
@@ -35,12 +37,13 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
     private serviceEspecialidadRequerida: EspecilidadRequeridaService,
     private notificationService: notificationService.NotificationService,
     private utilityService: UtilityServiceService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getAllEspecialidad();
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
     this.utilityService.customEspecialidadAdd.subscribe(msg => this.especialidadBandera = msg);
+    this.banderaBotonAnadir=true;
   }
 
   //obtener los nombres de las especialidades de la BD
@@ -66,12 +69,11 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
     });
   }
   //Captura el nombre seleccionado
-  capturar() {
+  capturar() { 
     this.verSeleccion = this.opcionSeleccionado;
-    console.log(this.verSeleccion);
     this.agregarDatoTabla();
-    this.opcionSeleccionado='0';
-    document.getElementById("caja").onchange;
+    $("#mi_select").val("0");
+    this.verificacionDatos();
   }
 
   //agrega la especialidad a la tabla de la vista previa
@@ -95,7 +97,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+ 
   confirmacionLimpiar() {
     this.dialogo
       .open(ConfirmationDialogComponent, {
@@ -105,6 +107,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           this.limpiarLista();
+          this.verificacionDatos();
         }
       });
   }
@@ -125,6 +128,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           this.dialogo.closeAll();
+          this.verificacionDatos();
         }
       });
   }
@@ -135,6 +139,7 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
         this.datosSeleccionador.splice(i, 1);
         this.dataSource = new MatTableDataSource(this.datosSeleccionador);
         this.dataSource.paginator = this.paginator;
+        this.verificacionDatos();
         break;
       }
     }
@@ -172,6 +177,14 @@ export class VentanaAuxiliarEspecialidadComponent implements OnInit {
       if (this.arrayEspecialidadesCantidad[i].cantidad == null) {
         this.arrayEspecialidadesCantidad[i].cantidad = 1;
       }
+    }
+  }
+
+  verificacionDatos(){
+    if( this.datosSeleccionador.length>0){
+      this.banderaBotonAnadir=false;
+    }else{
+      this.banderaBotonAnadir=true;
     }
   }
 

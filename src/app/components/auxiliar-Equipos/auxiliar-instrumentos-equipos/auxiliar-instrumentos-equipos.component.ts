@@ -21,13 +21,13 @@ import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirm
 export class AuxiliarInstrumentosEquiposComponent implements OnInit {
 
   @Input() codigoProcedimientoObtenido: string = "";//Codigo del procedimiento seleccionado
-
+ 
   parrafo = "";//para colocar que no hay nada en las tablas
   idProcedimiento: string ='';
   idAgendaProcedimiento: number=0;
 
-  editInstrument: editInstrumentosEquipos;  //variable utilizada para editar los instrumentos
-  estados: estadoClass[];  //variable que tiene el array de estados
+  editInstrument: editInstrumentosEquipos;//variable utilizada para editar los instrumentos
+  estados: estadoClass[];  //variable que tiene el array de estados  
   arrayInstrumentos: InstrumentosEquipos[];
   instrumentoEditable: InstrumentosEquipos;
   datosAddTabla: InstrumentosEquipos[] = [];
@@ -49,7 +49,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     private notificationService: notificationService.NotificationService,
     private utilityService: UtilityServiceService
   ) { }
-
+ 
   //la inicialización del componente
   ngOnInit(): void {
     this.utilityService.customInstrumento.subscribe(msg => {
@@ -71,6 +71,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     this.utilityService.customEstados.subscribe(msg => this.estados = msg);
     this.estados = obtenerEstado.getEstadoObtenido();
     this.utilityService.changeEstado(this.estados);
+    
     this.utilityService.customInstrumentoAdd.subscribe(msg => {
       this.datosAddTabla = msg;
       if (this.idProcedimiento != "") {
@@ -149,8 +150,6 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
     return res;
   }
 
-
-
   eliminarDato(Instrument: InstrumentosEquipos) {
     this.dialogo
       .open(ConfirmationDialogComponent, {
@@ -167,7 +166,7 @@ export class AuxiliarInstrumentosEquiposComponent implements OnInit {
               this.serviceIntrumentosEquipos.deleteInstrumento(this.arrayInstrumentos[i].id).subscribe();
               this.listarIntrumentEquip();
               this.listarIntrumentosRequeridos();
-              break;
+              break; 
             }
           }
         }

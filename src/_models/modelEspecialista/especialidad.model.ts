@@ -69,7 +69,7 @@ export class editarEpecialidadesRequeridas {
   /**
    * id Agenda especialista 
    * */
-  public id: number;
+  public id: number; 
   /**
    * código de especialidad
    */
@@ -92,7 +92,7 @@ export class editarEpecialidadesRequeridas {
    */
   public nombreEspecialista: string;
   /**
-   * Genero del paciente
+   * Genero del paciente 
    */
   public estado: string;
   idAgendaProcedimiento: number;

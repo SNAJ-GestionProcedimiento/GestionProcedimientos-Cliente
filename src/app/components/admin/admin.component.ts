@@ -45,5 +45,11 @@ export class AdminComponent implements OnInit {
         break;
     }
   }
+  public gestionProcedimientoOnclick(){
+
+  }
+  public gestionUsuariosOnclick(){
+    
+  }
 
 }

@@ -1,5 +1,4 @@
 <div class="mat-elevation-z8">
-    <h2>Instrumentos y equipos</h2>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Intrumento/equipo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,8 +8,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item my-2 my-sm-0">
-                    <select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
-                        <option value="0" selected>--Seleccione un instrumento o equipo a agregar--</option>
+                    <select id="mi_select" [(ngModel)]="opcionSeleccionado" (change)="capturar()">
+                        <option value="0" selected="selected">--Seleccione un instrumento o equipo a agregar--</option>
                         <option *ngFor="let dato of arrayInstrumentos">
                             {{dato.nombre}}
                         </option>
@@ -69,5 +68,5 @@
 <div class="trans ">
     <button type="button" class="btn btn-danger" (click)="cerrarVentana() ">Cancelar</button>
     <br>
-    <button type="button" class="btn btn-info ml-2" (click)="addInstruments()">Añadir intrumento/equipo</button>
+    <button class="ml-2 btn btn-info btn-outline btn-responsive btninter right centrado" (click)="addInstruments()" [disabled]="banderaBotonAnadir">Añadir intrumento/equipo</button>
 </div>

@@ -88,13 +88,13 @@ export class editInstrumentosEquipos {
     this.idAgendaProcedimiento=idProcedimiento;
     this.codigoEquipo=codigoEquipo;
     this.estado=estado;
-    this.cantidad=cantidad;
+    this.cantidad=cantidad; 
   }
 
   public parseToJSON(): JSON {
     return JSON.parse(JSON.stringify(this));
-  }
-
+  } 
+ 
   public static fromJSON(json): editInstrumentosEquipos {
     if (json.agendaEquipo.length == 0) { return null; }
     var editInstrumentosEquipos = new editInstrumentosEquipos();

@@ -13,13 +13,13 @@ export class InstrumentosEquiposService extends HttpService {
     super(http);
   }
 
-
+ 
   getInstrumentoEquipo(idAgendaProcedimiento: number): Observable<InstrumentosEquipos[]> {
     return this.http.get<InstrumentosEquipos[]>(`${this.apiURL}listAgendaEquipo/${idAgendaProcedimiento}`);
   }
 
   editarInstrumentoEquipo(instrumentEquipo: editInstrumentosEquipos): Observable<editInstrumentosEquipos> {
-    return this.http.put<editInstrumentosEquipos>(`${this.apiURL}editAgendaEquipo`, instrumentEquipo);
+    return this.http.put<editInstrumentosEquipos>(`${this.apiURL}editAgendaEquipo`, instrumentEquipo); 
   }
 
   getAllIntrumentos(): Observable<InstrumentosEquipos[]> {

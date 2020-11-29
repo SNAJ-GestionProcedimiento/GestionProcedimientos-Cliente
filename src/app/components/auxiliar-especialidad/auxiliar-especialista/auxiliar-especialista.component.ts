@@ -55,6 +55,9 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';  //para que material este en español
+    
+    console.log(localStorage.getItem('token'));
     this.utilityService.customEstados.subscribe(msg => { this.estados = msg });
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
     this.utilityService.customBanderaRequerido.subscribe(msg => {
@@ -189,7 +192,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
     dialogoConfig.autoFocus = true;
     dialogoConfig.width = "60%";
     this.dialogo.open(VentanaAuxiliarEspecialidadComponent, dialogoConfig);
-  }
+  } 
 
   //métodos para convertir el estado ya sea como se muestra al usuario y como se envia la consulta
   convertirEstadoLleda(instrumentoAcambiar) {
@@ -211,4 +214,4 @@ export class AuxiliarEspecialistaComponent implements OnInit {
     return instrumentoAcambiar;
   }
 
-}
+} 

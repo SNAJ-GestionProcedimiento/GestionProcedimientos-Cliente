@@ -49,6 +49,8 @@ import { AuxiliarEspecialistaComponent } from './components/auxiliar-especialida
 import { VentanaAuxiliarEspecialidadComponent } from './components/auxiliar-especialidad/ventana-auxiliar-especialidad/ventana-auxiliar-especialidad.component';
 import { EditarEspecialidadComponent } from './components/auxiliar-especialidad/editar-especialidad/editar-especialidad.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { VentanaEditarDocumentacionComponent } from './components/auxiliar-documentacion/ventana-editar-documentacion/ventana-editar-documentacion.component';
+import { VentanaEditarMaterialesComponent } from './components/auxiliar-materiales/ventana-editar-materiales/ventana-editar-materiales.component'
 import { AuxiliarEditarProgramacionComponent } from './components/auxiliar-editar-programacion/auxiliar-editar-programacion.component';
 import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 import { LoginComponent } from './components/login/login.component';
@@ -57,6 +59,13 @@ import { AdminComponent } from 'src/app/components/admin/admin.component';
 import { AdminNavbarComponent } from 'src/app/components/admin-navbar/admin-navbar.component';
 import { AdminUsuariosComponent } from 'src/app/components/admin-usuarios/admin-usuarios.component';
 import { AdminGuard } from './admin.guard';
+import { ModuloDocumentacionComponent } from './components/admin-crearProcedimiento/modulo-documentacion/modulo-documentacion.component';
+import { ModuloMaterialComponent } from './components/admin-crearProcedimiento/modulo-material/modulo-material.component';
+import { ModuloInstrumentoComponent } from './components/admin-crearProcedimiento/modulo-instrumento/modulo-instrumento.component';
+import { ModuloEspecialidadComponent } from './components/admin-crearProcedimiento/modulo-especialidad/modulo-especialidad.component';
+import { ModuloProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-procedimiento/modulo-procedimiento.component';
+import { ModuloPrincipalCrearProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-principal-crear-procedimiento/modulo-principal-crear-procedimiento.component';
+import { AdminProcedimientosComponent } from './components/admin-procedimientos/admin-procedimientos.component';
 import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-crear/usuarios-crear.component';
 
 
@@ -83,13 +92,22 @@ import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-cre
     VentanaEditarInstrumentoEquipoComponent,
     EditarEspecialidadComponent,
     ConfirmationDialogComponent,
+    VentanaEditarDocumentacionComponent,
+    VentanaEditarMaterialesComponent,
     AuxiliarEditarProgramacionComponent,
     NotificacionesComponent,
     LoginComponent,
     AdminComponent,
     AdminNavbarComponent,
     AdminUsuariosComponent,
-    UsuariosCrearComponent,
+    ModuloDocumentacionComponent,
+    ModuloMaterialComponent,
+    ModuloInstrumentoComponent,
+    ModuloEspecialidadComponent,
+    ModuloProcedimientoComponent,
+    ModuloPrincipalCrearProcedimientoComponent,
+    AdminProcedimientosComponent,
+    UsuariosCrearComponent
   ],
   imports: [
     BrowserModule,

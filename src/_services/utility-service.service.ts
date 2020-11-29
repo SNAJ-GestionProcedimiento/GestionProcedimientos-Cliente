@@ -3,6 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 import { especialidadesRequeridas } from 'src/_models/modelEspecialista/especialidad.model';
 import { estadoClass } from 'src/_models/modelInstrumento/instrumentos-equipos-estado.model';
 import { InstrumentosEquipos } from 'src/_models/modelInstrumento/instrumentos-equipos.model';
+import {DocumentoRequerido} from '../_models/documento.model'
+import { estadoDocClass } from '../_models/documento-estado.model';
+import { MaterialRequerido } from '../_models/material.model';
+import { estadoMatClass } from 'src/_models/materiales-estado.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,26 +16,66 @@ export class UtilityServiceService {
   constructor() { }
 
   private objIntrumento = new BehaviorSubject<InstrumentosEquipos>(null);
+  private objDocumento = new BehaviorSubject<DocumentoRequerido>(null); 
+  private objMateriales = new BehaviorSubject<MaterialRequerido>(null);
+  private objEstadoMat = new BehaviorSubject<estadoMatClass[]>(null);
+  private objMaterialAdd = new BehaviorSubject<MaterialRequerido[]>(null);
   private objEstados = new BehaviorSubject<estadoClass[]>(null);
   private objIdProcedimiento = new BehaviorSubject<string>("");
   private objIdProcedimientoModalidad = new BehaviorSubject<string>("");
+  private objEstadosDoc = new BehaviorSubject<estadoDocClass[]>(null);
+  private objDocumentoAdd = new BehaviorSubject<DocumentoRequerido[]>(null);
   private objIdAgendaProcedimiento = new BehaviorSubject<number>(0);
-  private objEspecialidad= new BehaviorSubject<especialidadesRequeridas>(null);
+  private objEspecialidad= new BehaviorSubject<especialidadesRequeridas>
+  (null);
   private objEspecialidadAdd= new BehaviorSubject<especialidadesRequeridas>(null);
   private objIntrumentoAdd = new BehaviorSubject<InstrumentosEquipos[]>(null);
   private objIdModalidad = new BehaviorSubject<string>("");
   private objBanderaRequerido = new BehaviorSubject<Boolean>(false);
   private objBanderaBotonAnadir = new BehaviorSubject<Boolean>(false);
 
+  public customIdAgendaProcedimiento = this.objIdAgendaProcedimiento.asObservable();
   public customInstrumento = this.objIntrumento.asObservable();
+  public customDocumento = this.objDocumento.asObservable();
+  public customDocumentoAdd = this.objDocumentoAdd.asObservable();
+  public customEstadosDoc = this.objEstadosDoc.asObservable();
+
   public customEstados = this.objEstados.asObservable();
   public customIdProcedimiento = this.objIdProcedimiento.asObservable();
-  public customIdAgendaProcedimiento = this.objIdAgendaProcedimiento.asObservable();
   public customIdProcedimientoModalidad = this.objIdProcedimientoModalidad.asObservable();
   public customEspecialidad = this.objEspecialidad.asObservable();
   public customEspecialidadAdd = this.objEspecialidadAdd.asObservable();
   public customInstrumentoAdd = this.objIntrumentoAdd.asObservable();
   public customIdModalidad = this.objIdModalidad.asObservable();
+  
+
+
+  
+  public customMaterial = this.objMateriales.asObservable();
+  public customEstadosMat = this.objEstadoMat.asObservable();
+  public customMaterialAdd = this.objMaterialAdd.asObservable();
+
+  //Fin materiales 
+
+  public changeMaterial(msg: MaterialRequerido): void{
+    this.objMateriales.next(msg);
+  }
+  public changeEstadoMaterial(msg: estadoMatClass []): void {
+    this.objEstadoMat.next(msg);
+  }
+  public changeMaterialAdd(msg: MaterialRequerido[]): void {
+    this.objMaterialAdd.next(msg);
+  }
+  public changeDocumento(msg: DocumentoRequerido): void{
+    this.objDocumento.next(msg);
+  }
+  public changeDocumentoAdd(msg: DocumentoRequerido[]): void {
+    this.objDocumentoAdd.next(msg);
+  }
+  public changeEstadoDocumento(msg: estadoDocClass []): void {
+    this.objEstadosDoc.next(msg);
+  }
+  
   public customBanderaRequerido = this.objBanderaRequerido.asObservable();
   public customBanderaBotonAnadir = this.objBanderaBotonAnadir.asObservable();
 

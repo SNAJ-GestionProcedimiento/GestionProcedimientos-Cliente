@@ -1,0 +1,35 @@
+<div class="container">
+    <h2>Procedimiento</h2>
+    <form class="mt-4" [formGroup]="busquedaForm">
+        <div class="form-row align-items-center">
+            <div class="form-group col-auto row mr-2">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Codigo:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control ml-2" placeholder="Código del procedimiento" 
+                        formControlName="code">
+                </div>
+            </div>
+            <div class="form-group col-auto row ml-2">
+                <input class="form-check-input" type="checkbox" value="" id="camaUCI" formControlName="uciBed">
+                <label class="form-check-label" for="camaUCI">
+                    Cama UCI:
+                </label>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group row mr-2">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Nombre:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control ml-2" placeholder="Nombre del procedimiento" 
+                        formControlName="name">
+                </div>
+            </div>
+            <div class="form-group col-auto row ml-2">
+                <input class="form-check-input" type="checkbox" value="" id="BancoSangre" formControlName="bloodBank">
+                <label class="form-check-label" for="BancoSangre">
+                    Banco de sangre:
+                </label>
+            </div>
+        </div>
+    </form>
+</div>

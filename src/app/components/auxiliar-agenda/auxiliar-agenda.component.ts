@@ -61,7 +61,7 @@ export class AuxiliarAgendaComponent implements OnInit {
     ];
   public dataSource;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private matDialog: MatDialog,
@@ -77,6 +77,8 @@ export class AuxiliarAgendaComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';  //para que material este en español
+    let token = AuthHelper.getLoggedToken();
     this.getAgendas();
   }
   /**Formulario de busqueda */

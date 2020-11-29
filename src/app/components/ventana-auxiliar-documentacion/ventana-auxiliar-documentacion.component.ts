@@ -4,7 +4,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatDialogConfig } from "@angular/material/dialog";
 import { MatTable } from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { DocumentoRequerido } from '../../../_models/documento.model';
+import { DocumentoRequerido, previsualizarDocumentos, editarDocumentos } from '../../../_models/documento.model';
+import { DocumentoService } from '../../../_services/documentacion.service';
+import * as notificationService from 'src/_services/notification.service';
+import { UtilityServiceService } from '../../../_services/utility-service.service';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from "@angular/common";
+
 
 
 
@@ -15,69 +22,170 @@ import { DocumentoRequerido } from '../../../_models/documento.model';
 })
 export class VentanaAuxiliarDocumentacionComponent implements OnInit {
 
-  docs: DocumentoRequerido[] = [new DocumentoRequerido(),
-  new DocumentoRequerido(), new DocumentoRequerido()];
+  data: Array<any>;
+  arrayDocumentos: DocumentoRequerido[];
+  opcionSeleccionada: string = '0';
+  verSeleccion = '';
+  datosSeleccionados: DocumentoRequerido[] = [];
+  editDocumento: editarDocumentos;
+  datosAdd: DocumentoRequerido[]=[];
+  idProcedimiento: number;
 
- 
-  displayedColumnsDoc: string[] = ['posicion', 'codigo', 'nombre', 'estado', 'archivo', 'observacion', 'acciones'];
 
 
-  dataSourceDoc = new MatTableDataSource<DocumentoRequerido>(this.docs);
+  displayedColumnsDoc: string[] = ['codigo', 'nombre', 'estado', 'observacion', 'acciones'];
+
+  dataSourceDocs = new MatTableDataSource<DocumentoRequerido>();
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  constructor(
+    private documentoService: DocumentoService,
+    private notificationService: notificationService.NotificationService,
+    private dialog: MatDialog,
+    private utilityService: UtilityServiceService
+  ) { }
 
-  constructor(public dialog: MatDialogRef<DocumentoRequerido>, public dial: MatDialog,
-    @ Inject(MAT_DIALOG_DATA) public data: DocumentoRequerido) {}
 
 
-  @ViewChild(MatTable) tabla1: MatTable<DocumentoRequerido>;
-
-  ngOnInit(): void {
-   
-   
+  ngOnInit(): void { 
+    this.getAllDocumentos()
+    this.utilityService.customDocumentoAdd.subscribe(msg => {
+      this.datosAdd = msg; 
+    }) ;
+    
+    this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idProcedimiento = msg);  
   }
 
- 
+  getAllDocumentos(){
+    this.documentoService.getAllDocumentos().subscribe((result: DocumentoRequerido[])=>{
+      this.arrayDocumentos = DocumentoRequerido.fromJSON(result);
+      
 
-  cerrarVentana(){
-    const dialogoConfig = new MatDialogConfig();
-    //dialogoConfig.disableClose=true;
-    dialogoConfig.autoFocus=true;
-    dialogoConfig.width="60%";
-    this.dialog.close();
+      if(this.arrayDocumentos != null){
+        this.arrayDocumentos.sort(function(a,b){
+          return ((a.nombre < b.nombre) ? -1: ((a.nombre > b.nombre) ? 1: 0));
+        })
+      }else{
+        this.notificationService.success('No existe documento');
+      }
+
+    })  
   }
 
-  openAgregarDocumento(){
-    //const dialogoConfig = new MatDialogConfig();
-    //dialogoConfig.disableClose=true;
+    capturar(){
+      this.verSeleccion = this.opcionSeleccionada;
+      this.agregarDatoTabla();
+    }
+
+    agregarDatoTabla(){
+      for(let i=0; i < this.arrayDocumentos.length; i++){
+        if(this.arrayDocumentos[i].nombre == this.verSeleccion){
+          if(!this.datosSeleccionados.includes(this.arrayDocumentos[i])){
+            this.datosSeleccionados.push(this.arrayDocumentos[i]);
+            this.dataSourceDocs = new MatTableDataSource(this.datosSeleccionados);
+            this.dataSourceDocs.paginator = this.paginator;
+            break;
+          }
+        }
+      }
+    }
+
+    confirmacionLimpiar() {
+      this.dialog
+        .open(ConfirmationDialogComponent, {
+          data: `¿Seguro que desea eliminar TODOS las especialidades que ha agregado en la tabla?`
+        })
+        .afterClosed()
+        .subscribe((confirmado: Boolean) => {
+          if (confirmado) {
+            this.limpiarLista();
+          }
+        });
+    }
+
+    limpiarLista(){
+      this.datosSeleccionados = [];
+      this.dataSourceDocs = new MatTableDataSource(this.datosSeleccionados);
+      this.dataSourceDocs.paginator = this.paginator;
+    }
+
+    cerrarVentana(){
+      this.dialog.open(ConfirmationDialogComponent, {
+        data: `¿Seguro que desea SALIR de la ventana añadir documentos? puesto que si sale y tiene instrumentos en la vista previa estos no se añadirán y se borrará de la tabla?`
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if(confirmado){
+          this.dialog.closeAll();
+        }
+      })
+    }
+
+    eliminarDato(documAeliminar: DocumentoRequerido){
+      for(let i = 0; i<this.datosSeleccionados.length; i++){
+        if(this.datosSeleccionados[i] == documAeliminar){
+          this.datosSeleccionados.splice(i,1);
+          this.dataSourceDocs = new MatTableDataSource(this.datosSeleccionados);
+          this.dataSourceDocs.paginator = this.paginator;
+        } 
+      }
+    }
+
+    addDocumento(){
+      this.dialog.open(ConfirmationDialogComponent, {
+        data: `¿Seguro que desea añadir todos los documentos que ha agregado en la tabla?`
+      }).afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if(confirmado){
+          for(let i=0; i<this.datosSeleccionados.length; i++){
+            const resultado = this.datosAdd.find(documento => documento.codigoDocumento === this.datosSeleccionados[i].codigoDocumento);
+
+            if(!resultado){
+              this.editDocumento = new editarDocumentos(this.datosSeleccionados[i].id, this.idProcedimiento, this.datosSeleccionados[i].codigoDocumento, this.datosSeleccionados[i].estado, this.datosSeleccionados[i].observacion);
+              
+              let res = this.documentoService.addDocumento(this.editDocumento).subscribe();
+
+            }else{
+              this.editDocumento = new editarDocumentos(resultado.id, this.idProcedimiento, resultado.codigoDocumento, "PEND", resultado.observacion);
+
+              let res = this.documentoService.addDocumento(this.editDocumento).subscribe();
+            }
+            this.utilityService.changeDocumentoAdd(this.datosAdd);
+
+          }
+          this.utilityService.changeDocumentoAdd(this.datosAdd);
+          this.dialog.closeAll();
+
+
+        }
+      });
+    }
+
+   
+
     
 
-    const dialogoConfig= this.dial.open(VentanaAuxiliarDocumentacionComponent,{
-      data: new DocumentoRequerido(),
-    });
-
-   dialogoConfig.afterClosed().subscribe(doc => {
-     if(doc != undefined)
-      this.agregar(doc);
-   });
-  }
-
-  agregar(doc: DocumentoRequerido){
-    this.docs.push(new DocumentoRequerido());
-    this.tabla1.renderRows();
     
-  }
 
-  cancelar(){
-    this.dialog.close();
+    
 
-  }
+    
 
-  borrarFila(cod: number) {
-    if (confirm("Realmente quiere borrarlo?")) {
-      this.docs.splice(cod, 1);
-      this.tabla1.renderRows();
+
+
+  
+
+  
+
+  keyPress(event: any) {
+    const pattern = /[0-9]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
     }
   }
+
+  
 }
 
 
