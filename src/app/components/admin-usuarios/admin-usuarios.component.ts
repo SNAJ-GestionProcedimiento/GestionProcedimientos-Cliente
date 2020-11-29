@@ -38,7 +38,7 @@ export class AdminUsuariosComponent implements OnInit {
     'acciones',
     ];
     public dataSource;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private formBuilder:FormBuilder,
@@ -47,6 +47,7 @@ export class AdminUsuariosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';  //para que material este en español
     this.buildbusquedaForm();
     this.getUsuarios();
   }

@@ -12,6 +12,15 @@
     <!-- Contenido de la pagina -->
     <div ng-sidebar-content>
         <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedOption == OPTIONS.VER_USUARIO">usuarios</li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedOption == OPTIONS.VER_PROCEDIMIENTO">procedimiento</li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedOption == OPTIONS.CREAR_PROCEDIMIENTO"><a href="/admin">procedimiento</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedOption == OPTIONS.CREAR_PROCEDIMIENTO">crear</li>
+                </ol>
+            </nav>
             <!-- VER USUARIOS -->
             <!--VER PROCEDIMIENTOS-->
             <app-admin-procedimientos *ngIf="selectedOption == OPTIONS.VER_PROCEDIMIENTO"></app-admin-procedimientos>
