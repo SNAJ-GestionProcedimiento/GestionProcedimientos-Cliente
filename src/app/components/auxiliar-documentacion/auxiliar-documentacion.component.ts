@@ -115,6 +115,9 @@ export class AuxiliarDocumentacionComponent implements OnInit {
         this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocumentos);
         this.dataDocumentosRequeridos.paginator = this.paginator;
       });
+
+      console.log("Agenda procedimiento creado : "+this.idAgendaProcedimiento);
+
     }
 
     listarDocumentosRequeridos(){ 
@@ -263,6 +266,16 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     this.utilityService.changeDocumentoAdd(this.datosAddTablaDoc);
     this.dialog.open(VentanaAuxiliarDocumentacionComponent, dialogoConfig);
     
+  }
+
+  validarAcuse(){
+    if(this.idAgendaProcedimiento != 0){
+      this.generarRecibido();
+    }else{
+      this.parrafo = "No existe un procedimiento creado!!";
+      this.notificationService.warn(this.parrafo);
+      
+    }
   }
 
   generarRecibido(){
