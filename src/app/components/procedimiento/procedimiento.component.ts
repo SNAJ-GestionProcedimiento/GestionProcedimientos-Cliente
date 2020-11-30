@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Procedimiento } from 'src/_models/procedimiento.model';
 import { EstadoCama } from 'src/_models/estado-cama.model';
@@ -35,6 +36,7 @@ export class ProcedimientoComponent implements OnInit {
   public inputVacio: boolean = true;
   public busquedaNula: boolean = true;
   public msjBusquedaNula: string = "No existe procedimiento con ";
+  public procVacio:boolean = false;
 
   /**Valiables de peticiones */
   public procedimientos: Array<Procedimiento>;
@@ -49,7 +51,8 @@ export class ProcedimientoComponent implements OnInit {
     private procedimientoService: ProcedimientoService,
     private estadoCamaService: EstadoCamaService,
     private utilityService: UtilityServiceService,
-    private editarComponentesService: EditarComponentesService
+    private editarComponentesService: EditarComponentesService,
+    private snackBar: MatSnackBar
   ) {
     this.buildbusquedaForm();
   }
@@ -70,7 +73,6 @@ export class ProcedimientoComponent implements OnInit {
         this.inputInactivo = "true";
         this.busquedaForm.get('searchType').disable();
         this.setProcedimiento();
-        console.log('deberia editar');
       }
     })
   }
@@ -170,7 +172,13 @@ export class ProcedimientoComponent implements OnInit {
         this.valorBusqueda = $event;
       }
     } else {
-      this.inputVacio = false;
+      if (this.filtroBusqueda != ''){
+        this.inputVacio = true;
+      }else{
+        this.inputVacio = false;
+      }
+      this.codigoProc = "";
+      this.procVacio = false;
     }
   }
 
@@ -186,7 +194,6 @@ export class ProcedimientoComponent implements OnInit {
     if (this.codigoProc != '' && this.filtroBusqueda != '') {
       this.setProcedimiento();
     } else {
-      console.log(this.codigoProc);
       if (this.filtroBusqueda == '' && this.codigoProc == '') {
         this.filtroSeleccionado = false;
         this.inputVacio = false;
@@ -203,9 +210,8 @@ export class ProcedimientoComponent implements OnInit {
 
   /**Peticiones */
   async setProcedimiento() {
-    let res: any = await this.procedimientoService.getCodigo(this.codigoProc).toPromise();
-    /**TODO:Capturar el error. que venga del servidor */
-    if (res != null) {
+    try{
+      let res: any = await this.procedimientoService.getCodigo(this.codigoProc).toPromise();
       this.procedimiento = Procedimiento.fromJSON(res.procedimiento);
       if (this.procedimiento != null) {
         this.updateBusquedaForm();
@@ -216,9 +222,11 @@ export class ProcedimientoComponent implements OnInit {
         this.utilityService.changeBanderaRequerido(this.banderaRequerido);
       }
       this.procedimientos = new Array<Procedimiento>();
-    } else {
-      this.msjBusquedaNula += 'codigo:' + this.codigoProc;
-      this.busquedaNula = false;
+    }catch(e){
+      let noProcedimiento:string = e.error.error.toString();
+      if(noProcedimiento.includes('not exist')){
+        this.openSnackBar('No existe el procedimiento con codigo',this.codigoProc);
+      }
     }
   }
 
@@ -230,13 +238,23 @@ export class ProcedimientoComponent implements OnInit {
     });
     this.procedimiento = null;
     this.data = this.procedimientos;
+    console.log(this.procedimientos);
     if (this.procedimientos.length > 0) {
+      this.procVacio = false;
       this.cargarNombres();
+    }else{
+      this.procVacio = true;
     }
   }
 
   async setEstadosCama() {
     let res: any = await this.estadoCamaService.get().toPromise();
     this.estadosCama = EstadoCama.fromJSON(res);
+  }
+  /**Eventos */
+  public openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 }

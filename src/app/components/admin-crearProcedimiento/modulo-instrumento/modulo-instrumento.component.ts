@@ -64,6 +64,7 @@ export class ModuloInstrumentoComponent implements OnInit {
   capturar() {
     this.verSeleccion = this.opcionSeleccionado;
     this.agregarDatoTabla();
+    $("#mi_select").val("0");
   }
 
   agregarDatoTabla() {
@@ -125,45 +126,5 @@ export class ModuloInstrumentoComponent implements OnInit {
       event.preventDefault();
     }
   }
-  /*cerrarVentana() {
-    this.dialogo
-      .open(ConfirmationDialogComponent, {
-        data: `¿Seguro que desea SALIR de la ventana añadir intrumentos y/o equipos puesto que si sale y tiene instrumentos en la vista previa estos no se añadirán y se borrará de la tabla?`
-      })
-      .afterClosed()
-      .subscribe((confirmado: Boolean) => {
-        if (confirmado) {
-          this.dialogo.closeAll();
-        }
-      });
-  }
-
-  //método para agregar instrumentos
-  addInstruments() {
-    this.dialogo
-      .open(ConfirmationDialogComponent, {
-        data: `¿Seguro que desea añadir todos los intrumentos y/o equipos que ha agregado en la tabla?`
-      })
-      .afterClosed()
-      .subscribe((confirmado: Boolean) => {
-        if (confirmado) {
-          for (let i = 0; i < this.datosSeleccionador.length; i++) {
-            const resultado = this.datosAdd.find( intrumento => intrumento.codigoEquipo === this.datosSeleccionador[i].codigoEquipo );
-            if(!resultado){  //si no esta el instrimento al agregar en la lista de la agenda, se agrega
-              this.editInstrument = new editInstrumentosEquipos(this.datosSeleccionador[i].id, this.idProcedimiento, this.datosSeleccionador[i].codigoEquipo.toString(), "PEND", this.datosSeleccionador[i].cantidad);
-              let res = this.serviceIntrumentosEquipos.addInstrumento(this.editInstrument).subscribe();
-            }else{ //si esta el instrimento al agregar en la lista de la agenda, se edita
-              this.editInstrument = new editInstrumentosEquipos(resultado.id, this.idProcedimiento, resultado.codigoEquipo.toString(), "PEND", parseInt(resultado.cantidad.toString())+1);
-              let res = this.serviceIntrumentosEquipos.editarInstrumentoEquipo(this.editInstrument).subscribe();
-            }
-            this.utilityService.changeIntrumentoAdd(this.datosAdd);
-          }
-          this.utilityService.changeIntrumentoAdd(this.datosAdd);
-          this.dialogo.closeAll();
-        }
-      });
-
-  }*/
-
 }
 

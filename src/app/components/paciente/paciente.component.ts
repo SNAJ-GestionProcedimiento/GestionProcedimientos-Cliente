@@ -31,6 +31,7 @@ export class PacienteComponent implements OnInit {
   public pacAcudiente:boolean=false;
 
   public pacienteForm : FormGroup;
+  public fechaActual:string;
   
 
   constructor(
@@ -45,6 +46,7 @@ export class PacienteComponent implements OnInit {
 
   ngOnInit(): void {  
     this.setTiposID();
+    this.fechaActual = DateHelper.dateToStr(new Date());
     this.pacienteAcudienteService.idAcudiente.subscribe(value=> this.idAcudiente = value);
     this.editarComponentesService.idPaciente.subscribe(value=>{
       if(value!=''){
@@ -76,11 +78,11 @@ export class PacienteComponent implements OnInit {
       birthdate:['',[Validators.required]],
       age:['',[]],
       email:['',[Validators.required,Validators.email]],
-      name:['',[Validators.required]],
+      name:['',[Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
       homeAddress:['',[Validators.required]],
       phoneNumber:['',[Validators.required]],
       gender:['',[Validators.required]],
-      observation:['',[Validators.required]]
+      observation:['',[Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]]
     });
 
     /**Cuando escriba el id del paciente lo busca*/
@@ -123,8 +125,12 @@ export class PacienteComponent implements OnInit {
     });
     this.pacienteForm.get("name").valueChanges
     .subscribe(value =>{
-      if(this.paciente!=null){
-        this.paciente.nombre = value;
+      if(this.pacienteForm.get('name').errors){
+        this.paciente = null;
+      }else{
+        if(this.paciente!=null){
+          this.paciente.nombre = value;
+        }
       }
     });
     this.pacienteForm.get("homeAddress").valueChanges
@@ -147,8 +153,12 @@ export class PacienteComponent implements OnInit {
     });
     this.pacienteForm.get("observation").valueChanges
     .subscribe(value =>{
-      if(this.paciente!=null){
-        this.observacionPaciente=value;
+      if(this.pacienteForm.get('observation').errors){
+        this.observacionPaciente=null;
+      }else{
+        if(this.paciente!=null){
+          this.observacionPaciente=value;
+        }
       }
     });
   }
@@ -181,7 +191,7 @@ export class PacienteComponent implements OnInit {
     this.pacienteForm.get('gender').setValue('');
     this.pacienteForm.get('email').setValue('');
   }
-  /**Deshabilita campos del formulario */
+  /**Habilita campos del formulario */
   private enableForm(){
     this.pacienteForm.get('documentType').enable();
     this.pacienteForm.get('name').enable();

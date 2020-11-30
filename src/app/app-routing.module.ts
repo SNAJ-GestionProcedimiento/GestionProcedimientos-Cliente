@@ -22,9 +22,10 @@ const routes: Routes = [
   { path: 'programacion/editar', component: AuxiliarHomeComponent, canActivate:[LoginGuard]},
   //Rutas de administrador
   { path: 'admin', component: AdminComponent, canActivate:[LoginGuard,AdminGuard]},
+  { path: 'admin/usuario', component: AdminComponent, canActivate:[LoginGuard,AdminGuard]},
+  { path: 'admin/procedimiento/crear', component: AdminComponent, canActivate:[LoginGuard, AdminGuard]},
+  { path: 'admin/procedimiento/editar', component: AdminComponent, canActivate:[LoginGuard, AdminGuard]},
   { path: 'admin/procedimiento', component: AdminProcedimientosComponent, canActivate:[LoginGuard,AdminGuard]},
-  { path: 'admin/procedimiento/crear', component: ModuloPrincipalCrearProcedimientoComponent, canActivate:[LoginGuard,AdminGuard]},
-  { path: 'admin/usuarios', component: AdminUsuariosComponent, canActivate:[LoginGuard,AdminGuard]},
   //Ruta de error 404
   { path: '**' , component: AuxiliarHomeComponent},
 ];

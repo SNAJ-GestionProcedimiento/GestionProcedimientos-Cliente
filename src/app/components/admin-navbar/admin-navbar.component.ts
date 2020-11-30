@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioTokenService } from 'src/_services/usuarios/usuario-token.service';
 import { UsuarioGrupoService } from 'src/_services/usuarios/usuario-grupo.service';
+import { Router } from '@angular/router';
+
+import { LogoutService } from 'src/_services/logout.service';
 
 @Component({
   selector: 'app-admin-navbar',
@@ -12,7 +15,9 @@ export class AdminNavbarComponent implements OnInit {
 
   constructor(
     private usuarioTokenService:UsuarioTokenService,
-    private usuarioGrupoService:UsuarioGrupoService
+    private usuarioGrupoService:UsuarioGrupoService,
+    private router:Router,
+    private logoutService:LogoutService
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +29,12 @@ export class AdminNavbarComponent implements OnInit {
     this.nombreUsuario = userGroup.username;
     //let res:any = await this.usuarioTokenService.getUser(userGroup.username).toPromise();
     //console.log(res);
+  }
+  public cerrarSesion(){
+    console.log(localStorage.getItem('token'));
+    this.logoutService.logout(localStorage.getItem('token'));
+    localStorage.removeItem('token');
+    this.router.navigateByUrl("");
   }
 
 }

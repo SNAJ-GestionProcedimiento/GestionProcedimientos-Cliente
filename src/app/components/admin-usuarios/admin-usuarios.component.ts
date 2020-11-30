@@ -2,11 +2,14 @@ import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder,Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 
 import { UsuarioObtenerService } from 'src/_services/usuarios/usuario-obtener.service';
 
 import { Usuario } from 'src/_models/modelsLogin/usuario.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { UsuariosCrearComponent } from './usuarios-crear/usuarios-crear.component';
 
 @Component({
   selector: 'app-admin-usuarios',
@@ -23,7 +26,7 @@ export class AdminUsuariosComponent implements OnInit {
   public datoBusqueda:string = '';
   /**Datos de la tabla */
   public usuarios:Array<Usuario>;
-  public dataSource;
+  
   /**Array de titulos de columnas */
   public displayedColumns: string[] = [
     'idUsuario',
@@ -32,15 +35,19 @@ export class AdminUsuariosComponent implements OnInit {
     'email',
     'nombreUsuario',
     'tipoUsuario',
+    'acciones',
     ];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+    public dataSource;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private formBuilder:FormBuilder,
-    private usuarioObtenerService:UsuarioObtenerService
+    private usuarioObtenerService:UsuarioObtenerService,
+    private matDialog:MatDialog
   ) { }
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';  //para que material este en español
     this.buildbusquedaForm();
     this.getUsuarios();
   }
@@ -67,7 +74,10 @@ export class AdminUsuariosComponent implements OnInit {
 
   }
   agregarOnclick(){
-
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "50%";
+    this.matDialog.open(UsuariosCrearComponent,dialogConfig);
   }
 
   /**Peticiones */

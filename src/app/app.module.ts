@@ -66,6 +66,7 @@ import { ModuloEspecialidadComponent } from './components/admin-crearProcedimien
 import { ModuloProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-procedimiento/modulo-procedimiento.component';
 import { ModuloPrincipalCrearProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-principal-crear-procedimiento/modulo-principal-crear-procedimiento.component';
 import { AdminProcedimientosComponent } from './components/admin-procedimientos/admin-procedimientos.component';
+import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-crear/usuarios-crear.component';
 
 
 @NgModule({
@@ -106,6 +107,7 @@ import { AdminProcedimientosComponent } from './components/admin-procedimientos/
     ModuloProcedimientoComponent,
     ModuloPrincipalCrearProcedimientoComponent,
     AdminProcedimientosComponent,
+    UsuariosCrearComponent
   ],
   imports: [
     BrowserModule,

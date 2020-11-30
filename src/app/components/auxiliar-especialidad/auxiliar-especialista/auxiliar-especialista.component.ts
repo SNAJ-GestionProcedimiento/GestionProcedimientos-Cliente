@@ -55,6 +55,8 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';  //para que material este en español
+    
     console.log(localStorage.getItem('token'));
     this.utilityService.customEstados.subscribe(msg => { this.estados = msg });
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
@@ -91,7 +93,6 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   //método para en listar los equipos asociados a un procedimiento
   listarEspecialidades() {
     this.parrafo = "";
-    console.log('idAgenDAS:'+this.idAgendaProcedimiento);
     this.serviceEspecialidadRequerida.getEspecialidadRequerida(this.idAgendaProcedimiento).subscribe((rest: especialidadesRequeridas[]) => {
       this.especialidadAsociada = especialidadesRequeridas.fromJSON(rest);
       if (this.especialidadAsociada != null) {
@@ -106,7 +107,6 @@ export class AuxiliarEspecialistaComponent implements OnInit {
       this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada);
       this.dataEspecialidad.paginator = this.paginator;
     }, (errorServicio) => {
-      console.log(errorServicio);
       this.mensajeError = errorServicio.console.error.error.message;
     }
     );
@@ -206,11 +206,8 @@ export class AuxiliarEspecialistaComponent implements OnInit {
   }
 
   convertirEstadoSalida(instrumentoAcambiar): especialidadesRequeridas {
-    console.log("entro al método: " + instrumentoAcambiar.length);
     for (let j = 0; j < this.estados.length; j++) {
-      console.log("uio que llego: " + instrumentoAcambiar.estado + " estado: " + this.estados[j].contenido);
       if (instrumentoAcambiar.estado == this.estados[j].contenido) {
-        console.log("entro en salida");
         instrumentoAcambiar.estado = this.estados[j].valor;
       }
     }

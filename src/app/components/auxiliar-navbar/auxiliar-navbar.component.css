@@ -1,6 +1,6 @@
-.dropdown-menu,
-.dropdown-menu-left {
+#menu-notificaciones{
     width: 680px !important;
     height: 600px;
     overflow: auto;
 }
+

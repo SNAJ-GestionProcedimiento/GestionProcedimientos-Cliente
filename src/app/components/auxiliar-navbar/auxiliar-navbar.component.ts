@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones.service';
 import { UsuarioGrupoService } from 'src/_services/usuarios/usuario-grupo.service';
+import { Router } from '@angular/router';
+
+import { LogoutService } from 'src/_services/logout.service';
 
 @Component({
   selector: 'app-auxiliar-navbar',
@@ -14,7 +17,9 @@ export class AuxiliarNavbarComponent implements OnInit {
 
   constructor(
     private numNotificacion: NumeroNotificacionesService,
-    private usuarioGrupoService:UsuarioGrupoService
+    private usuarioGrupoService:UsuarioGrupoService,
+    private router:Router,
+    private logoutService:LogoutService 
   ) { }
 
   ngOnInit(): void {
@@ -30,8 +35,11 @@ export class AuxiliarNavbarComponent implements OnInit {
     let token = localStorage.getItem('token');
     let userGroup:any = await this.usuarioGrupoService.getGroup(token).toPromise();
     this.nombreUsuario = userGroup.username;
-    //let res:any = await this.usuarioTokenService.getUser(userGroup.username).toPromise();
-    //console.log(res);
+  }
+  public cerrarSesion(){
+    this.logoutService.logout(localStorage.getItem('token'));
+    localStorage.removeItem('token');
+    this.router.navigateByUrl("");
   }
 
 }

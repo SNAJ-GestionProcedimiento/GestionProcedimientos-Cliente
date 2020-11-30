@@ -1,0 +1,99 @@
+<div class="container">
+    <h1>Crear usuario</h1>
+    <h2>Datos del usuario</h2>
+    <hr>
+    <div class="mat-dialog-content">
+        <form [formGroup]="usuarioForm">
+            <!--Identificación del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Identificación:</label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" placeholder="identificacion usuario" formControlName="idUser">
+                </div>
+            </div>
+            <div class="errors" *ngIf="this.usuarioForm.get('idUser').touched">
+                <p *ngIf="usuarioForm.get('idUser').errors">*Ingrese la identificacion del usuario</p>
+                <p *ngIf="existeId">*Ya existe un usuario con esa identificación</p>
+            </div>
+            <!--Nombre del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nombre:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="nombre" formControlName="firstNameUser">
+                </div>
+            </div>
+            <div class="errors" *ngIf="this.usuarioForm.get('firstNameUser').touched">
+                <p *ngIf="usuarioForm.get('firstNameUser').errors">*Ingrese el nombre completo del usuario</p>
+            </div>
+            <!--Apellido del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Apellido:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="apellido" formControlName="lastNameUser">
+                </div>
+            </div>
+            <div class="errors" *ngIf="this.usuarioForm.get('lastNameUser').touched">
+                <p *ngIf="usuarioForm.get('lastNameUser').errors">*Ingrese el apellido del usuario</p>
+            </div>
+            <!--nombre de usuario del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nombre de usuario:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="nombre de usuario" formControlName="userName">
+                </div>
+            </div>
+            <div class="errors" *ngIf="this.usuarioForm.get('userName').touched">
+                <p *ngIf="usuarioForm.get('userName').errors">*Ingrese el nombre de usuario</p>
+            </div>
+            <!--contraseña de usuario del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Contraseña:</label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" placeholder="contraseña" formControlName="password">
+                </div>
+            </div>
+            <div class="errors" *ngIf="this.usuarioForm.get('password').touched">
+                <p *ngIf="usuarioForm.get('password').errors">*Ingrese una contraseña</p>
+            </div>
+            <!--confirmar contraseña de usuario del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Confirmar contraseña:</label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" placeholder="contraseña" formControlName="valPassword">
+                </div>
+            </div>
+            <div class="errors" *ngIf="this.usuarioForm.get('valPassword').touched">
+                <p *ngIf="usuarioForm.get('valPassword').errors">*Campo obligatorio</p>
+                <p *ngIf="!contraCoincide">*Las contraseñas no coinciden</p>
+            </div>
+            <!--email del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Email:</label>
+                <div class="col-sm-6">
+                    <input type="email" class="form-control" placeholder="email" formControlName="email">
+                </div>
+            </div>
+            <div class="errors" *ngIf="this.usuarioForm.get('email').touched">
+                <p *ngIf="usuarioForm.get('email').errors">*Ingrese el correo del usuario</p>
+            </div>
+            <!--Rol del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Tipo de usuario:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" formControlName="typeUser">
+                        <option value="{{grupo.idGrupo}}" *ngFor="let grupo of grupos">{{grupo.nombreGrupo}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="errors" *ngIf="this.usuarioForm.get('typeUser').touched">
+                <p *ngIf="usuarioForm.get('typeUser').errors">*Ingrese el tipo de usuario</p>
+            </div>
+        </form>
+    </div>
+        <hr>
+        <div class="mx-auto" style="width: 400px;">
+            <button type="button" class="btn btn-danger">Cancelar</button>
+            <button type="button" class="btn btn-info ml-2" (click)="crearUsuario()">Crear Usuario</button>
+        </div>
+    
+</div>

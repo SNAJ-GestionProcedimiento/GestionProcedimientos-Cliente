@@ -8,7 +8,7 @@
                 <input class="form-control" type="number" formControlName='id'>
                 <!--Errores -->
                 <div class="error" *ngIf="acudienteForm.get('id').errors && this.acudienteForm.get('id').touched">
-                    <p>*Ingrese el numero de documento</p>
+                    <p *ngIf="acudienteForm.get('id').errors.required">*Ingrese el numero de documento</p>
                 </div>
                 <div class="alert alert-danger mt-3" role="alert" *ngIf="this.acuMenor">
                     El acudiente no puede ser menor de edad.
@@ -43,6 +43,7 @@
                 <input type="text" class="form-control" formControlName="name">
                 <div class="error" *ngIf="acudienteForm.get('name').errors && this.acudienteForm.get('name').touched">
                     <p>*Ingrese el nombre del acudiente</p>
+                    <p *ngIf="pacienteForm.get('name').errors.pattern">*No se admiten numeros o caracteres especiales en la observación del paciente</p>
                 </div>
             </div>
             <!--Dirección-->
