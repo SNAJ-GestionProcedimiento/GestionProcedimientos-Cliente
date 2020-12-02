@@ -176,7 +176,6 @@ export class AcudienteComponent implements OnInit {
   async setAcudiente(){
     let res:any = await this.acudienteService.get(this.acudienteId).toPromise();
     this.acudiente = Acudiente.fromJSON(res);
-    console.log(this.acudiente);
     if (this.acudiente != null){
       if(this.acudienteId == this.acudiente.identificacion){
         let edad = DateHelper.getAge(new Date(this.acudiente.fechaNacimiento));
