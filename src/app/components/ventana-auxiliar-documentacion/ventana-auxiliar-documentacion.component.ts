@@ -141,14 +141,14 @@ export class VentanaAuxiliarDocumentacionComponent implements OnInit {
             const resultado = this.datosAdd.find(documento => documento.codigoDocumento === this.datosSeleccionados[i].codigoDocumento);
 
             if(!resultado){
-              this.editDocumento = new editarDocumentos(this.datosSeleccionados[i].id, this.idProcedimiento, this.datosSeleccionados[i].codigoDocumento, this.datosSeleccionados[i].estado, this.datosSeleccionados[i].observacion);
-              
-              let res = this.documentoService.addDocumento(this.editDocumento).subscribe();
+              this.editDocumento = new editarDocumentos(this.datosSeleccionados[i].id, this.idProcedimiento, this.datosSeleccionados[i].codigoDocumento, "PEND", this.datosSeleccionados[i].observacion);
+
+             this.documentoService.addDocumento(this.editDocumento).subscribe();
 
             }else{
               this.editDocumento = new editarDocumentos(resultado.id, this.idProcedimiento, resultado.codigoDocumento, "PEND", resultado.observacion);
 
-              let res = this.documentoService.addDocumento(this.editDocumento).subscribe();
+              this.documentoService.addDocumento(this.editDocumento).subscribe();
             }
             this.utilityService.changeDocumentoAdd(this.datosAdd);
 
