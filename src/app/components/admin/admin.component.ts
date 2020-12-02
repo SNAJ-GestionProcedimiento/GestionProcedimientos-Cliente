@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit {
     let url = this.router.url;
     switch (url){
       case '/admin':
-        this.selectedOption = this.OPTIONS.VER_USUARIO;
+        this.selectedOption = this.OPTIONS.VER_PROCEDIMIENTO;
         break;
       case '/admin/usuario':
         this.selectedOption = this.OPTIONS.VER_USUARIO;
@@ -46,10 +46,10 @@ export class AdminComponent implements OnInit {
     }
   }
   public gestionProcedimientoOnclick(){
-
+    this.router.navigateByUrl('/admin');
   }
   public gestionUsuariosOnclick(){
-    
+    this.router.navigateByUrl('/admin/usuario');
   }
 
 }

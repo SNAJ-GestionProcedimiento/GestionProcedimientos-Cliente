@@ -38,6 +38,7 @@ export class ModuloEspecialidadComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';  //para que material este en español
     this.getAllEspecialidad();
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
     this.utilityService.customEspecialidadAdd.subscribe(msg => this.especialidadBandera = msg);
@@ -68,10 +69,8 @@ export class ModuloEspecialidadComponent implements OnInit {
   //Captura el nombre seleccionado
   capturar() {
     this.verSeleccion = this.opcionSeleccionado;
-    console.log(this.verSeleccion);
     this.agregarDatoTabla();
-    this.opcionSeleccionado='0';
-    document.getElementById("caja").onchange;
+    $("#mi_select2").val("0");
   }
 
   //agrega la especialidad a la tabla de la vista previa
@@ -134,45 +133,6 @@ export class ModuloEspecialidadComponent implements OnInit {
         }
       });
   }
-
-  /*cancelar() {
-    this.dialogo
-      .open(ConfirmationDialogComponent, {
-        data: `¿Seguro que desea SALIR de la ventana añadir especialidades puesto que si sale y tiene especialidades en la vista previa estos no se añadirán y se borrará de la tabla?`
-      })
-      .afterClosed()
-      .subscribe((confirmado: Boolean) => {
-        if (confirmado) {
-          this.dialogo.closeAll();
-        }
-      });
-  }
-  addInstruments() {
-    this.dialogo
-      .open(ConfirmationDialogComponent, {
-        data: `¿Seguro que desea añadir todos los intrumentos y/o equipos que ha agregado en la tabla?`
-      })
-      .afterClosed()
-      .subscribe((confirmado: Boolean) => {
-        if (confirmado) {
-          //this.datosAdd = this.datosSeleccionador;
-          this.validarCantidadVacia();
-          for (let i = 0; i < this.datosSeleccionador.length; i++) {
-            for (let j = 0; j < this.datosSeleccionador[i].cantidad; j++) {
-              let res = this.serviceEspecialidadRequerida.addEspecialidad(this.datosSeleccionador[i]).subscribe();
-              if (res != null) {
-                //this.especialidadBandera=this.datosSeleccionador[i];
-                this.utilityService.changeEspecialidadAdd(this.especialidadBandera);
-              }
-            }
-
-          }
-          this.utilityService.changeEspecialidadAdd(this.especialidadBandera);
-          this.dialogo.closeAll();
-        }
-      });
-
-  }*/
 
   validarCantidadVacia() {
     for (let i = 0; i < this.arrayEspecialidadesCantidad.length; i++) {

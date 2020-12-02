@@ -85,8 +85,8 @@
 
 
 </div>
-<button type="button" class="btn btn-info" (click)="openAgregarDocu()">Añadir documento</button>
-<button type="button" class="btn btn-info" (click)="generarRecibido()">Generar Recibido</button>
+<button type="button" class="btn btn-info" (click)="openAgregarDocu()" [disabled]="banderaBotonAnadir">Añadir documento</button>
+<button type="button" class="btn btn-info" (click)="validarAcuse()" [disabled]="banderaBotonAnadir">Generar Recibido</button>
 
 <br>
 <hr>
