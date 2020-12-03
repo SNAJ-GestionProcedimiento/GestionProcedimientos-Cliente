@@ -20,16 +20,20 @@ export class ProcedimientoModalidad{
      */
     public idModalidad_id:number;
 
+    
+    
+    constructor(idProcedimientoModalidad:number, camaUCI:boolean,bancoSangre:boolean,codigoProcedimiento_id:string,idModalidad_id:number){
+        this.idProcedimientoModalidad=idProcedimientoModalidad;
+        this.camaUCI=camaUCI;
+        this.bancoSangre=bancoSangre;
+        this.codigoProcedimiento_id=codigoProcedimiento_id;
+        this.idModalidad_id=idModalidad_id;
+    }
+
     public static fromJSON(json):ProcedimientoModalidad{
         if(json==null){return null;}
 
-        var proceMod = new ProcedimientoModalidad();
-
-        proceMod.idProcedimientoModalidad = json.idProcedimientoModalidad;
-        proceMod.bancoSangre = json.bancoSangre;
-        proceMod.camaUCI = json.camaUCI;
-        proceMod.codigoProcedimiento_id = json.codigoProcedimiento;
-        proceMod.idModalidad_id = json.idModalidad;
+        var proceMod = new ProcedimientoModalidad(json.idProcedimientoModalidad,json.bancoSangre, json.camaUCI,json.codigoProcedimiento,json.idModalidad);
 
         return proceMod;
     }
