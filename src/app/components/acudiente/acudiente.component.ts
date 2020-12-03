@@ -65,7 +65,7 @@ export class AcudienteComponent implements OnInit {
       age:['',[]],
       birthdate:['',[Validators.required]],
       email:['',[Validators.required,Validators.email]],
-      name:['',[Validators.required],Validators.pattern(/^[a-zA-Z ]+$/)],
+      name:['',[Validators.required,Validators.pattern(/^[a-zA-Z ]+$/)]],
       homeAddress:['',[Validators.required]],
       phoneNumber:['',[Validators.required]],
       gender:['',[Validators.required]],
@@ -174,7 +174,7 @@ export class AcudienteComponent implements OnInit {
 
   /**Peticiones */
   async setAcudiente(){
-    let res = await this.acudienteService.get(this.acudienteId).toPromise();
+    let res:any = await this.acudienteService.get(this.acudienteId).toPromise();
     this.acudiente = Acudiente.fromJSON(res);
     if (this.acudiente != null){
       if(this.acudienteId == this.acudiente.identificacion){
