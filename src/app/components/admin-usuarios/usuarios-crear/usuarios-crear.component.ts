@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime } from 'rxjs/operators';
+import swal from 'sweetalert2';
 
 import { GrupoUsuario } from 'src/_models/grupo.models';
 import { Usuario } from 'src/_models/modelsLogin/usuario.model';
@@ -162,7 +163,7 @@ export class UsuariosCrearComponent implements OnInit {
     if(this.usuario != null){
       try {
         let res:any = await this.usuarioCrearService.addUser(this.usuario).toPromise();
-        this.openSnackBar('Se ha registrado al usuario',this.usuario.username);
+        swal.fire('¡Exito!','El usuario: '+this.usuario.username+' ha sido creado exitosamente!','success')
         this.matDialog.closeAll(); 
       } catch (error) {
         console.log(error.error);

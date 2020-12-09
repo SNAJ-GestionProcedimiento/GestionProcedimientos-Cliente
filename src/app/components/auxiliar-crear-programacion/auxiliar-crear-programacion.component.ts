@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import swal from 'sweetalert2';
 
 
 import { ProcedimientoComponent } from '../procedimiento/procedimiento.component';
@@ -16,6 +17,9 @@ import { AuxiliarEspecialistaComponent } from '../auxiliar-especialidad/auxiliar
 import { EditarComponentesService } from 'src/_services/serviciosComponentes/editar-componentes.service';
 import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones.service';
 import { Paciente } from 'src/_models/paciente.model';
+import { Acudiente } from 'src/_models/acudiente.model';
+import { Procedimiento } from 'src/_models/procedimiento.model';
+import { Agendamiento } from 'src/_models/agendamiento.models';
 
 
 @Component({
@@ -111,7 +115,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     let estadoCama = this.procedimientoCmp.getestadoCama();
     let agendamiento = this.horaFechaCmp.getAgendamiento();
   
-    if (!this.validarCampos(paciente,observacion,acudiente,procedimiento,estadoCama,agendamiento)) {
+    if (!this.validarCampos(paciente,acudiente,procedimiento,agendamiento)) {
       
     } else {
       /**Creacion del modelo */
@@ -124,9 +128,21 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     }
   }
   /** Validacion de campos*/
-  public validarCampos(paciente:Paciente,observacion,acudiente,procedimiento,estadoCama,agendamiento){
-    if (paciente.identificacion==null) {
-      console.log('paciente nulo');
+  public validarCampos(paciente:Paciente,acudiente:Acudiente,procedimiento:Procedimiento,agendamiento:Agendamiento){
+    if (paciente==null || paciente.identificacion==null) {
+      swal.fire('¡Error!', '¡Verifica los datos del paciente!', 'error');
+      return false;
+    }
+    if (acudiente == null || acudiente.identificacion==null) {
+      swal.fire('¡Error!', '¡Verifica los datos del acudiente!', 'error');
+      return false;
+    }
+    if (procedimiento == null || procedimiento.codigoProcedimiento==null) {
+      swal.fire('¡Error!', '¡Verifica los datos del procedimiento!', 'error');
+      return false;
+    }
+    if (agendamiento.fecha==null || agendamiento.hora==null) {
+      swal.fire('¡Error!', '¡Verifica los datos del agendamiento!', 'error');
       return false;
     }
     return true;
