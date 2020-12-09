@@ -6,10 +6,15 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 
 import { UsuarioObtenerService } from 'src/_services/usuarios/usuario-obtener.service';
+import { UsuarioEliminarService } from 'src/_services/usuarios/usuario-eliminar.service';
 
 import { Usuario } from 'src/_models/modelsLogin/usuario.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsuariosCrearComponent } from './usuarios-crear/usuarios-crear.component';
+import { GroupHelper } from 'src/_helpers/group.helper';
+import { UsuariosInfoComponent } from './usuarios-info/usuarios-info.component';
+import { UsuariosEditarComponent } from './usuarios-editar/usuarios-editar.component';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-admin-usuarios',
@@ -43,7 +48,8 @@ export class AdminUsuariosComponent implements OnInit {
   constructor(
     private formBuilder:FormBuilder,
     private usuarioObtenerService:UsuarioObtenerService,
-    private matDialog:MatDialog
+    private matDialog:MatDialog,
+    private usuarioEliminarService:UsuarioEliminarService
   ) { }
 
   ngOnInit(): void {
@@ -76,8 +82,36 @@ export class AdminUsuariosComponent implements OnInit {
   agregarOnclick(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
+    dialogConfig.width = "50%"; 
+    this.matDialog.open(UsuariosCrearComponent,dialogConfig).afterClosed().subscribe(()=>{
+      this.getUsuarios();
+    });
+  }
+  infoOnclick(element){
+    UsuariosInfoComponent.elemento = element;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
     dialogConfig.width = "50%";
-    this.matDialog.open(UsuariosCrearComponent,dialogConfig);
+    this.matDialog.open(UsuariosInfoComponent,dialogConfig);
+  }
+  editarOnclick(element){
+    UsuariosEditarComponent.elemento = element;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "50%";
+    this.matDialog.open(UsuariosEditarComponent,dialogConfig).afterClosed().subscribe(()=>{
+      this.getUsuarios();
+    });
+  }
+  eliminarOnclick(element){
+    this.matDialog.open(ConfirmationDialogComponent,{
+      data:`¿Desea eliminar el usuario: ${element.username}?`
+    }).afterClosed()
+    .subscribe((confirmado:Boolean)=>{
+      if(confirmado){
+        this.eliminarUsuario(element);
+      }
+    })
   }
 
   /**Peticiones */
@@ -86,12 +120,20 @@ export class AdminUsuariosComponent implements OnInit {
     if(res!=null){
       this.usuarios = new Array<Usuario>();
       res.forEach(element => {
-        let usuario = new Usuario(element.id,element.username,"",element.first_name,element.last_name,element.email,element.groups);
+        let grupos = GroupHelper.obtenerGruposStr(element.groups);
+        let usuario = new Usuario(element.id,element.username,"",element.first_name,element.last_name,element.email,grupos);
         this.usuarios.push(usuario);
       });
-      console.log(this.usuarios);
       this.dataSource = new MatTableDataSource<any>(this.usuarios);
       this.dataSource.paginator = this.paginator;
+    }
+  }
+
+  public async eliminarUsuario(usuario:Usuario){
+    try {
+      let res:any = await this.usuarioEliminarService.deleteUser(usuario.username).toPromise(); 
+      this.ngOnInit();
+    } catch (error) {
     }
   }
 }

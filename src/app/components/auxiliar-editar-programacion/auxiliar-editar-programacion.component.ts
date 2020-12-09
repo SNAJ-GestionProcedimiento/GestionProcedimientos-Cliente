@@ -68,6 +68,7 @@ export class AuxiliarEditarProgramacionComponent implements OnInit {
       this.openSnackBar('No ha seleccionado Elemento a ','EDITAR');
       this.router.navigateByUrl('programacion');
     }else{
+      this.editarComponentesService.cambiarEsCrear(false);
       /**Cargar los datos a ver o editar */
       if(AuxiliarEditarProgramacionComponent.recibido!=null){
         this.idPacienteAgendado = AuxiliarEditarProgramacionComponent.recibido.idPac;

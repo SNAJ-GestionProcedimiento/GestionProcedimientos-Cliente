@@ -1,0 +1,29 @@
+<div class="text-right">
+    <button mat-button mat-dialog-close mat-raised-button type="button" class="btn btn-danger btn-link btn-sm btn-just-icon">
+        <i class="material-icons">clear</i>
+    </button>
+</div>
+<div class="container text-center">
+    <h1>Datos del usuario</h1>
+    <hr>
+    <div class="row" *ngIf="usuario != null">
+        <label class="col-sm-6 col-form-label text-right">Identificación :</label>
+        <label class="col-sm-6 col-form-label text-left font-weight-bold">{{usuario.id}}</label>
+
+        <label class="col-sm-6 col-form-label text-right">Nombre :</label>
+        <label class="col-sm-6 col-form-label text-left font-weight-bold">{{usuario.first_name}}</label>
+
+        <label class="col-sm-6 col-form-label text-right">Apellido :</label>
+        <label class="col-sm-6 col-form-label text-left font-weight-bold">{{usuario.last_name}}</label>
+
+        <label class="col-sm-6 col-form-label text-right">Nombre de usuario :</label>
+        <label class="col-sm-6 col-form-label text-left font-weight-bold">{{usuario.username}}</label>
+
+        <label class="col-sm-6 col-form-label text-right">Correo :</label>
+        <label class="col-sm-6 col-form-label text-left font-weight-bold">{{usuario.email}}</label>
+
+        <label class="col-sm-6 col-form-label text-right">Tipo de usuario :</label>
+        <label class="col-sm-6 col-form-label text-left font-weight-bold">{{usuario.groups[0]}}</label>
+
+    </div>
+</div>

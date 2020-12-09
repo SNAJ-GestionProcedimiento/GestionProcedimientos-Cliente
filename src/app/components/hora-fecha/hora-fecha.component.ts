@@ -47,6 +47,14 @@ export class HoraFechaComponent implements OnInit {
     this.agendamiento.estadoAgenda=this.horafechaForm.get('stateSchedule').value;
     this.agendamiento.estadoSala=this.horafechaForm.get('stateSala').value;
     this.fechaActual = DateHelper.dateToStr(new Date());
+    this.editarComponentesService.esCrear.subscribe(value=>{
+      if (value) {
+        this.horafechaForm.get('stateSchedule').disable();  
+      } else{
+        this.horafechaForm.get('stateSchedule').enable();
+      }
+      
+    })
 
     /**Activado en editar */
     this.editarComponentesService.idAgendaProc.subscribe(value=>{

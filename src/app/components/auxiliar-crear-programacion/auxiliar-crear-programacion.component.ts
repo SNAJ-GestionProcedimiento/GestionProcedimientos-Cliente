@@ -15,6 +15,7 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from '../auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
 import { EditarComponentesService } from 'src/_services/serviciosComponentes/editar-componentes.service';
 import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones.service';
+import { Paciente } from 'src/_models/paciente.model';
 
 
 @Component({
@@ -62,7 +63,8 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     private utilityService: UtilityServiceService,
     private editarComponentesService:EditarComponentesService,
     private numNotificacion: NumeroNotificacionesService
-  ) { }
+  ) {
+  }
 
   receiveMessage($event) {
     this.message = $event
@@ -70,6 +72,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   } 
 
   ngOnInit(): void {
+    this.editarComponentesService.cambiarEsCrear(true);
     this.actualizarIds();
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento=msg);
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento=msg);
@@ -108,15 +111,25 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     let estadoCama = this.procedimientoCmp.getestadoCama();
     let agendamiento = this.horaFechaCmp.getAgendamiento();
   
-    /**Creacion del modelo */
-    let agenda:AgendaCrear = AgendaCrear.fromOBJECTS(paciente,acudiente,procedimiento,agendamiento,observacion,estadoCama,'1');
+    if (!this.validarCampos(paciente,observacion,acudiente,procedimiento,estadoCama,agendamiento)) {
+      
+    } else {
+      /**Creacion del modelo */
+      let agenda:AgendaCrear = AgendaCrear.fromOBJECTS(paciente,acudiente,procedimiento,agendamiento,observacion,estadoCama,'1');
 
-    this.crearAgenda(agenda);
-    this.listarInstrumentosDesdeProgramacion();
-    this.listarDocumentosDesdeProgramacion();
-    this.listarMaterialesDesdeProgramacion();
-    
-    
+      this.crearAgenda(agenda);
+      this.listarInstrumentosDesdeProgramacion();
+      this.listarDocumentosDesdeProgramacion();
+      this.listarMaterialesDesdeProgramacion(); 
+    }
+  }
+  /** Validacion de campos*/
+  public validarCampos(paciente:Paciente,observacion,acudiente,procedimiento,estadoCama,agendamiento){
+    if (paciente.identificacion==null) {
+      console.log('paciente nulo');
+      return false;
+    }
+    return true;
   }
 
   /**Peticiones */

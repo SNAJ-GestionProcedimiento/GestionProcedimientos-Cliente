@@ -8,6 +8,10 @@ import { GrupoUsuario } from 'src/_models/grupo.models';
 import { Usuario } from 'src/_models/modelsLogin/usuario.model';
 
 import { UsuarioCrearService } from 'src/_services/usuarios/usuario-crear.service';
+import { UsuarioIdObtenerService } from 'src/_services/usuarios/usuario-id-obtener.service';
+import { UsuarioTokenService } from 'src/_services/usuarios/usuario-token.service';
+import { GruposService } from 'src/_services/grupos.service';
+import { GroupHelper } from 'src/_helpers/group.helper';
 
 @Component({
   selector: 'app-usuarios-crear',
@@ -18,9 +22,12 @@ export class UsuariosCrearComponent implements OnInit {
   /**Variables del formulario */
   public grupos:Array<GrupoUsuario>;
   public usuarioForm:FormGroup;
+  public deshabilitarBoton = true;
   /**Variables de control existencia y coincidencia */
   public existeId:boolean = false;
+  public idDisponible:boolean = false;
   public existeNom:boolean = false;
+  public nomVacio:boolean = true;
   public contraCoincide:boolean=true;
   /**Variables del modelo*/
   public idUsuario:string;
@@ -29,13 +36,18 @@ export class UsuariosCrearComponent implements OnInit {
   public nomUsuario:string;
   public contraUsuario:string;
   public correoUsuario:string;
-  public tipoUsuario:string='1';
+  public tipoUsuario:string;
+  /**Variable de registro */
+  public usuario:Usuario;
 
   constructor(
     private formBuilder:FormBuilder,
     private usuarioCrearService:UsuarioCrearService,
     private matDialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public gruposService:GruposService,
+    public usuarioIdObtenerService:UsuarioIdObtenerService,
+    public usuarioTokenService:UsuarioTokenService
   ) { }
 
   ngOnInit(): void {
@@ -47,27 +59,14 @@ export class UsuariosCrearComponent implements OnInit {
   /**Metodo que crea el formulario */
   private buildUsuarioForm(){
     this.usuarioForm = this.formBuilder.group({
-      idUser:['',[Validators.required]],
       firstNameUser:['',[Validators.required]],
       lastNameUser:['',[Validators.required]],
       userName:['',[Validators.required]],
       password:['',[Validators.required]],
       valPassword:['',[Validators.required]],
       email:['',[Validators.required,Validators.email]],
-      typeUser:['1',[Validators.required]],
+      typeUser:['',[Validators.required]],
     })
-    this.usuarioForm.get("idUser").valueChanges
-    .subscribe(value=>{
-      /**TODO:Preguntar si existe usuario con ese id
-       * si no
-       */
-      if(value == '1'){
-        this.existeId = true;
-      }else{
-        this.existeId = false;
-        this.idUsuario = value;
-      }
-    });
     this.usuarioForm.get("firstNameUser").valueChanges
     .subscribe(value=>{
       this.nombreUsuario = value;
@@ -82,6 +81,13 @@ export class UsuariosCrearComponent implements OnInit {
        * si no
        */
       this.nomUsuario = value;
+      if(this.nomUsuario == null){
+        this.nomVacio = true;
+        this.deshabilitarBoton = true;
+      }else{
+        this.nomVacio = false;
+        this.setUsuarioNom();
+      }
     });
     this.usuarioForm.get("password").valueChanges
     .subscribe(value=>{
@@ -93,9 +99,9 @@ export class UsuariosCrearComponent implements OnInit {
       )
     .subscribe(value=>{
       if(value!=this.contraUsuario){
-        this.contraCoincide = true;
-      }else{
         this.contraCoincide = false;
+      }else{
+        this.contraCoincide = true;
       }
     });
     this.usuarioForm.get("email").valueChanges
@@ -104,21 +110,23 @@ export class UsuariosCrearComponent implements OnInit {
     });
     this.usuarioForm.get("typeUser").valueChanges
     .subscribe(value=>{
+      console.log(value);
       this.tipoUsuario = value;
     });
   }
 
-  public setGruposUsuario(){
-    //TODO: hacer la peticion de grupos de usuario
-    this.grupos.push(new GrupoUsuario('1','Administrador'));
-    this.grupos.push(new GrupoUsuario('2','Auxiliar de Programación'));
+  public async setGruposUsuario(){
+    let res:any = await this.gruposService.getGrupos().toPromise();
+    res.forEach(element => {
+      this.grupos.push(new GrupoUsuario(JSON.stringify(element.group_id),GroupHelper.parseGrupoString(element.group_name)));
+    });
   }
 
   public crearUsuario(){
     if(this.usuarioForm.valid){
       /**Se crea el objeto de tipo Usuario */
-      let usuario = new Usuario(
-        this.idUsuario,
+      this.usuario = new Usuario(
+        this.idUsuario='null',
         this.nomUsuario,
         this.contraUsuario,
         this.nombreUsuario,
@@ -126,15 +134,46 @@ export class UsuariosCrearComponent implements OnInit {
         this.correoUsuario,
         [this.tipoUsuario]
       );
-        console.log(usuario);
-      let res:any = this.usuarioCrearService.addUser(usuario).toPromise();
-      console.log(res);
-      //Mensaje de creacion con nombre de usuario
-      this.openSnackBar('Se ha registrado al usuario',usuario.username);
-      this.matDialog.closeAll();
+      this.registrarUsuario();
     }else{
-      console.log('invalido infeliz')
+      /**Marca todos los controles del formulario como tocados */
+      let nomControles = Object.keys(this.usuarioForm.controls);
+      nomControles.filter(data =>{
+        let control = this.usuarioForm.controls[data];
+        control.markAsTouched();
+      })
     }
+  }
+  public async setUsuarioNom(){
+    try {
+      let res:any = await this.usuarioTokenService.getUser(this.nomUsuario).toPromise();
+      this.existeNom = true;
+      this.deshabilitarBoton = true;
+    } catch (error) {
+      let er:string = error.error.error;
+      if(er.includes('does not exist')){
+        this.existeNom =false;
+        this.deshabilitarBoton = false;
+      }
+    }
+  }
+
+  public async registrarUsuario(){
+    if(this.usuario != null){
+      try {
+        let res:any = await this.usuarioCrearService.addUser(this.usuario).toPromise();
+        this.openSnackBar('Se ha registrado al usuario',this.usuario.username);
+        this.matDialog.closeAll(); 
+      } catch (error) {
+        console.log(error.error);
+      }
+    }else{
+      this.deshabilitarBoton = true;
+    }
+  }
+
+  cerrarVentana(){
+    this.matDialog.closeAll();
   }
 
   /**Eventos */
@@ -143,5 +182,7 @@ export class UsuariosCrearComponent implements OnInit {
       duration: 3000,
     });
   }
+
+  /**Metodos auxiliares de formularios */
 
 }

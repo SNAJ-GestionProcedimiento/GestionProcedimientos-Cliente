@@ -1,0 +1,83 @@
+<div class="container">
+    <h1>Editar usuario</h1>
+    <h2>Datos del usuario</h2>
+    <hr>
+    <div class="mat-dialog-content">
+        <form [formGroup]="usuarioEditarForm">
+            <!--Identificación del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Identificación:</label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" placeholder="{{usuario.id}}" disabled>
+                </div>
+            </div>
+            <!--Nombre del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nombre:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="nombre" formControlName="firstNameUser">
+                    <div class="errors" *ngIf="this.usuarioEditarForm.get('firstNameUser').touched">
+                        <p *ngIf="usuarioEditarForm.get('firstNameUser').errors">*Ingrese el nombre completo del usuario</p>
+                    </div>
+                </div>
+            </div>
+            <!--Apellido del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Apellido:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="apellido" formControlName="lastNameUser">
+                    <div class="errors" *ngIf="this.usuarioEditarForm.get('lastNameUser').touched">
+                        <p *ngIf="usuarioEditarForm.get('lastNameUser').errors">*Ingrese el apellido del usuario</p>
+                    </div>
+                </div>
+            </div>
+            <!--nombre de usuario del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nombre de usuario:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="nombre de usuario" formControlName="userName">
+                    <div class="errors" *ngIf="this.usuarioEditarForm.get('userName').touched">
+                        <div class="alert alert-danger mt-1" role="alert" *ngIf="existeNom && !nomVacio">
+                            Ya existe un usuario con ese nombre de usuario
+                        </div>
+                        <div class="alert alert-success mt-1" role="alert" *ngIf="!existeNom && !nomVacio">
+                            Nombre de usuario disponible
+                        </div>
+                        <p *ngIf="usuarioEditarForm.get('userName').errors">*Ingrese el nombre de usuario</p>
+                    </div>
+                </div>
+            </div>
+            <!--email del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Email:</label>
+                <div class="col-sm-6">
+                    <input type="email" class="form-control" placeholder="email" formControlName="email">
+                    <div class="errors" *ngIf="this.usuarioEditarForm.get('email').touched">
+                        <p *ngIf="usuarioEditarForm.get('email').errors">*Ingrese el correo del usuario</p>
+                    </div>
+                </div>
+            </div>
+            <!--Rol del usuario-->
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Tipo de usuario:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" formControlName="typeUser">
+                        <option value="{{grupo.idGrupo}}" *ngFor="let grupo of grupos">{{grupo.nombreGrupo}}</option>
+                        <div class="errors" *ngIf="this.usuarioEditarForm.get('typeUser').touched">
+                            <p *ngIf="usuarioEditarForm.get('typeUser').errors">*Ingrese el tipo de usuario</p>
+                        </div>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <form>
+            
+        </form>
+    </div>
+    <hr>
+    <div class="mx-auto" style="width: 400px;">
+        <button type="button" class="btn btn-danger" mat-dialog-close>Cancelar</button>
+        <button type="button" class="btn btn-info ml-2" (click)="editarOnclick()">Editar Usuario</button>
+    </div>
+</div>
