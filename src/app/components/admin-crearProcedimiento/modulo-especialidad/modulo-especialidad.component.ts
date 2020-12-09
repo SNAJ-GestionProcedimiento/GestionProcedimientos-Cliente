@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -15,6 +16,8 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
 })
 export class ModuloEspecialidadComponent implements OnInit {
 
+  public busquedaForm: FormGroup;
+  
   displayedColumns: string[] = ['codigo', 'nombreEspecialidad', 'cantidad', 'acciones'];
   dataSource = null;
   especialidadBandera: especialidadesRequeridas;
@@ -34,14 +37,28 @@ export class ModuloEspecialidadComponent implements OnInit {
     private dialogo: MatDialog,
     private serviceEspecialidadRequerida: EspecilidadRequeridaService,
     private notificationService: notificationService.NotificationService,
-    private utilityService: UtilityServiceService
-  ) { }
+    private utilityService: UtilityServiceService,
+    private formBuilder: FormBuilder
+  ) {
+    this.buildbusquedaForm();
+   }
 
   ngOnInit(): void {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';  //para que material este en español
     this.getAllEspecialidad();
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento = msg);
     this.utilityService.customEspecialidadAdd.subscribe(msg => this.especialidadBandera = msg);
+  }
+
+  /**Metodos de formularios */
+  private buildbusquedaForm() {
+    this.busquedaForm = this.formBuilder.group({
+      cantidad: ['', []]
+    });
+    this.busquedaForm.get('cantidad').valueChanges
+      .subscribe(value => {
+        let cod=value;   
+      });
   }
 
   //obtener los nombres de las especialidades de la BD
@@ -70,7 +87,7 @@ export class ModuloEspecialidadComponent implements OnInit {
   capturar() {
     this.verSeleccion = this.opcionSeleccionado;
     this.agregarDatoTabla();
-    $("#mi_select2").val("0");
+    $("#mi_select4").val("0");
   }
 
   //agrega la especialidad a la tabla de la vista previa
@@ -135,11 +152,17 @@ export class ModuloEspecialidadComponent implements OnInit {
   }
 
   validarCantidadVacia() {
-    for (let i = 0; i < this.arrayEspecialidadesCantidad.length; i++) {
-      if (this.arrayEspecialidadesCantidad[i].cantidad == null) {
-        this.arrayEspecialidadesCantidad[i].cantidad = 1;
+    for (let i = 0; i < this.datosSeleccionador.length; i++) {
+      if (this.datosSeleccionador[i].cantidad == null) {
+        console.log("entre");
+        this.datosSeleccionador[i].cantidad = 1;
       }
     }
+  }
+
+  getEspecialidadesRequeridas():especialidadesPrevisualizar[]{
+    this.validarCantidadVacia();
+    return this.datosSeleccionador;
   }
 
 }

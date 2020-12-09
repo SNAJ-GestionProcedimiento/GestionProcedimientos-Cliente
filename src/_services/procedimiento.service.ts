@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { HttpService } from './http.service';
 import { Procedimiento } from 'src/_models/procedimiento.model';
 import { Observable, throwError } from 'rxjs';
+import { Modalidad } from 'src/_models/modalidad.model';
+import { catchError } from 'rxjs/operators';
+import { CrearProcedimientoAdmin } from 'src/_models/procedimientoCrearAdmin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +15,9 @@ export class ProcedimientoService extends HttpService {
   urlListarProcedimientos: String;
   constructor(
     protected http: HttpClient
-  ) { 
+  ) {
     super(http);
-    this.urlListarProcedimientos=this.apiURL;
+    this.urlListarProcedimientos = this.apiURL;
     this.apiURL += 'getProcedimiento';
   }
 
@@ -22,9 +25,9 @@ export class ProcedimientoService extends HttpService {
     * Obtiene una persona
     * @param codigo identificador del procedimiento
     */
-   getCodigo(codigo: string){
+  getCodigo(codigo: string) {
     return this.http.get(
-      `${this.apiURL+'Codigo'}/${codigo}`,
+      `${this.apiURL + 'Codigo'}/${codigo}`,
       {
         headers: this.headers
       },
@@ -35,9 +38,9 @@ export class ProcedimientoService extends HttpService {
     * Obtiene una persona
     * @param nombre identificador del procedimiento
     */
-   getNombre(nombre: string){
+  getNombre(nombre: string) {
     return this.http.get(
-      `${this.apiURL+'Nombre'}/${nombre}`,
+      `${this.apiURL + 'Nombre'}/${nombre}`,
       {
         headers: this.headers
       },
@@ -45,10 +48,36 @@ export class ProcedimientoService extends HttpService {
   }
 
   getProcedimientos(): Observable<Procedimiento[]> {
-    let url=`${this.urlListarProcedimientos}listAllProcedimientos`;
-    console.log(url);
+    //let url=`${this.urlListarProcedimientos}listAllProcedimientos`;
+    //console.log(url);
     return this.http.get<Procedimiento[]>(`${this.urlListarProcedimientos}listAllProcedimientos`);
   }
 
-  
+  getModidalidades(): Observable<Modalidad[]> {
+    //let url=`${this.urlListarProcedimientos}listAllModalidades`;
+    //console.log(url);
+    return this.http.get<Modalidad[]>(`${this.urlListarProcedimientos}listAllModalidades`);
+  }
+
+  existeNombreProc(nombre: String): Observable<Modalidad[]> {
+    //let url=`${this.urlListarProcedimientos}listAllModalidades`;
+    //console.log(url);
+    return this.http.get<Modalidad[]>(`${this.urlListarProcedimientos}getProcedimientoNombreIgual/${nombre}`).pipe(
+      catchError(
+        e=>{
+          if(e.status==500){
+            return throwError(e);
+          };
+        }
+      )
+    );
+  }
+
+  crearProcedimiento(procedimiento: CrearProcedimientoAdmin):Observable<CrearProcedimientoAdmin> {
+    return this.http.post<CrearProcedimientoAdmin>(`${this.urlListarProcedimientos}addProcedimiento`, procedimiento);
+  }
+
+  eliminarProcedimiento(cod: String):Observable<any> {
+    return this.http.delete<any>(`${this.urlListarProcedimientos}deleteProcedimiento/${cod}`);
+  }
 }

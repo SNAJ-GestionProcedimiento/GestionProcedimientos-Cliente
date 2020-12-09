@@ -64,7 +64,7 @@ export class ModuloInstrumentoComponent implements OnInit {
   capturar() {
     this.verSeleccion = this.opcionSeleccionado;
     this.agregarDatoTabla();
-    $("#mi_select").val("0");
+    $("#mi_select3").val("0");
   }
 
   agregarDatoTabla() {
@@ -125,6 +125,10 @@ export class ModuloInstrumentoComponent implements OnInit {
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+
+  getInstrumentosRequeridos():InstrumentosEquipos[]{
+    return this.datosSeleccionador;
   }
 }
 
