@@ -1,4 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
+import swal from 'sweetalert2';
 
 import { ProcedimientoComponent } from '../procedimiento/procedimiento.component';
 import { PacienteComponent } from 'src/app/components/paciente/paciente.component';
@@ -102,9 +103,31 @@ export class AuxiliarEditarProgramacionComponent implements OnInit {
 
     let idAgendaProc = AuxiliarEditarProgramacionComponent.recibido.idAgendaProcedimiento;
 
-    var agendaEditar = AgendaEditar.fromOBJECTS(idAgendaProc,paciente,acudiente,procedimiento,agendamiento,observacion,estadoCama,'1');
+    if (this.validarCampos(paciente,acudiente,procedimiento,agendamiento)){
+      var agendaEditar = AgendaEditar.fromOBJECTS(idAgendaProc,paciente,acudiente,procedimiento,agendamiento,observacion,estadoCama,'1');
 
-    this.editarAgenda(agendaEditar);
+      this.editarAgenda(agendaEditar);
+    }
+  }
+  /** Validacion de campos*/
+  public validarCampos(paciente:Paciente,acudiente:Acudiente,procedimiento:Procedimiento,agendamiento:Agendamiento){
+    if (paciente==null || paciente.identificacion=='') {
+      swal.fire('¡Error!', '¡Verifica los datos del paciente!', 'error');
+      return false;
+    }
+    if (acudiente == null || acudiente.identificacion=='') {
+      swal.fire('¡Error!', '¡Verifica los datos del acudiente!', 'error');
+      return false;
+    }
+    if (procedimiento == null || procedimiento.codigoProcedimiento=='') {
+      swal.fire('¡Error!', '¡Verifica los datos del procedimiento!', 'error');
+      return false;
+    }
+    if (agendamiento.fecha=='' || agendamiento.hora=='') {
+      swal.fire('¡Error!', '¡Verifica los datos del agendamiento!', 'error');
+      return false;
+    }
+    return true;
   }
   /**Peticiones */
   public async editarAgenda(agendaEditar:AgendaEditar){

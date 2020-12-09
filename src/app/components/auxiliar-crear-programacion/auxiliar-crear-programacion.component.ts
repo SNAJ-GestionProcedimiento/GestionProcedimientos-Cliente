@@ -115,9 +115,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     let estadoCama = this.procedimientoCmp.getestadoCama();
     let agendamiento = this.horaFechaCmp.getAgendamiento();
   
-    if (!this.validarCampos(paciente,acudiente,procedimiento,agendamiento)) {
-      
-    } else {
+    if (this.validarCampos(paciente,acudiente,procedimiento,agendamiento)){
       /**Creacion del modelo */
       let agenda:AgendaCrear = AgendaCrear.fromOBJECTS(paciente,acudiente,procedimiento,agendamiento,observacion,estadoCama,'1');
 
