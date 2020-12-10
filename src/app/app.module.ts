@@ -67,6 +67,7 @@ import { ModuloProcedimientoComponent } from './components/admin-crearProcedimie
 import { ModuloPrincipalCrearProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-principal-crear-procedimiento/modulo-principal-crear-procedimiento.component';
 import { AdminProcedimientosComponent } from './components/admin-procedimientos/admin-procedimientos.component';
 import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-crear/usuarios-crear.component';
+import { VentanaAdjuntarDocumentoComponent } from '../app/components/auxiliar-documentacion/ventana-adjuntar-documento/ventana-adjuntar-documento.component'
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-cre
     ModuloProcedimientoComponent,
     ModuloPrincipalCrearProcedimientoComponent,
     AdminProcedimientosComponent,
-    UsuariosCrearComponent
+    UsuariosCrearComponent,
+    VentanaAdjuntarDocumentoComponent
   ],
   imports: [
     BrowserModule,
@@ -137,6 +139,8 @@ import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-cre
     AdminGuard
     ],
   bootstrap: [AppComponent],
-  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, ConfirmationDialogComponent]
+  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, 
+  VentanaAdjuntarDocumentoComponent,
+  ConfirmationDialogComponent]
 })
 export class AppModule { }

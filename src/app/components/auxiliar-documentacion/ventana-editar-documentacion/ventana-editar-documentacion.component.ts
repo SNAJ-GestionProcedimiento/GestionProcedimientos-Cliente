@@ -63,7 +63,7 @@ export class VentanaEditarDocumentacionComponent implements OnInit {
     if(this.custormertext != "" && this.custormertext != " "){
       this.datosDocumento.observacion=this.custormertext;
     }else{
-      this.notificationService.success('Campo observación no editado! ')
+      this.notificationService.success('Campo observación no editado!');
     }
     this.editDocumentos = new editarDocumentos(this.datosDocumento.id, this.idProcedimiento, this.datosDocumento.codigoDocumento, this.datosDocumento.estado, this.datosDocumento.descripcion); 
     
@@ -75,7 +75,6 @@ export class VentanaEditarDocumentacionComponent implements OnInit {
       this.utilityService.changeDocumento(this.datosDocumento);
       this.cerrarVentana();
     }
-
   } 
 
   convertirEstadoLleda(documentoAcambiar) {
@@ -100,7 +99,6 @@ export class VentanaEditarDocumentacionComponent implements OnInit {
     for(let i = 0 ; i<this.estadosDoc.length; i++){
       this.estadosDoc[i].contenido != this.datosDocumento.estado
       this.listaEsdadoDoc.push(this.estadosDoc[i]);    
+    }
   }
-  
-}
 }

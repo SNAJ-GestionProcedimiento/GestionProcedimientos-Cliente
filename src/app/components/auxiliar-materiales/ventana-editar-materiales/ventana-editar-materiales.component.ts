@@ -35,9 +35,16 @@ export class VentanaEditarMaterialesComponent implements OnInit {
   fechaLlegaEdid: string;
   casaMedicaEdit: string; 
 
+
   public listaEstadosMat: estadoMatClass[] = [];
+  
+  todaySoli: string;
+  todayCompro: string;
+  todayLlegada: string;
+
  
   ngOnInit(): void {  
+
     console.log("ESTADOS Mate ON INIT: !! "+this.estadosMat);
     this.utilityService.customIdAgendaProcedimiento.subscribe(element => this.idProcedimiento = element);
 
@@ -54,6 +61,7 @@ export class VentanaEditarMaterialesComponent implements OnInit {
       this.verSeleccion = this.datosMateriales.estado;
       this.customertext=this.datosMateriales.cantidadMat;
       this.casaMedicaEdit = this.datosMateriales.casaMedica;
+      this.fechaSoliciudEdit = this.datosMateriales.fechaSolicitud
     })
   } 
 
@@ -77,7 +85,12 @@ export class VentanaEditarMaterialesComponent implements OnInit {
     this.datosMateriales.estado = this.verSeleccion;
     let materialEnviar = this.convertirEstadoSalida(this.datosMateriales);
     this.datosMateriales.casaMedica = this.casaMedicaEdit;
+    this.validarFechaSolicitud();
+    this.validarFechaCompromiso();
+    this.validarFechaLlegada();
 
+    //this.datosMateriales.fechaEstimada = this.fechaComproEdid.toString();
+    //this.datosMateriales.fechaRecibido = this.fechaLlegaEdid.toString();
     if(this.customertext.toString()!="" && this.customertext.toString() !=" "){
       this.datosMateriales.cantidadMat=this.customertext;
       
@@ -118,6 +131,41 @@ export class VentanaEditarMaterialesComponent implements OnInit {
       }
     }
     
+  }
+
+  validarFechaSolicitud(){
+    if(this.fechaSoliciudEdit == undefined || this.fechaSoliciudEdit == ""){
+      this.todaySoli = new Date().toISOString().split('T')[0];
+      this.fechaSoliciudEdit = this.todaySoli;
+      this.datosMateriales.fechaSolicitud = this.fechaSoliciudEdit;
+    }else{
+      this.datosMateriales.fechaSolicitud = this.fechaSoliciudEdit.toString();
+    }
+
+   
+  }
+
+
+  
+
+  validarFechaCompromiso(){
+    if(this.fechaComproEdid == undefined || this.fechaComproEdid == ""){
+      this.todayCompro = new Date().toISOString().split('T')[0];
+      this.fechaComproEdid = this.todayCompro;
+      this.datosMateriales.fechaEstimada = this.fechaComproEdid;
+    }else{
+      this.datosMateriales.fechaEstimada = this.fechaComproEdid.toString();
+    }
+  }
+
+  validarFechaLlegada(){
+    if(this.fechaLlegaEdid == undefined || this.fechaLlegaEdid == ""){
+      this.todayLlegada = new Date().toISOString().split('T')[0];
+      this.fechaLlegaEdid = this.todayLlegada;
+      this.datosMateriales.fechaRecibido = this.fechaLlegaEdid;
+    }else{
+      this.datosMateriales.fechaRecibido = this.fechaLlegaEdid.toString();
+    }
   }
 }
 

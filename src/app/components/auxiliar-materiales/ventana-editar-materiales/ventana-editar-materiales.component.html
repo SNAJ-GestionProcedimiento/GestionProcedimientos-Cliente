@@ -18,14 +18,7 @@
         </div>
     </div>
 
-    <div class="modal-body row ">
-        <div class="col-md-6 ContenedorTitulo ">
-            <label>Fecha estimada: </label>
-        </div>
-        <div class="col-md-6 ">
-            <label>{{datosMateriales.fechaEstimada}}</label>
-        </div>
-    </div>
+
     <div class=" modal-body row ">
         <div class="col-md-6 ContenedorTitulo ">
             <label>Estado: </label>
@@ -50,11 +43,42 @@
 
     </div>
 
+    <div class="modal-body row ">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Fecha Solicitud: </label>
+        </div>
+        <div class="col-md-6 ">
+            <input name="date" type="date" value="" placeholder="{{datosMateriales.fechaSolicitud}}" [(ngModel)]="fechaSoliciudEdit" required>
+        </div>
+
+    </div>
+
+    <div class="modal-body row ">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Fecha Compromiso: </label>
+        </div>
+        <div class="col-md-6 ">
+            <input name="date" type="date" value="" placeholder="{{datosMateriales.fechaEstimada}}" [(ngModel)]="fechaComproEdid" required>
+        </div>
+
+    </div>
+
+    <div class="modal-body row ">
+        <div class="col-md-6 ContenedorTitulo">
+            <label>Fecha Llegada: </label>
+        </div>
+        <div class="col-md-6 ">
+            <input name="date" type="date" value="" placeholder="{{datosMateriales.fechaRecibido}}" [(ngModel)]="fechaLlegaEdid" required>
+        </div>
+
+    </div>
+
+
 
     <!--<p [hidden]="opcionSeleccionado=='0' ">Haz seleccionado la opción # {{verSeleccion}}</p>-->
     <hr>
     <div style="text-align: center; ">
         <button type="button " class="btn btn-danger mr-3 " (click)="cerrarVentana() " value=" Cerrar esta ventana ">Cancelar edición</button>
-        <button type="button " class="btn btn-info " (click)="editar() ">Editar</button>
+        <button type="button" class="btn btn-info " (click)="editar() ">Editar</button>
     </div>
 </div>

@@ -12,6 +12,7 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { element } from 'protractor';
 import { VentanaEditarDocumentacionComponent } from './ventana-editar-documentacion/ventana-editar-documentacion.component';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { VentanaAdjuntarDocumentoComponent } from './ventana-adjuntar-documento/ventana-adjuntar-documento.component';
 
 @Component({
   selector: 'app-auxiliar-documentacion',
@@ -253,6 +254,22 @@ export class AuxiliarDocumentacionComponent implements OnInit {
       this.notificationService.warn(this.parrafo);
       
     }
+  }
+
+  adjuntarDocumento(){
+    const dialogoConfig = new MatDialogConfig();
+    //dialogoConfig.disableClose=true;
+    dialogoConfig.autoFocus=true;
+    dialogoConfig.width="60%";
+    //this.datosAddTablaDoc = this.arrayDocumentos;
+    this.dialog.open(VentanaAdjuntarDocumentoComponent, dialogoConfig);
+
+  }
+
+
+
+  onDocChange(event: any){
+    console.log("HOLA");
   }
 
   generarRecibido(){

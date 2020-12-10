@@ -139,7 +139,7 @@ export class VentanaAuxiliarMaterialComponent implements OnInit {
             if(!resultado){
               this.editMaterial = new editarMateriales(this.datosSeleccionados[i].id, this.idProcedimiento,this.datosSeleccionados[i].codigoMaterial, "PSOL", null,null,null,this.datosSeleccionados[i].casaMedica);
 
-              let res = this.serviceMateriales.addInstrumento(this.editMaterial).subscribe();
+              let res = this.serviceMateriales.addMaterial(this.editMaterial).subscribe();
             }else{
               this.editMaterial = new editarMateriales(resultado.id, this.idProcedimiento, resultado.codigoMaterial, "PSOL", null,null,null,resultado.casaMedica);
               let res = this.serviceMateriales.editAgendaMaterial(this.editMaterial).subscribe();
