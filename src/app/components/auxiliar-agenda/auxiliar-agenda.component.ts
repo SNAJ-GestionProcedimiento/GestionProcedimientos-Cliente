@@ -216,7 +216,6 @@ export class AuxiliarAgendaComponent implements OnInit {
 
 
   public editarAgenda(element){
-    console.log('enviado:'+JSON.stringify(element));
     AuxiliarEditarProgramacionComponent.recibido = element;
     this.router.navigateByUrl('programacion/editar');
   }

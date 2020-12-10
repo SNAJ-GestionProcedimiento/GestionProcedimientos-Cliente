@@ -6,12 +6,14 @@ import { Agendamiento } from 'src/_models/agendamiento.models';
   providedIn: 'root'
 })
 export class EditarComponentesService {
+  private msgEditarCrearAgenda = new BehaviorSubject<boolean>(true);
   private msgEditarIdPac = new BehaviorSubject<string>('');
   private msgEditarIdAcu = new BehaviorSubject<string>('');
   private msgEditarIdProc = new BehaviorSubject<string>('');
   private msgEditarAgend = new BehaviorSubject<string>('');
   private msgEditarObs = new BehaviorSubject<string>('');
 
+  public esCrear = this.msgEditarCrearAgenda.asObservable();
   public idPaciente = this.msgEditarIdPac.asObservable();
   public idAcudiente = this.msgEditarIdAcu.asObservable();
   public idProcedimiento = this.msgEditarIdProc.asObservable();
@@ -19,6 +21,9 @@ export class EditarComponentesService {
   public observacion = this.msgEditarObs.asObservable();
 
   constructor() { }
+  public cambiarEsCrear(esCrear:boolean):void{
+    this.msgEditarCrearAgenda.next(esCrear);
+  }
 
   public cambiarIdPac(idNuevo:string):void{
     this.msgEditarIdPac.next(idNuevo);

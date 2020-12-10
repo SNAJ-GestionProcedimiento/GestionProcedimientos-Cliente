@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 
 import { LoginGuard } from './login.guard';
 import { AdminGuard } from './admin.guard';
+import { AuxProgGuard } from './aux-prog.guard';
 import { AdminProcedimientosComponent } from './components/admin-procedimientos/admin-procedimientos.component';
 import { ModuloPrincipalCrearProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-principal-crear-procedimiento/modulo-principal-crear-procedimiento.component';
 import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
@@ -17,9 +18,9 @@ const routes: Routes = [
   //Rutas de logueo
   { path: '', component: LoginComponent },
   //Rutas de programacion
-  { path: 'programacion', component: AuxiliarHomeComponent, canActivate:[LoginGuard] },
-  { path: 'programacion/crear', component: AuxiliarHomeComponent, canActivate:[LoginGuard]},
-  { path: 'programacion/editar', component: AuxiliarHomeComponent, canActivate:[LoginGuard]},
+  { path: 'programacion', component: AuxiliarHomeComponent, canActivate:[LoginGuard,AuxProgGuard] },
+  { path: 'programacion/crear', component: AuxiliarHomeComponent, canActivate:[LoginGuard,AuxProgGuard]},
+  { path: 'programacion/editar', component: AuxiliarHomeComponent, canActivate:[LoginGuard,AuxProgGuard]},
   //Rutas de administrador
   { path: 'admin', component: AdminComponent, canActivate:[LoginGuard,AdminGuard]},
   { path: 'admin/usuario', component: AdminComponent, canActivate:[LoginGuard,AdminGuard]},
@@ -27,7 +28,7 @@ const routes: Routes = [
   { path: 'admin/procedimiento/editar', component: AdminComponent, canActivate:[LoginGuard, AdminGuard]},
   { path: 'admin/procedimiento', component: AdminProcedimientosComponent, canActivate:[LoginGuard,AdminGuard]},
   //Ruta de error 404
-  { path: '**' , component: AuxiliarHomeComponent},
+  { path: '**' , component: LoginComponent},
 ];
 
 @NgModule({

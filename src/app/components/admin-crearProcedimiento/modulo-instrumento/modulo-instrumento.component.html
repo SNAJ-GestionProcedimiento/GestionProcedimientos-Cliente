@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item my-2 my-sm-0">
-                    <select id="mi_select" [(ngModel)]="opcionSeleccionado" (change)="capturar()">
+                    <select id="mi_select3" [(ngModel)]="opcionSeleccionado" (change)="capturar()">
                         <option value="0" selected>--Seleccione un instrumento o equipo a agregar--</option>
                         <option *ngFor="let dato of arrayInstrumentos">
                             {{dato.nombre}}

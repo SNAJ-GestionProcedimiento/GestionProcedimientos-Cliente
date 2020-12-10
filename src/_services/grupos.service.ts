@@ -5,21 +5,19 @@ import { HttpService } from './http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class LogoutService extends HttpService{
+export class GruposService extends HttpService{
 
   constructor(protected http: HttpClient) {
     super(http);
-    this.apiURL += 'logout';
+    this.apiURL += 'getGroups';
    }
 
    /**
-    * Cerrar Sesión
+    * Obtener grupos
     */
-   logout(token:string){
-    return this.http.post(`${this.apiURL}`,{},{
-        headers:new HttpHeaders({
-        'Authorization':  `Token ${token}`,
-        })
-      });
+   getGrupos(){
+    return this.http.get(`${this.apiURL}`,{
+      headers: this.headers
+    },);
    }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import swal from 'sweetalert2';
 
 
 import { ProcedimientoComponent } from '../procedimiento/procedimiento.component';
@@ -15,6 +16,10 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { AuxiliarEspecialistaComponent } from '../auxiliar-especialidad/auxiliar-especialista/auxiliar-especialista.component';
 import { EditarComponentesService } from 'src/_services/serviciosComponentes/editar-componentes.service';
 import { NumeroNotificacionesService } from 'src/_services/numero-notificaciones.service';
+import { Paciente } from 'src/_models/paciente.model';
+import { Acudiente } from 'src/_models/acudiente.model';
+import { Procedimiento } from 'src/_models/procedimiento.model';
+import { Agendamiento } from 'src/_models/agendamiento.models';
 
 
 @Component({
@@ -62,7 +67,8 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     private utilityService: UtilityServiceService,
     private editarComponentesService:EditarComponentesService,
     private numNotificacion: NumeroNotificacionesService
-  ) { }
+  ) {
+  }
 
   receiveMessage($event) {
     this.message = $event
@@ -70,6 +76,7 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
   } 
 
   ngOnInit(): void {
+    this.editarComponentesService.cambiarEsCrear(true);
     this.actualizarIds();
     this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento=msg);
     this.utilityService.customIdAgendaProcedimiento.subscribe(msg => this.idAgendaProcedimiento=msg);
@@ -108,15 +115,35 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     let estadoCama = this.procedimientoCmp.getestadoCama();
     let agendamiento = this.horaFechaCmp.getAgendamiento();
   
-    /**Creacion del modelo */
-    let agenda:AgendaCrear = AgendaCrear.fromOBJECTS(paciente,acudiente,procedimiento,agendamiento,observacion,estadoCama,'1');
+    if (this.validarCampos(paciente,acudiente,procedimiento,agendamiento)){
+      /**Creacion del modelo */
+      let agenda:AgendaCrear = AgendaCrear.fromOBJECTS(paciente,acudiente,procedimiento,agendamiento,observacion,estadoCama,'1');
 
-    this.crearAgenda(agenda);
-    this.listarInstrumentosDesdeProgramacion();
-    this.listarDocumentosDesdeProgramacion();
-    this.listarMaterialesDesdeProgramacion();
-    
-    
+      this.crearAgenda(agenda);
+      this.listarInstrumentosDesdeProgramacion();
+      this.listarDocumentosDesdeProgramacion();
+      this.listarMaterialesDesdeProgramacion(); 
+    }
+  }
+  /** Validacion de campos*/
+  public validarCampos(paciente:Paciente,acudiente:Acudiente,procedimiento:Procedimiento,agendamiento:Agendamiento){
+    if (paciente==null || paciente.identificacion==null) {
+      swal.fire('¡Error!', '¡Verifica los datos del paciente!', 'error');
+      return false;
+    }
+    if (acudiente == null || acudiente.identificacion==null) {
+      swal.fire('¡Error!', '¡Verifica los datos del acudiente!', 'error');
+      return false;
+    }
+    if (procedimiento == null || procedimiento.codigoProcedimiento==null) {
+      swal.fire('¡Error!', '¡Verifica los datos del procedimiento!', 'error');
+      return false;
+    }
+    if (agendamiento.fecha==null || agendamiento.hora==null) {
+      swal.fire('¡Error!', '¡Verifica los datos del agendamiento!', 'error');
+      return false;
+    }
+    return true;
   }
 
   /**Peticiones */

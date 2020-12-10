@@ -68,6 +68,8 @@ import { ModuloPrincipalCrearProcedimientoComponent } from './components/admin-c
 import { AdminProcedimientosComponent } from './components/admin-procedimientos/admin-procedimientos.component';
 import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-crear/usuarios-crear.component';
 import { VentanaAdjuntarDocumentoComponent } from '../app/components/auxiliar-documentacion/ventana-adjuntar-documento/ventana-adjuntar-documento.component'
+import { UsuariosInfoComponent } from './components/admin-usuarios/usuarios-info/usuarios-info.component';
+import { UsuariosEditarComponent } from './components/admin-usuarios/usuarios-editar/usuarios-editar.component';
 
 
 @NgModule({
@@ -109,7 +111,9 @@ import { VentanaAdjuntarDocumentoComponent } from '../app/components/auxiliar-do
     ModuloPrincipalCrearProcedimientoComponent,
     AdminProcedimientosComponent,
     UsuariosCrearComponent,
-    VentanaAdjuntarDocumentoComponent
+    VentanaAdjuntarDocumentoComponent,
+    UsuariosInfoComponent,
+    UsuariosEditarComponent
   ],
   imports: [
     BrowserModule,

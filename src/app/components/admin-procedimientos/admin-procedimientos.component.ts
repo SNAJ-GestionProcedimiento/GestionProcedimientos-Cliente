@@ -13,6 +13,7 @@ import { Procedimiento } from 'src/_models/procedimiento.model';
 import { ProcedimientoService } from 'src/_services/procedimiento.service';
 import { estadoClass } from 'src/_models/modelInstrumento/instrumentos-equipos-estado.model';
 import { obtenerEstado } from 'src/_models/estado-Procedimiento.model';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-admin-procedimientos',
@@ -44,9 +45,9 @@ export class AdminProcedimientosComponent implements OnInit {
   constructor(
     private formBuilder:FormBuilder,
     private usuarioObtenerService:UsuarioObtenerService,
-    private matDialog:MatDialog,
     private router:Router,
-    private procedimientoServece: ProcedimientoService
+    private procedimientoServece: ProcedimientoService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -82,10 +83,7 @@ export class AdminProcedimientosComponent implements OnInit {
   /**Peticiones */
   public async getProced(){
     this.procedimientoServece.getProcedimientos().subscribe((res: Procedimiento[])=>{
-      //console.log(JSON.stringify(res));
-      //console.log(this.estados);
       this.procedimientos=res;
-      //console.log(this.procedimientos);
       this.convertirEstadoLleda(this.procedimientos);
       this.dataSource = new MatTableDataSource<any>(this.procedimientos);
       this.dataSource.paginator = this.paginator;
@@ -113,5 +111,22 @@ export class AdminProcedimientosComponent implements OnInit {
       }
     }
     return instrumentoAcambiar;
+  }
+
+  eliminarDato(element: Procedimiento){
+    let codigo= element.codigoProcedimiento;
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        data: `¿Seguro que desea ELIMINAR el procedimiento?`
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          console.log(codigo);
+          this.procedimientoServece.eliminarProcedimiento(codigo).subscribe(res=>{
+            this.getProced();  
+          });
+        }
+      });
   }
 }
