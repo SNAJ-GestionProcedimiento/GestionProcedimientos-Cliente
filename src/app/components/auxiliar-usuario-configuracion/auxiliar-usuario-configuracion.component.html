@@ -3,7 +3,7 @@
 <!-- SideBar -->
 <ng-sidebar-container>
     <!-- Contenido del Sidebar -->
-    <ng-sidebar opened="true" mode="push">
+    <ng-sidebar [(opened)]="_opened" mode="push" [(closeOnClickOutside)]="_desaparecer">
         <button type="button" class="btn btn-info mr-auto" (click)="gestionOnclick()">Gestion de programación</button>
     </ng-sidebar>
 
