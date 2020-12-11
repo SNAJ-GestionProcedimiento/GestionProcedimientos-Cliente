@@ -154,7 +154,6 @@ export class ModuloEspecialidadComponent implements OnInit {
   validarCantidadVacia() {
     for (let i = 0; i < this.datosSeleccionador.length; i++) {
       if (this.datosSeleccionador[i].cantidad == null) {
-        console.log("entre");
         this.datosSeleccionador[i].cantidad = 1;
       }
     }

@@ -13,30 +13,37 @@ import { editarDocumentos } from '../_models/documento.model';
       super(http);
     }
 
+    token():HttpHeaders{
+      //envio del heard token
+      const httpHeaders = new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      });
+      return httpHeaders;
+    }
 
     getMaterialRequerido(idAgendaProcedimiento: number): Observable<MaterialRequerido[]>{
-      return this.http.get<MaterialRequerido[]>(`${this.apiURL}listAgendaMaterial/${idAgendaProcedimiento}`); 
+      return this.http.get<MaterialRequerido[]>(`${this.apiURL}listAgendaMaterial/${idAgendaProcedimiento}`, { headers: this.token() }); 
     }
 
     getMaterialesProcedimiento(idProcedimiento: number, idModalidad: number): Observable<MaterialRequerido[]>{
-        return this.http.get<MaterialRequerido[]>(`${this.apiURL}getMaterialesProc/${idProcedimiento}/${idModalidad}`);
+        return this.http.get<MaterialRequerido[]>(`${this.apiURL}getMaterialesProc/${idProcedimiento}/${idModalidad}`, { headers: this.token() });
     }
 
     editAgendaMaterial(materialEditado: editarMateriales): Observable<editarMateriales> {
-      return this.http.put<editarMateriales>(`${this.apiURL}editAgendaMaterial`, materialEditado); 
+      return this.http.put<editarMateriales>(`${this.apiURL}editAgendaMaterial`, materialEditado, { headers: this.token() }); 
     }
 
     getAllMateriales(): Observable<MaterialRequerido[]> {
-      return this.http.get<MaterialRequerido[]>(`${this.apiURL}getAllMateriales`);
+      return this.http.get<MaterialRequerido[]>(`${this.apiURL}getAllMateriales`, { headers: this.token() });
     }
   
     addMaterial(materialAdd: editarMateriales): Observable<editarMateriales> {
-      return this.http.post<editarMateriales>(`${this.apiURL}addAgendaMaterial`, materialAdd);
+      return this.http.post<editarMateriales>(`${this.apiURL}addAgendaMaterial`, materialAdd, { headers: this.token() });
     }
 
     deleteMaterial(idAgendaMaterial: number): Observable<any> {
       const url=this.apiURL+"deleteAgendaMaterial/"+idAgendaMaterial.toString();
-      return this.http.delete(`${url}`);
+      return this.http.delete(`${url}`, { headers: this.token() });
     }
 
 

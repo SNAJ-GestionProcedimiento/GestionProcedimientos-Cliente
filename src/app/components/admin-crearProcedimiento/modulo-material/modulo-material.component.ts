@@ -48,7 +48,6 @@ export class ModuloMaterialComponent implements OnInit {
   getAllMateriales(){
     this.serviceMateriales.getAllMateriales().subscribe((result: MaterialRequerido[]) =>{
       this.arrayMateriales = MaterialRequerido.fromJSON(result);
-      //console.log(this.arrayMateriales);
       if (this.arrayMateriales != null){
         this.arrayMateriales.sort(function (a,b){
           return ((a.nombre < b.nombre) ? -1 : ((a.nombre > b.nombre) ? 1: 0));

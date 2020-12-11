@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item my-2 my-sm-0">
-                    <select id="mi_select2" [(ngModel)]="opcionSeleccionada" (change)="capturar()">
+                    <select id="mi_select2" class="form-control form-control-sm ml-2" [(ngModel)]="opcionSeleccionada" (change)="capturar()">
                         <option value="0" selected>--Seleccione un material--</option>
                         <option *ngFor="let dato of arrayMateriales">
                             {{dato.nombre}}
@@ -60,7 +60,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 15] " showFirstLastButtons></mat-paginator>
+    <mat-paginator class="table-responsive-sm" [pageSizeOptions]="[5, 10, 15] " showFirstLastButtons></mat-paginator>
 </div>
 <br>
 <button type="button " class="btn btn-outline-success " (click)="confirmacionLimpiar()">Limpiar</button>

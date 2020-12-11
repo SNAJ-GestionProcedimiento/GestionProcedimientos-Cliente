@@ -111,7 +111,6 @@ export class UsuariosCrearComponent implements OnInit {
     });
     this.usuarioForm.get("typeUser").valueChanges
     .subscribe(value=>{
-      console.log(value);
       this.tipoUsuario = value;
     });
   }
@@ -166,7 +165,6 @@ export class UsuariosCrearComponent implements OnInit {
         swal.fire('¡Exito!','El usuario: '+this.usuario.username+' ha sido creado exitosamente!','success')
         this.matDialog.closeAll(); 
       } catch (error) {
-        console.log(error.error);
       }
     }else{
       this.deshabilitarBoton = true;
