@@ -34,7 +34,7 @@ export class AdminComponent implements OnInit {
       case '/admin/usuario':
         this.selectedOption = this.OPTIONS.VER_USUARIO;
         break;
-      case '/admin/procedimiento':
+      case '/admin':
           this.selectedOption = this.OPTIONS.VER_PROCEDIMIENTO;
         break;
       case '/admin/procedimiento/crear':
