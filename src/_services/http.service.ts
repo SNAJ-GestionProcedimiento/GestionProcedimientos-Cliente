@@ -9,7 +9,7 @@ export abstract class HttpService {
   protected headers: HttpHeaders;
 
   constructor(protected http: HttpClient) {
-    this.apiURL = "https://snajbackend.herokuapp.com/";
+    this.apiURL = config.apiUrl;
     this.headers = new HttpHeaders();
     this.headers.set('Content.Type','application/json');
    }
