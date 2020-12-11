@@ -43,7 +43,7 @@ export class ModuloPrincipalCrearProcedimientoComponent implements OnInit {
     //console.log(JSON.stringify(proced));
     this.crearProcedimiento.crearProcedimiento(proced).subscribe(res => {
       swal.fire('¡Exito!', 'Se creo el procedimiento correctamente!', 'success');
-      this.router.navigateByUrl('admin/procedimiento');
+      this.router.navigateByUrl('/admin');
     },
       (errorServicio) => {
         swal.fire('¡Error!', '¡Verifica los datos del procedimiento a crear!', 'error');
