@@ -30,7 +30,7 @@ import { editarDocumentos } from '../_models/documento.model';
       return this.http.get<MaterialRequerido[]>(`${this.apiURL}getAllMateriales`);
     }
   
-    addInstrumento(materialAdd: editarMateriales): Observable<editarMateriales> {
+    addMaterial(materialAdd: editarMateriales): Observable<editarMateriales> {
       return this.http.post<editarMateriales>(`${this.apiURL}addAgendaMaterial`, materialAdd);
     }
 

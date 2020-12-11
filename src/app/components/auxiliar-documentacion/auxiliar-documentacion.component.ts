@@ -12,6 +12,7 @@ import { UtilityServiceService } from 'src/_services/utility-service.service';
 import { element } from 'protractor';
 import { VentanaEditarDocumentacionComponent } from './ventana-editar-documentacion/ventana-editar-documentacion.component';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { VentanaAdjuntarDocumentoComponent } from './ventana-adjuntar-documento/ventana-adjuntar-documento.component';
 
 @Component({
   selector: 'app-auxiliar-documentacion',
@@ -233,29 +234,6 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   ngAfterViewInit() {
   }
  
-  /*columnas = [
-    {titulo: 'Código', columnName: 'cod'},
-    {titulo: 'Nombre', columnName: 'nom'},
-    {titulo: 'Descipción', columnName: 'desc'},
-    {titulo: 'Caduca', columnName: 'caduc'},
-    //{titulo: 'Estado', columnName: 'est'},
-    {titulo: 'Archivo', columnName: 'path'},
-    {titulo: 'Observación', columnName: 'observ'},
-   ];*/
-
-   /*asignarEstadoDocumentos(arrayDocumentacion){
-     for (let i = 0; i < arrayDocumentacion.length; i++) {
-       for (let j = 0; j < this.estados.length; j++) {
-         
-         
-       }
-
-       
-     }
-
-   }*/
-   
-  
 
   openAgregarDocu() {
     const dialogoConfig = new MatDialogConfig();
@@ -278,6 +256,22 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     }
   }
 
+  adjuntarDocumento(){
+    const dialogoConfig = new MatDialogConfig();
+    //dialogoConfig.disableClose=true;
+    dialogoConfig.autoFocus=true;
+    dialogoConfig.width="60%";
+    //this.datosAddTablaDoc = this.arrayDocumentos;
+    this.dialog.open(VentanaAdjuntarDocumentoComponent, dialogoConfig);
+
+  }
+
+
+
+  onDocChange(event: any){
+    console.log("HOLA");
+  }
+
   generarRecibido(){
 
     this.documentosService.generarAcuseRecibido(this.idAgendaProcedimiento).subscribe(data => {
@@ -289,20 +283,6 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     });
     
   }
-
-  
-  openAgregarDocumento(){
-    //const dialogoConfig = new MatDialogConfig();
-    //dialogoConfig.disableClose=true;
-    
-
-   /* const dialogoConfig= this.dialog.open(VentanaAuxiliarDocumentacionComponent,{
-      data: new DocumentoRequerido()
-    });*/
-
-  ;
-  }
-
  
   ngOnDestroy(): void{
   
@@ -312,14 +292,3 @@ export class AuxiliarDocumentacionComponent implements OnInit {
 
 
 }
-
-/*export class Documento{
-  constructor(public posicion: number, public codigo: number, public nombre: string, public estado: string, public archivo: string, public observacion: string, public acciones: string){
-  }
-}*/
-
-/*const ELEMENT_DATA_DOC: Documentos[] = [
-  {posicion: 1, codigo: 1213124, nombre: 'Orden apoyo', estado: 'Disponible', archivo: 'Docu', observacion: 'Asdasda', acciones: 'editar'},
-  
-  {posicion: 2, codigo: 13453124, nombre: 'Constancia', estado: 'Pendiente', archivo: 'Docu', observacion: 'gdfgdfgdf', acciones: 'editar'}
-];*/

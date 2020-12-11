@@ -7,7 +7,7 @@ export class DocumentoRequerido{
     public caduca: boolean; 
     public nombre: string; 
     public estado: string; 
-    public path: string; 
+    public path: File; 
     public observacion: string;
     public fechaDocRecibido: string;
     public fechaVencimiento: string;

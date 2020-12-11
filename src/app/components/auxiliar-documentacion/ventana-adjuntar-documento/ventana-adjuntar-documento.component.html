@@ -1,0 +1,25 @@
+<div class="mat-elevation-z8">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Adjuntar documento</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        </button>
+
+        <label class="adjArchivo" (change)="onArchivoChange($event)">
+            <input type="file" >
+        </label>
+
+        <label class="enviarArch">
+            <input type="submit">
+        </label>
+
+
+    </nav>
+
+    <div style="text-align: center; ">
+        <button type="button " class="btn btn-danger mr-3 " (click)="cerrarVentana() " value=" Cerrar esta ventana ">Cancelar</button>
+    </div>
+
+
+
+</div>

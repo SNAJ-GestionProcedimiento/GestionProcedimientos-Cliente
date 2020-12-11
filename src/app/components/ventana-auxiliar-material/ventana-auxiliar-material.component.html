@@ -25,7 +25,7 @@
         <!-- código Column -->
         <ng-container matColumnDef="codigo">
             <th mat-header-cell *matHeaderCellDef> Codigo </th>
-            <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.codigoMaterial}} </td>
         </ng-container>
 
         <!-- nombre Column -->
@@ -43,31 +43,26 @@
         <!-- Casa médica Column -->
         <ng-container matColumnDef="casa">
             <th mat-header-cell *matHeaderCellDef> Casa médica </th>
-            <td mat-cell *matCellDef="let element"> {{element.casa}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.casaMedica}} </td>
         </ng-container>
 
-
-        <!-- fecha solicitud Column 
+        <!-- fecha solicitud Column -->
         <ng-container matColumnDef="fechaSolicitud">
             <th mat-header-cell *matHeaderCellDef> Fecha solicitud </th>
             <td mat-cell *matCellDef="let element"> {{element.fechaSolicitud}} </td>
         </ng-container>
-        -->
 
-        <!-- Fecha compromiso Column 
+        <!-- Fecha compromiso Column -->
         <ng-container matColumnDef="fechaEstimada">
             <th mat-header-cell *matHeaderCellDef> Fecha Compromiso </th>
             <td mat-cell *matCellDef="let element"> {{element.fechaEstimada}} </td>
         </ng-container>
-        -->
 
-        <!-- Fecha llegada Column 
+        <!-- Fecha llegada Column -->
         <ng-container matColumnDef="fechaRecibido">
             <th mat-header-cell *matHeaderCellDef> Fecha Llegada </th>
             <td mat-cell *matCellDef="let element"> {{element.fechaRecibido}} </td>
         </ng-container>
-        -->
-
 
         <!-- Unidad Column -->
         <ng-container matColumnDef="unidad">

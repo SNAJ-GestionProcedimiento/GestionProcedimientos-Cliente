@@ -67,6 +67,7 @@ import { ModuloProcedimientoComponent } from './components/admin-crearProcedimie
 import { ModuloPrincipalCrearProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-principal-crear-procedimiento/modulo-principal-crear-procedimiento.component';
 import { AdminProcedimientosComponent } from './components/admin-procedimientos/admin-procedimientos.component';
 import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-crear/usuarios-crear.component';
+import { VentanaAdjuntarDocumentoComponent } from '../app/components/auxiliar-documentacion/ventana-adjuntar-documento/ventana-adjuntar-documento.component'
 import { UsuariosInfoComponent } from './components/admin-usuarios/usuarios-info/usuarios-info.component';
 import { UsuariosEditarComponent } from './components/admin-usuarios/usuarios-editar/usuarios-editar.component';
 
@@ -110,6 +111,7 @@ import { UsuariosEditarComponent } from './components/admin-usuarios/usuarios-ed
     ModuloPrincipalCrearProcedimientoComponent,
     AdminProcedimientosComponent,
     UsuariosCrearComponent,
+    VentanaAdjuntarDocumentoComponent,
     UsuariosInfoComponent,
     UsuariosEditarComponent
   ],
@@ -141,6 +143,8 @@ import { UsuariosEditarComponent } from './components/admin-usuarios/usuarios-ed
     AdminGuard
     ],
   bootstrap: [AppComponent],
-  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, ConfirmationDialogComponent]
+  entryComponents: [VentanaAuxiliarInstrumentosEquiposComponent, VentanaAuxiliarEspecialidadComponent, VentanaAuxiliarDocumentacionComponent, VentanaAuxiliarMaterialComponent, 
+  VentanaAdjuntarDocumentoComponent,
+  ConfirmationDialogComponent]
 })
 export class AppModule { }

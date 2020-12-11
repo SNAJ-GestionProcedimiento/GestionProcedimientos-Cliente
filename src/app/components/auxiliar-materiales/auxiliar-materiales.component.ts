@@ -42,7 +42,7 @@ export class AuxiliarMaterialesComponent implements OnInit {
   banderaBotonAnadir: Boolean;
 
 
-  displayedColumnsMat: string[] = [ 'codigoMaterial', 'nombre', 'estado', /*'casaMedica, 'fechaSolicitud', 'fechaEstimada', 'fechaRecibido',*/ 'casaMedica','cantidadMat', 'unidad', 'acciones'];
+  displayedColumnsMat: string[] = [ 'codigoMaterial', 'nombre', 'estado', 'fechaSolicitud', 'fechaCompromiso', 'fechaLlegada',/*'casaMedica,  */ 'casaMedica','cantidadMat', 'unidad', 'acciones'];
 
   dataMaterialesRequeridos: MatTableDataSource<MaterialRequerido>;
 
@@ -268,8 +268,3 @@ export class AuxiliarMaterialesComponent implements OnInit {
   
 
 }
-
-/*const ELEMENT_DATA_MAT: Materiales[]=[
-  {posicion: 1, codigo: 234234, nombre: 'Pinzas', estado: 'Solicitado', casa: 'Ni idea', fechaSol: '13 Septiembre', fechaCom: '15 Septiembre', fechaLlegada: '15 Septiembre', cantidad: 14, unidad: 'm', acciones: 'editar'},
-  {posicion: 2, codigo: 323423, nombre: 'otros', estado: 'Solicitado', casa: 'aja', fechaSol: '13 Septiembre', fechaCom: '15 Septiembre', fechaLlegada: '15 Septiembre', cantidad: 14, unidad: 'm', acciones: 'editar'}
-]*/
