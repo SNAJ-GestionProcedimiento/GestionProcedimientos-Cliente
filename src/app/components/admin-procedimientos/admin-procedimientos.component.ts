@@ -117,12 +117,11 @@ export class AdminProcedimientosComponent implements OnInit {
     let codigo= element.codigoProcedimiento;
     this.dialog
       .open(ConfirmationDialogComponent, {
-        data: `¿Seguro que desea ELIMINAR el procedimiento?`
+        data: `¿Seguro que desea ELIMINAR el procedimiento?. \n Si elimina el procedimiento se eliminarán todas las agendas asociadas al procedimiento`
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          console.log(codigo);
           this.procedimientoServece.eliminarProcedimiento(codigo).subscribe(res=>{
             this.getProced();  
           });

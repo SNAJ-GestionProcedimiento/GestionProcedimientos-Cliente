@@ -57,7 +57,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumnsDoc; "></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    <mat-paginator class="table-responsive-sm" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
 </div>
 <br>
 <button type="button" class="btn btn-outline-success" (click)="confirmacionLimpiar()">Limpiar</button>

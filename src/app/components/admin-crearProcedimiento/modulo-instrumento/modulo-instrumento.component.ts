@@ -46,7 +46,6 @@ export class ModuloInstrumentoComponent implements OnInit {
     this.serviceIntrumentosEquipos.getAllIntrumentos().subscribe((result: InstrumentosEquipos[]) => {
 
       this.arrayInstrumentos = InstrumentosEquipos.fromJSON(result);
-      //console.log("desde añadir instrumento: " + this.arrayInstrumentos);
       if (this.arrayInstrumentos != null) {
         for (let i = 0; i < this.arrayInstrumentos.length; i++) {
           this.arrayInstrumentos[i].cantidad = 1;

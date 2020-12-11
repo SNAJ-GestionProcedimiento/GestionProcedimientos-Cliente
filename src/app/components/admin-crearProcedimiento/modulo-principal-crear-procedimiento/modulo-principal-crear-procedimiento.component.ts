@@ -40,7 +40,6 @@ export class ModuloPrincipalCrearProcedimientoComponent implements OnInit {
     proced.materialesRequeridos = this.materiales.getMaterialesRequeridos();
     proced.equiposRequeridos = this.instrumentos.getInstrumentosRequeridos();
     proced.especialidadesRequeridas = this.especial.getEspecialidadesRequeridas();
-    //console.log(JSON.stringify(proced));
     this.crearProcedimiento.crearProcedimiento(proced).subscribe(res => {
       swal.fire('¡Exito!', 'Se creo el procedimiento correctamente!', 'success');
       this.router.navigateByUrl('/admin');
@@ -59,7 +58,6 @@ export class ModuloPrincipalCrearProcedimientoComponent implements OnInit {
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          console.log("entre");
           this.router.navigateByUrl('/admin');
         }
       });
