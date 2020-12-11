@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from '../http.service';
 
 
@@ -17,10 +17,11 @@ export class AgendaListarService extends HttpService{
    * Lista los procedimientos agendados
    */
   list(){
-    return this.http.get<any>(`${this.apiURL}`,
-    {
-      headers: this.headers
-    })
+    return this.http.get<any>(`${this.apiURL}`,{
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
+      });
   }
 
 }

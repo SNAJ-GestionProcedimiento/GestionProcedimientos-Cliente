@@ -16,10 +16,11 @@ export class UsuarioEliminarService extends HttpService {
     * Eliminar usuario
     */
    deleteUser(nomUsuario:string){
+     console.log(localStorage.getItem('token'));
     return this.http.delete(`${this.apiURL}/${nomUsuario}`,{
       headers:new HttpHeaders({
         'Authorization':  `Token ${localStorage.getItem('token')}`,
       })
-      } );
+      });
    }
 }

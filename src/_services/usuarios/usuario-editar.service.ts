@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from '../http.service';
 
 import { Usuario } from 'src/_models/modelsLogin/usuario.model'
@@ -19,7 +19,9 @@ export class UsuarioEditarService extends HttpService{
     */
    editUser(usuario:Usuario){
     return this.http.put(`${this.apiURL}`,usuario,{
-        headers:this.headers
-      } );
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
+      });
    }
 }

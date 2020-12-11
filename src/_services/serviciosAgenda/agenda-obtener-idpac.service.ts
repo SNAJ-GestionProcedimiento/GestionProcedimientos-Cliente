@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from '../http.service';
 
 @Injectable({
@@ -15,9 +15,10 @@ export class AgendaObtenerIdpacService extends HttpService{
    * Obtenemos una agenda con id de paciente
    */
   get(idPaciente:string){
-    return this.http.get<any>(`${this.apiURL}/${idPaciente}`,
-    {
-      headers: this.headers
-    })
+    return this.http.get<any>(`${this.apiURL}/${idPaciente}`,{
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
+      })
   }
 }

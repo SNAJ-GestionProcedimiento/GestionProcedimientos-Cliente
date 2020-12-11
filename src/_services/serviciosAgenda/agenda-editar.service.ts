@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from '../http.service';
 
 import { AgendaEditar } from 'src/_models/models_Agenda/agenda-editar.model';
@@ -19,8 +19,10 @@ export class AgendaEditarService extends HttpService{
     */
    update(agendaEditar: AgendaEditar){
     return this.http.put<any>(
-      `${this.apiURL}`,agendaEditar.parseToJSON(),
-      { headers: this.headers },
-    );
+      `${this.apiURL}`,agendaEditar.parseToJSON(),{
+        headers:new HttpHeaders({
+          'Authorization':  `Token ${localStorage.getItem('token')}`,
+        })
+        });
   }
 }

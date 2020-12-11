@@ -72,6 +72,7 @@ export class LoginComponent implements OnInit {
       switch(grupo){
         /**Grupo 1:Administrador */
         case "Admin":
+          console.log(res.token);
           this.router.navigateByUrl('admin');
           break;
         /**Grupo 2:Auxiliar de programación */

@@ -17,7 +17,9 @@ export class GruposService extends HttpService{
     */
    getGrupos(){
     return this.http.get(`${this.apiURL}`,{
-      headers: this.headers
-    },);
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
+      });
    }
 }
