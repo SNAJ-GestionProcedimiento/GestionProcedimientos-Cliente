@@ -4,6 +4,7 @@ import { UsuarioGrupoService } from 'src/_services/usuarios/usuario-grupo.servic
 import { Router } from '@angular/router';
 
 import { LogoutService } from 'src/_services/logout.service';
+import { AuthHelper } from 'src/_helpers/auth.helper';
 
 @Component({
   selector: 'app-auxiliar-navbar',
@@ -32,13 +33,11 @@ export class AuxiliarNavbarComponent implements OnInit {
   }
 
   public async actualizarNombre(){
-    let token = localStorage.getItem('token');
-    let userGroup:any = await this.usuarioGrupoService.getGroup(token).toPromise();
-    this.nombreUsuario = userGroup.username;
+    this.nombreUsuario = localStorage.getItem('username');
   }
   public cerrarSesion(){
+    AuthHelper.logout();
     this.logoutService.logout(localStorage.getItem('token'));
-    localStorage.removeItem('token');
     this.router.navigateByUrl("");
   }
 

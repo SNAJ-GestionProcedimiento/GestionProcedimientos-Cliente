@@ -9,8 +9,7 @@ import { LoginGuard } from './login.guard';
 import { AdminGuard } from './admin.guard';
 import { AuxProgGuard } from './aux-prog.guard';
 import { AdminProcedimientosComponent } from './components/admin-procedimientos/admin-procedimientos.component';
-import { ModuloPrincipalCrearProcedimientoComponent } from './components/admin-crearProcedimiento/modulo-principal-crear-procedimiento/modulo-principal-crear-procedimiento.component';
-import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
+import { AuxiliarUsuarioConfiguracionComponent } from './components/auxiliar-usuario-configuracion/auxiliar-usuario-configuracion.component';
 
 
 
@@ -21,6 +20,8 @@ const routes: Routes = [
   { path: 'programacion', component: AuxiliarHomeComponent, canActivate:[LoginGuard,AuxProgGuard] },
   { path: 'programacion/crear', component: AuxiliarHomeComponent, canActivate:[LoginGuard,AuxProgGuard]},
   { path: 'programacion/editar', component: AuxiliarHomeComponent, canActivate:[LoginGuard,AuxProgGuard]},
+  //Rutas de configuracion Auxiliar
+  { path: 'auxiliar/configuracion', component:AuxiliarUsuarioConfiguracionComponent, canActivate:[LoginGuard,AuxProgGuard]},
   //Rutas de administrador
   { path: 'admin', component: AdminComponent, canActivate:[LoginGuard,AdminGuard]},
   { path: 'admin/usuario', component: AdminComponent, canActivate:[LoginGuard,AdminGuard]},

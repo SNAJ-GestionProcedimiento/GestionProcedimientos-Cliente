@@ -11,14 +11,24 @@ export class UsuarioEditarService extends HttpService{
 
   constructor(protected http: HttpClient) {
     super(http);
-    this.apiURL += 'editUserAdmin';
+    this.apiURL += 'editUser';
    }
 
    /**
-    * Editar usuario
+    * Editar usuario desde administrador
     */
-   editUser(usuario:Usuario){
-    return this.http.put(`${this.apiURL}`,usuario,{
+   editUserAdmin(usuario:Usuario){
+    return this.http.put(`${this.apiURL}Admin`,usuario,{
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
+      });
+   }
+   /**
+    * Editar usuario desde usuario
+    */
+   editUserUser(usuario:Usuario){
+    return this.http.put(`${this.apiURL}User`,usuario,{
       headers:new HttpHeaders({
         'Authorization':  `Token ${localStorage.getItem('token')}`,
       })

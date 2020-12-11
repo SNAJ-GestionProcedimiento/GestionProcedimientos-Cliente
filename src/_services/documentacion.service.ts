@@ -43,7 +43,10 @@ export class DocumentoService extends HttpService{
     const url=this.apiURL+"generateRecibido/"+idAgendaProcedimiento.toString();
 
     const options = {
-      responseType: 'blob' as 'json'
+      responseType: 'blob' as 'json',
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
     };
 
     return this.http.get<any>((`${url}`),options);

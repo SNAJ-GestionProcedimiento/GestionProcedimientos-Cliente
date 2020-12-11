@@ -112,7 +112,7 @@ export class UsuariosEditarComponent implements OnInit {
   /**Peticiones */
   public async editarUsuario(){
     try {
-      let res:any = await this.usuarioEditarService.editUser(this.usuario).toPromise();
+      let res:any = await this.usuarioEditarService.editUserAdmin(this.usuario).toPromise();
       this.openSnackBar('Se ha editado correctamente al usuario',this.usuario.id);
       this.matDialog.closeAll();
     } catch (error) {

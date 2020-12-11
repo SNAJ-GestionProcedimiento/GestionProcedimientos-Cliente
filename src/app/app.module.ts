@@ -70,6 +70,7 @@ import { UsuariosCrearComponent } from './components/admin-usuarios/usuarios-cre
 import { VentanaAdjuntarDocumentoComponent } from '../app/components/auxiliar-documentacion/ventana-adjuntar-documento/ventana-adjuntar-documento.component'
 import { UsuariosInfoComponent } from './components/admin-usuarios/usuarios-info/usuarios-info.component';
 import { UsuariosEditarComponent } from './components/admin-usuarios/usuarios-editar/usuarios-editar.component';
+import { AuxiliarUsuarioConfiguracionComponent } from './components/auxiliar-usuario-configuracion/auxiliar-usuario-configuracion.component';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { UsuariosEditarComponent } from './components/admin-usuarios/usuarios-ed
     UsuariosCrearComponent,
     VentanaAdjuntarDocumentoComponent,
     UsuariosInfoComponent,
-    UsuariosEditarComponent
+    UsuariosEditarComponent,
+    AuxiliarUsuarioConfiguracionComponent,
   ],
   imports: [
     BrowserModule,
