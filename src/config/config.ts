@@ -1,3 +1,3 @@
 export default {
-    apiUrl: 'http://localhost:8000/'
+    apiUrl: 'https://snajbackend.herokuapp.com/'
 }
