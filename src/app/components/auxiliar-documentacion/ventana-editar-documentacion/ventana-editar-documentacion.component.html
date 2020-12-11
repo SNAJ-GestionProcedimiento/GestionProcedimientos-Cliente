@@ -32,7 +32,7 @@
             <label>Estado: </label>
         </div>
         <div class="col-md-6 ">
-            <select [(ngModel)]="opcionSeleccionada " (change)="capturar() ">
+            <select [(ngModel)]="opcionSeleccionada" class="form-control form-control-sm ml-2" (change)="capturar() ">
                 <option value="0" selected>{{datosDocumento.estado}}</option>
                 <option *ngFor="let dato of listaEsdadoDoc ">
                     {{dato.contenido}}
