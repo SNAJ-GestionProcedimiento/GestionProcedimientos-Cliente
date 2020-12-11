@@ -25,4 +25,18 @@ export class UsuarioCgContraService extends HttpService{
       })
       });
    }
+
+   /**
+    * Cabiar contraseña desde usuario
+    */
+   changePassAdmin(id:string,claveNueva:string){
+    return this.http.put(`${this.apiURL}Admin`,{
+      id: id,
+      new_password: claveNueva
+    },{
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
+      });
+   }
 }

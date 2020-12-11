@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 /**Modelos */
 import { Usuario } from 'src/_models/modelsLogin/usuario.model';
 /**Servicios */
@@ -28,7 +29,8 @@ export class AuxiliarUsuarioConfiguracionComponent implements OnInit {
     private usuarioTokenService:UsuarioTokenService,
     private formBuilder:FormBuilder,
     private usuarioEditarService:UsuarioEditarService,
-    private usuarioCgContraService:UsuarioCgContraService
+    private usuarioCgContraService:UsuarioCgContraService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -105,7 +107,7 @@ export class AuxiliarUsuarioConfiguracionComponent implements OnInit {
     }
   }
   /**Eventos */
-  public gestionOnclick(){
-
+  gestionOnclick(){
+    this.router.navigateByUrl('programacion');
   }
 }

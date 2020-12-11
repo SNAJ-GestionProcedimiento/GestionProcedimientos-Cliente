@@ -11,6 +11,8 @@ import { GruposService } from 'src/_services/grupos.service';
 import { UsuarioIdObtenerService } from 'src/_services/usuarios/usuario-id-obtener.service';
 import { UsuarioTokenService } from 'src/_services/usuarios/usuario-token.service';
 import { UsuarioEditarService } from 'src/_services/usuarios/usuario-editar.service';
+import { UsuarioCgContraService } from 'src/_services/usuarios/usuario-cg-contra.service';
+
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
@@ -22,12 +24,15 @@ export class UsuariosEditarComponent implements OnInit {
   /**Variable de usuario*/
   public static elemento:Usuario;
   public usuario:Usuario;
+  public contra:string;
   /**Variables del formulario */
   public grupos:Array<GrupoUsuario>;
   public usuarioEditarForm:FormGroup;
+  public contraForm:FormGroup;
   /**Variables de control */
   public existeNom:boolean=false;
   public nomVacio:boolean=false;
+  public cambioContra:boolean=false;
 
   constructor(
     private formBuilder:FormBuilder,
@@ -36,7 +41,8 @@ export class UsuariosEditarComponent implements OnInit {
     public gruposService:GruposService,
     public usuarioIdObtenerService:UsuarioIdObtenerService,
     public usuarioTokenService:UsuarioTokenService,
-    public usuarioEditarService:UsuarioEditarService
+    public usuarioEditarService:UsuarioEditarService,
+    public usuarioCgContraService:UsuarioCgContraService
     ) { }
 
   ngOnInit(): void {
@@ -47,6 +53,7 @@ export class UsuariosEditarComponent implements OnInit {
       this.setGruposUsuario();
       this.buildUsuarioForm();
       this.completarFormulario();
+      this.buildContraForm();
     }
   }
 
@@ -61,6 +68,23 @@ export class UsuariosEditarComponent implements OnInit {
     })
   }
 
+  public cambiarOnclick(){
+    if(this.cambioContra){
+      this.cambioContra = false;
+    }else{
+      this.cambioContra = true;
+    }
+  }
+  /**Metodo que crea el formulario cambio de contraseña*/
+  private buildContraForm(){
+    this.contraForm = this.formBuilder.group({
+      password:['',[Validators.required]]
+    });
+    this.contraForm.get('password').valueChanges.subscribe(
+      value=>{
+        this.contra = value;
+      });
+  }
   /**Metodo que crea el formulario */
   private buildUsuarioForm(){
     this.usuarioEditarForm = this.formBuilder.group({
@@ -117,6 +141,15 @@ export class UsuariosEditarComponent implements OnInit {
       this.matDialog.closeAll();
     } catch (error) {
       this.openSnackBar('Proceso de edición','faliida');
+    }
+  }
+
+  public async editarContra(){
+    try {
+      let res:any = await this.usuarioCgContraService.changePassAdmin(this.usuario.id,this.contra).toPromise();
+      this.openSnackBar('La contraseña se ha cambiado exitosamente para el usuario',this.usuario.username);
+    } catch (error) {
+      this.openSnackBar('No se ha podido cambiar la contraseña para el usuario',this.usuario.username);
     }
   }
   /**Eventos */
