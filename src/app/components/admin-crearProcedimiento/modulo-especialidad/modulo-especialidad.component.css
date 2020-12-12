@@ -11,3 +11,9 @@ table tr {
     text-align: center;
     width: 100%;
 }
+
+input {
+    text-align: center;
+    background-color: transparent;
+    border: 0px solid
+}
