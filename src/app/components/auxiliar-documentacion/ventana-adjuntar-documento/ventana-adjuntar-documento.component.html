@@ -5,19 +5,17 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         </button>
 
-        <label class="adjArchivo" (change)="onArchivoChange($event)">
-            <input type="file" >
-        </label>
-
-        <label class="enviarArch">
-            <input type="submit">
-        </label>
-
-
+        <form id="formuAdjunt" enctype="multipart/form-data">
+            <input id="mydocform" type="file" name="file" (change)="uploadFile($event)" accept="application/pdf">
+        </form>
     </nav>
 
     <div style="text-align: center; ">
         <button type="button " class="btn btn-danger mr-3 " (click)="cerrarVentana() " value=" Cerrar esta ventana ">Cancelar</button>
+    </div>
+
+    <div style="text-align: center; ">
+        <button type="button " class="btn btn-link" (click)="enviarAdjunto()">Enviar</button>
     </div>
 
 

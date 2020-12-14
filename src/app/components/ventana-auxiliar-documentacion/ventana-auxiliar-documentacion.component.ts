@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatDialogConfig } from "@angular/material/dialog";
 import { MatTable } from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { DocumentoRequerido, previsualizarDocumentos, editarDocumentos } from '../../../_models/documento.model';
+import { DocumentoRequerido, editarDocumentos } from '../../../_models/documento.model';
 import { DocumentoService } from '../../../_services/documentacion.service';
 import * as notificationService from 'src/_services/notification.service';
 import { UtilityServiceService } from '../../../_services/utility-service.service';
@@ -76,13 +76,17 @@ export class VentanaAuxiliarDocumentacionComponent implements OnInit {
     this.verSeleccion = this.opcionSeleccionada;
     this.agregarDatoTabla();
     $("#mi_seleccion").val("0");
-    this.verificarDatos();
-
-    
+    this.verificarDatos();   
     
   }
 
+  duplicados(){
+    let hash = {};
+    this.datosSeleccionados = this.datosSeleccionados.filter(o => hash[o.codigoDocumento] ? false : hash[o.codigoDocumento] = true);
+  }
+
   agregarDatoTabla(){
+    this.duplicados();
     for(let i=0; i < this.arrayDocumentos.length; i++){
       if(this.arrayDocumentos[i].nombre == this.verSeleccion){
         if(!this.datosSeleccionados.includes(this.arrayDocumentos[i])){
@@ -113,6 +117,7 @@ export class VentanaAuxiliarDocumentacionComponent implements OnInit {
     this.dataSourceDocs = new MatTableDataSource(this.datosSeleccionados);
     this.dataSourceDocs.paginator = this.paginator;
   }
+  
 
   cerrarVentana(){
     this.dialog.open(ConfirmationDialogComponent, {
@@ -148,10 +153,10 @@ export class VentanaAuxiliarDocumentacionComponent implements OnInit {
           const resultado = this.datosAdd.find(documento => documento.codigoDocumento === this.datosSeleccionados[i].codigoDocumento);
            
           if(!resultado){
-            this.editDocumento = new editarDocumentos(this.datosSeleccionados[i].id, this.idProcedimiento, this.datosSeleccionados[i].codigoDocumento, "PEND", this.datosSeleccionados[i].observacion);
+            this.editDocumento = new editarDocumentos(this.datosSeleccionados[i].id, this.idProcedimiento, this.datosSeleccionados[i].codigoDocumento, "PEND", this.datosSeleccionados[i].observacion, this.datosSeleccionados[i].descripcion, this.datosSeleccionados[i].caduca, this.datosSeleccionados[i].nombre, this.datosSeleccionados[i].path,this.datosSeleccionados[i].fechaDocRecibido,this.datosSeleccionados[i].fechaVencimiento);
             let res = this.documentoService.addDocumento(this.editDocumento).subscribe();
           }else{
-            this.editDocumento = new editarDocumentos(resultado.id, this.idProcedimiento, resultado.codigoDocumento, "PEND", resultado.observacion);
+            this.editDocumento = new editarDocumentos(resultado.id, this.idProcedimiento, resultado.codigoDocumento, "PEND", resultado.observacion,resultado.descripcion,resultado.caduca,resultado.nombre,resultado.path,resultado.fechaDocRecibido,resultado.fechaVencimiento);
             let res = this.documentoService.addDocumento(this.editDocumento).subscribe();
           }
           this.utilityService.changeDocumentoAdd(this.datosAdd);

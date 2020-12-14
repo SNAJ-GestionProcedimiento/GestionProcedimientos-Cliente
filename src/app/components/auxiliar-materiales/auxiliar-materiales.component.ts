@@ -78,8 +78,6 @@ export class AuxiliarMaterialesComponent implements OnInit {
 
       this.utilityService.customIdProcedimiento.subscribe(msg => this.idProcedimiento = msg);
 
-
-
       this.utilityService.customIdModalidad.subscribe(element => {
         this.idModalidad = element;
       });
@@ -96,12 +94,10 @@ export class AuxiliarMaterialesComponent implements OnInit {
      
       this.estadosMat = obtenerEstadoMat.getEstadoObtenidoMateriales();
       this.utilityService.changeEstado(this.estadosMat);
-      
     
       this.utilityService.customEstadosMat.subscribe(element => 
         this.estados
       );
-
       
       this.utilityService.customMaterialAdd.subscribe(element => {
         this.datosAddMaterial = element;
@@ -116,8 +112,6 @@ export class AuxiliarMaterialesComponent implements OnInit {
           this.listarMateriales();
         }
       });
-     
-      
     }
 
     listarMateriales(){
@@ -209,7 +203,6 @@ export class AuxiliarMaterialesComponent implements OnInit {
         
       });
     } 
-  
     
     eliminarDatoMat(materialElim: MaterialRequerido) {
       this.dialog.open(ConfirmationDialogComponent, {
@@ -259,12 +252,4 @@ export class AuxiliarMaterialesComponent implements OnInit {
       this.utilityService.changeMaterialAdd(this.datosAddMaterial);
       this.dialog.open(VentanaAuxiliarMaterialComponent, dialogoConfig);
     }
-
-    ngAfterViewInit() {
-    } 
-  
- 
-  
-  
-
 }

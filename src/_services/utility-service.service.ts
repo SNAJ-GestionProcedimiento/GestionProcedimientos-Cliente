@@ -33,12 +33,14 @@ export class UtilityServiceService {
   private objIdModalidad = new BehaviorSubject<string>("");
   private objBanderaRequerido = new BehaviorSubject<Boolean>(false);
   private objBanderaBotonAnadir = new BehaviorSubject<Boolean>(false);
+  private objAdjPosicion = new BehaviorSubject<string>(null);
 
   public customIdAgendaProcedimiento = this.objIdAgendaProcedimiento.asObservable();
   public customInstrumento = this.objIntrumento.asObservable();
   public customDocumento = this.objDocumento.asObservable();
   public customDocumentoAdd = this.objDocumentoAdd.asObservable();
   public customEstadosDoc = this.objEstadosDoc.asObservable();
+  public customPosicionAdjuntar = this.objAdjPosicion.asObservable();
 
   public customEstados = this.objEstados.asObservable();
   public customIdProcedimiento = this.objIdProcedimiento.asObservable();
@@ -47,9 +49,6 @@ export class UtilityServiceService {
   public customEspecialidadAdd = this.objEspecialidadAdd.asObservable();
   public customInstrumentoAdd = this.objIntrumentoAdd.asObservable();
   public customIdModalidad = this.objIdModalidad.asObservable();
-  
-
-
   
   public customMaterial = this.objMateriales.asObservable();
   public customEstadosMat = this.objEstadoMat.asObservable();
@@ -74,6 +73,10 @@ export class UtilityServiceService {
   }
   public changeEstadoDocumento(msg: estadoDocClass []): void {
     this.objEstadosDoc.next(msg);
+  }
+
+  public changePosicionAdjuntar(msg: string): void{
+    this.objAdjPosicion.next(msg)
   }
   
   public customBanderaRequerido = this.objBanderaRequerido.asObservable();

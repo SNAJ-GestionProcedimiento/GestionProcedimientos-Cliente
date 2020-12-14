@@ -141,12 +141,7 @@ export class VentanaEditarMaterialesComponent implements OnInit {
     }else{
       this.datosMateriales.fechaSolicitud = this.fechaSoliciudEdit.toString();
     }
-
-   
   }
-
-
-  
 
   validarFechaCompromiso(){
     if(this.fechaComproEdid == undefined || this.fechaComproEdid == ""){
