@@ -4,7 +4,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { DocumentoRequerido, editarDocumentos } from '../../../_models/documento.model';
 import { VentanaAuxiliarDocumentacionComponent } from '../ventana-auxiliar-documentacion/ventana-auxiliar-documentacion.component';
-import { Procedimiento } from '../../../_models/procedimiento.model';
 import { estadoDocClass, obtenerEstadoDoc } from '../../../_models/documento-estado.model';
 import {DocumentoService} from '../../../_services/documentacion.service'
 import * as notificationService from 'src/_services/notification.service';
@@ -41,9 +40,10 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   banderaBotonAnadir: Boolean;
   idBotonAdjuntar: string;
   posicion: string;
+  idDocumentoMostrar: editarDocumentos;
 
 
-  displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion','estado','observacion','acciones'];
+  displayedColumnsDoc: string[] = ['codigoDocumento', 'nombre', 'descripcion','estado','observacion', 'path', 'acciones'];
 
   dataDocumentosRequeridos: MatTableDataSource<DocumentoRequerido>;
 
@@ -56,7 +56,6 @@ export class AuxiliarDocumentacionComponent implements OnInit {
     private utilityService: UtilityServiceService
 
     ) {   }
-
 
     ngOnInit(): void {
 
@@ -100,8 +99,6 @@ export class AuxiliarDocumentacionComponent implements OnInit {
           this.listarDocumentos();
         }
       });
-
-
     }
 
     listarDocumentos(){
@@ -115,17 +112,13 @@ export class AuxiliarDocumentacionComponent implements OnInit {
           this.listarDocumentosRequeridos();
         }else{
           this.arrayDocumentos = [];
-          this.parrafo = "No hay documentos asociados al procedimiento";
           this.notificationService.warn('No hay Documentos asociados al procedimiento');
         }
         this.dataDocumentosRequeridos = new MatTableDataSource(this.arrayDocumentos);
         this.dataDocumentosRequeridos.paginator = this.paginator;
       });
-
       console.log("Agenda procedimiento creado : "+this.idAgendaProcedimiento);
-
     }
-
 
     listarDocumentosRequeridos(){ 
       if(parseInt(this.idModalidad) != null){
@@ -138,8 +131,10 @@ export class AuxiliarDocumentacionComponent implements OnInit {
               for(let i = 0; i < this.documentosRequeridos.length; i++){
                 this.documentosRequeridos[i].estado="";
               }
+
               this.dataDocumentosRequeridos = new MatTableDataSource(this.documentosRequeridos);
               this.dataDocumentosRequeridos.paginator = this.paginator;
+            
             }
           });
       }else{
@@ -176,6 +171,16 @@ export class AuxiliarDocumentacionComponent implements OnInit {
       }
     }
 
+    mostrarArchivoAdjunto(){
+      this.documentosService.generarAcuseRecibido(this.idAgendaProcedimiento).subscribe(data => {
+
+        const file = new Blob([data], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      
+    });
+    }
+
     public listarDocumentosPorCodigoModalidad(){
       this.documentosService.getDocumentosProcedimiento(Number(this.codigoProcedimientoObtenido),1).subscribe((result: DocumentoRequerido[]) => {
         this.arrayDocumentos=result;
@@ -194,7 +199,18 @@ export class AuxiliarDocumentacionComponent implements OnInit {
   
       })
     }
-    
+
+
+    generarArchivoAdjunto(documentoEvent: DocumentoRequerido){
+      const idArchivoAdjunto = documentoEvent.id;
+      console.log(idArchivoAdjunto);
+      this.documentosService.getArchivoAdjunto(idArchivoAdjunto).subscribe(data => {
+        const file = new Blob([data], {type: 'application/pdf'});
+        const fileUrl = URL.createObjectURL(file);
+        window.open(fileUrl);
+      })
+    }
+
     eliminarDatoDoc(documAeliminar: DocumentoRequerido) {
       this.dialog.open(ConfirmationDialogComponent, {
           data: `¿Seguro que desea eliminar el documento?`
@@ -246,47 +262,38 @@ export class AuxiliarDocumentacionComponent implements OnInit {
       
     }
   
-  sinDuplicados(){
-    let hash = {};
-    this.arrayDocumentos = this.arrayDocumentos.filter(o => hash[o.codigoDocumento] ? false: hash[o.codigoDocumento] = true);
-  }
-
-  validarAcuse(){
-    if(this.idAgendaProcedimiento != 0){
-      this.generarRecibido();
-    }else{
-      this.parrafo = "No existe un procedimiento creado!!";
-      this.notificationService.warn(this.parrafo);
-      
+    sinDuplicados(){
+      let hash = {};
+      this.arrayDocumentos = this.arrayDocumentos.filter(o => hash[o.codigoDocumento] ? false: hash[o.codigoDocumento] = true);
     }
-  }
 
-  adjuntarDocumento(pos){
-    const dialogoConfig = new MatDialogConfig();
-    dialogoConfig.autoFocus=true;
-    dialogoConfig.width="60%";
-    this.posicion = pos;
-    this.utilityService.changePosicionAdjuntar(this.posicion);
-    this.dialog.open(VentanaAdjuntarDocumentoComponent, dialogoConfig);
+    validarAcuse(){
+      if(this.idAgendaProcedimiento != 0){
+        this.generarRecibido();
+      }else{
+        this.parrafo = "No existe un procedimiento creado!!";
+        this.notificationService.warn(this.parrafo);
+        
+      }
+    }
 
-  }
+    adjuntarDocumento(pos){
+      const dialogoConfig = new MatDialogConfig();
+      dialogoConfig.autoFocus=true;
+      dialogoConfig.width="60%";
+      this.posicion = pos;
+      this.utilityService.changePosicionAdjuntar(this.posicion);
+      this.dialog.open(VentanaAdjuntarDocumentoComponent, dialogoConfig);
+    }
 
- 
-
-
-  generarRecibido(){
-
-    this.documentosService.generarAcuseRecibido(this.idAgendaProcedimiento).subscribe(data => {
-
-        const file = new Blob([data], { type: 'application/pdf' });
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
-      
-    });
     
-  }
- 
 
-
+    generarRecibido(){
+      this.documentosService.generarAcuseRecibido(this.idAgendaProcedimiento).subscribe(data => {
+          const file = new Blob([data], { type: 'application/pdf' });
+          const fileURL = URL.createObjectURL(file);
+          window.open(fileURL);
+      });
+    }
 
 }

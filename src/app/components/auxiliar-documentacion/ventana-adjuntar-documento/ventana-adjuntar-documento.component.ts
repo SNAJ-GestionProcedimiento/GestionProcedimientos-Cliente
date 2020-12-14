@@ -16,8 +16,9 @@ import { Form } from '@angular/forms';
 })
 export class VentanaAdjuntarDocumentoComponent implements OnInit {
 
+
   idAgendaProcedimiento: number;
-  tituloVentana: string;
+  public tituloVentana = "";
   datosAdd: DocumentoRequerido[]=[];
   arrayRequeridos: DocumentoRequerido[] = [];
   todosLosDocumentos: DocumentoRequerido[]=[];
@@ -76,29 +77,11 @@ export class VentanaAdjuntarDocumentoComponent implements OnInit {
 
     this.todosLosDocumentos = this.arrayRequeridos;
 
-
     for (let i = 0; i < this.todosLosDocumentos.length; i++) {
-      console.log("En elfor:"+this.posicionClickAdjuntar);
-
       if(this.posicionClickAdjuntar === this.todosLosDocumentos[i].codigoDocumento){
-       
         this.documentoAdjunt = new editarDocumentos(this.todosLosDocumentos[i].id,this.idAgendaProcedimiento, this.posicionClickAdjuntar, this.todosLosDocumentos[i].estado, this.todosLosDocumentos[i].observacion, this.todosLosDocumentos[i].descripcion, this.todosLosDocumentos[i].caduca, this.todosLosDocumentos[i].nombre, this.archivoDocum, this.dateDocRecib, this.todosLosDocumentos[i].fechaVencimiento);
-
-
       }
- 
-
-      
     }
-
-
-    console.log(this.documentoAdjunt);
-
-
-      
-    
-
-    
  }
 
   uploadFile(event:any) {
@@ -111,6 +94,7 @@ export class VentanaAdjuntarDocumentoComponent implements OnInit {
     console.log(fileName);
     this.crearDocumentoAdjuntar();
     this.dateDocRecib = new Date().toISOString().split('T')[0];
+
     this.formData.append("id", this.documentoAdjunt.id.toString());
     this.formData.append("estado", this.documentoAdjunt.estado);
     this.formData.append("path",this.archivoDocum);
@@ -123,5 +107,9 @@ export class VentanaAdjuntarDocumentoComponent implements OnInit {
   enviarAdjunto(){
     this.documentoService.editarDocumentoServicio(this.formData).subscribe();
     this.notificationService.success("Documento subido satisfactoriamente!!!");
+  }
+
+  closeDialog() {
+    this.dialog.closeAll();
   }
 }

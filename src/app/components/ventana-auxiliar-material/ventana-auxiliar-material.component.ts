@@ -137,11 +137,11 @@ export class VentanaAuxiliarMaterialComponent implements OnInit {
             material.codigoMaterial === this.datosSeleccionados[i].codigoMaterial);
 
             if(!resultado){
-              this.editMaterial = new editarMateriales(this.datosSeleccionados[i].id, this.idProcedimiento,this.datosSeleccionados[i].codigoMaterial, "PSOL", null,null,null,this.datosSeleccionados[i].casaMedica);
+              this.editMaterial = new editarMateriales(this.datosSeleccionados[i].id, this.idProcedimiento,this.datosSeleccionados[i].codigoMaterial, "PSOL", null,null,null,this.datosSeleccionados[i].casaMedica, this.datosSeleccionados[i].unidad);
 
               let res = this.serviceMateriales.addMaterial(this.editMaterial).subscribe();
             }else{
-              this.editMaterial = new editarMateriales(resultado.id, this.idProcedimiento, resultado.codigoMaterial, "PSOL", null,null,null,resultado.casaMedica);
+              this.editMaterial = new editarMateriales(resultado.id, this.idProcedimiento, resultado.codigoMaterial, "PSOL", null,null,null,resultado.casaMedica, this.datosSeleccionados[i].unidad);
               let res = this.serviceMateriales.editAgendaMaterial(this.editMaterial).subscribe();
             }
 

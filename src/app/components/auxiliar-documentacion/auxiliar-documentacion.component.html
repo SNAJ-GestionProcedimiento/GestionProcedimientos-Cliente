@@ -15,18 +15,11 @@
             <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
         </ng-container>
 
-        <!-- estado Column -->
+        <!-- descripcion Column -->
         <ng-container matColumnDef="descripcion">
             <th mat-header-cell *matHeaderCellDef> Descripción </th>
             <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
         </ng-container>
-
-        <!-- estado Column 
-        <ng-container matColumnDef="caduca">
-            <th mat-header-cell *matHeaderCellDef> Caduca </th>
-            <td mat-cell *matCellDef="let element"> {{element.caduca}} </td>
-        </ng-container> 
-        -->
 
         <!-- estado Column -->
         <ng-container matColumnDef="estado">
@@ -34,27 +27,20 @@
             <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
         </ng-container>
 
-        <!-- Ruta Column 
-        <ng-container matColumnDef="path">
-            <th mat-header-cell *matHeaderCellDef> Archivo </th>
-            <td mat-cell *matCellDef="let element"> {{element.path}} </td>
-        </ng-container>
-        -->
-
         <!-- Observación Column -->
         <ng-container matColumnDef="observacion">
             <th mat-header-cell *matHeaderCellDef> Observaciones </th>
             <td mat-cell *matCellDef="let element"> {{element.observacion}} </td>
         </ng-container>
 
+        <!-- Documento column -->
+        <ng-container matColumnDef="path">
+            <th mat-header-cell *matHeaderCellDef> Documento </th>
 
-
-        <!-- Fecha vencimiento Column 
-        <ng-container matColumnDef="fechaVencimiento">
-            <th mat-header-cell *matHeaderCellDef> Fecha caducidad </th>
-            <td mat-cell *matCellDef="let element"> {{element.fechaVencimiento}} </td>
-        </ng-container> 
-        -->
+            <td mat-cell *matCellDef="let element">
+                <input type="button" class="ver-archivo" (click)="generarArchivoAdjunto(element)" value="Ver documento" size="50">
+            </td>
+        </ng-container>
 
         <!-- acciones Column -->
         <ng-container matColumnDef="acciones">
@@ -81,7 +67,6 @@
     </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-
 
 </div>
 <button type="button" class="btn btn-info" (click)="openAgregarDocu()" [disabled]="banderaBotonAnadir">Añadir documento</button>

@@ -5,3 +5,16 @@ table th {
 p {
     text-align: right;
 }
+
+.buttondemoDense section {
+    text-align: center;
+    margin: 8px;
+    position: relative !important;
+}
+
+.buttondemoDense .label {
+    position: absolute;
+    bottom: 5px;
+    left: 7px;
+    font-size: 12px;
+}

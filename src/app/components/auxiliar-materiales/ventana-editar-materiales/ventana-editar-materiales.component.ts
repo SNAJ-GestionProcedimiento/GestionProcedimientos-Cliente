@@ -34,7 +34,7 @@ export class VentanaEditarMaterialesComponent implements OnInit {
   fechaComproEdid: string;
   fechaLlegaEdid: string;
   casaMedicaEdit: string; 
-
+  unidadDeMedida: string;
 
   public listaEstadosMat: estadoMatClass[] = [];
   
@@ -54,14 +54,18 @@ export class VentanaEditarMaterialesComponent implements OnInit {
     }); 
 
     this.estadosMat = obtenerEstadoMat.getEstadoObtenidoMateriales();
-        console.log("ESTADOS Mate ON INIT: !! "+this.estadosMat);
+    
     this.utilityService.customMaterial.subscribe(element => {
       this.datosMateriales = element;
       this.hacerListaEstadosMat();
       this.verSeleccion = this.datosMateriales.estado;
       this.customertext=this.datosMateriales.cantidadMat;
       this.casaMedicaEdit = this.datosMateriales.casaMedica;
-      this.fechaSoliciudEdit = this.datosMateriales.fechaSolicitud
+      this.fechaSoliciudEdit = this.datosMateriales.fechaSolicitud;
+      this.fechaComproEdid = this.datosMateriales.fechaEstimada;
+      this.fechaLlegaEdid = this.datosMateriales.fechaRecibido;
+      this.unidadDeMedida = this.datosMateriales.unidad;
+      
     })
   } 
 
@@ -89,15 +93,13 @@ export class VentanaEditarMaterialesComponent implements OnInit {
     this.validarFechaCompromiso();
     this.validarFechaLlegada();
 
-    //this.datosMateriales.fechaEstimada = this.fechaComproEdid.toString();
-    //this.datosMateriales.fechaRecibido = this.fechaLlegaEdid.toString();
     if(this.customertext.toString()!="" && this.customertext.toString() !=" "){
       this.datosMateriales.cantidadMat=this.customertext;
       
     }else{
       this.notificationService.success("No se editó el material");
     }
-    this.materialEditar = new editarMateriales(this.datosMateriales.id, this.idProcedimiento, this.datosMateriales.codigoMaterial, materialEnviar.estado,this.fechaSoliciudEdit,this.fechaComproEdid,this.fechaLlegaEdid, this.casaMedicaEdit);
+    this.materialEditar = new editarMateriales(this.datosMateriales.id, this.idProcedimiento, this.datosMateriales.codigoMaterial, materialEnviar.estado,this.fechaSoliciudEdit,this.fechaComproEdid,this.fechaLlegaEdid, this.casaMedicaEdit, this.datosMateriales.unidad);
     let res = this.serviceMateriales.editAgendaMaterial(this.materialEditar).subscribe();
     if(res != null){
       this.convertirEstadoLleda(this.datosMateriales);

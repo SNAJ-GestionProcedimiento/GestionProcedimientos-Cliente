@@ -48,6 +48,16 @@ export class DocumentoService extends HttpService{
     return this.http.delete(`${url}`, { headers: this.token() });
   }
 
+  getArchivoAdjunto(idDocumento: number): Observable<Blob>{
+    const url = this.apiURL+"getArchivoAdjunto/"+idDocumento.toString();
+    const options = {
+      responseType: 'blob' as 'json',
+      headers: this.token()
+    };
+
+    return this.http.get<any>((`${url}`),options);
+  }
+
   generarAcuseRecibido(idAgendaProcedimiento: number): Observable<Blob>{
     const url=this.apiURL+"generateRecibido/"+idAgendaProcedimiento.toString();
 

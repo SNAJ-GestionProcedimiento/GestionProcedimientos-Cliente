@@ -130,7 +130,7 @@ export class AuxiliarMaterialesComponent implements OnInit {
         }
         this.dataMaterialesRequeridos = new MatTableDataSource(this.arrayMateriales);
         this.dataMaterialesRequeridos.paginator = this.paginator;
-      })
+      });
     } 
 
     listarMaterialesRequeridos(){
@@ -149,7 +149,7 @@ export class AuxiliarMaterialesComponent implements OnInit {
               this.dataMaterialesRequeridos.paginator = this.paginator
             }
         } );
-      }else{
+      }else{ 
         this.notificationService.warn('No existe modalidad');
       }
     }

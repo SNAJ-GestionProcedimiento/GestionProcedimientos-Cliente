@@ -53,10 +53,11 @@ export class editarMateriales {
   public fechaRecibido: string;
   public idAgendaProcedimiento: number;
   public casaMedica: string;
+  public unidad: string;
 
 
 
-  constructor(id: number, idProcedimiento: number, codigoMaterial: string, estado: string, fechaSolicitud: string, fechaEstimada: string, fechaRecibido: string, casaMedica: string) {
+  constructor(id: number, idProcedimiento: number, codigoMaterial: string, estado: string, fechaSolicitud: string, fechaEstimada: string, fechaRecibido: string, casaMedica: string, unidad: string) {
     this.id = id;
     this.idAgendaProcedimiento = idProcedimiento;
     this.codigoMaterial = codigoMaterial;
@@ -65,6 +66,8 @@ export class editarMateriales {
     this.fechaRecibido = fechaRecibido;
     this.fechaSolicitud = fechaSolicitud;
     this.casaMedica = casaMedica;
+    this.unidad = unidad;
+    
   }
 
   public parseToJSON(): JSON {
@@ -82,6 +85,7 @@ export class editarMateriales {
     editarMateriales.fechaEstimada = json.fechaEstimada;
     editarMateriales.fechaRecibido = json.fechaRecibido;
     editarMateriales.casaMedica = json.casaMedica;
+    editarMateriales.unidad = json.unidad;
 
     return editarMateriales;
   }
