@@ -2,33 +2,38 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from '../http.service';
 
-import { Usuario } from 'src/_models/modelsLogin/usuario.model'
-
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioEditarService extends HttpService{
+export class UsuarioCgContraService extends HttpService{
 
   constructor(protected http: HttpClient) {
     super(http);
-    this.apiURL += 'editUser';
+    this.apiURL += 'changePassword';
    }
 
    /**
-    * Editar usuario desde administrador
+    * Cabiar contraseña desde usuario
     */
-   editUserAdmin(usuario:Usuario){
-    return this.http.put(`${this.apiURL}Admin`,usuario,{
+   changePassUser(claveAnterior:string,claveNueva:string){
+    return this.http.put(`${this.apiURL}User`,{
+      old_password: claveAnterior,
+      new_password: claveNueva
+    },{
       headers:new HttpHeaders({
         'Authorization':  `Token ${localStorage.getItem('token')}`,
       })
       });
    }
+
    /**
-    * Editar usuario desde usuario
+    * Cabiar contraseña desde usuario
     */
-   editUserUser(usuario:Usuario){
-    return this.http.put(`${this.apiURL}User`,usuario,{
+   changePassAdmin(id:string,claveNueva:string){
+    return this.http.put(`${this.apiURL}Admin`,{
+      id: id,
+      new_password: claveNueva
+    },{
       headers:new HttpHeaders({
         'Authorization':  `Token ${localStorage.getItem('token')}`,
       })

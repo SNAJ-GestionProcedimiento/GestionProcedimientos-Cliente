@@ -27,11 +27,8 @@ export class AdminNavbarComponent implements OnInit {
     let token = localStorage.getItem('token');
     let userGroup:any = await this.usuarioGrupoService.getGroup(token).toPromise();
     this.nombreUsuario = userGroup.username;
-    //let res:any = await this.usuarioTokenService.getUser(userGroup.username).toPromise();
-    //console.log(res);
   }
   public cerrarSesion(){
-    console.log(localStorage.getItem('token'));
     this.logoutService.logout(localStorage.getItem('token'));
     localStorage.removeItem('token');
     this.router.navigateByUrl("");

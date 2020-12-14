@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item my-2 my-sm-0">
-                    <select [(ngModel)]="opcionSeleccionada" (change)="capturar()">
+                    <select [(ngModel)]="opcionSeleccionada" class="form-control form-control-sm ml-2" (change)="capturar()">
                         <option value="0" selected>--Seleccione un material--</option>
                         <option *ngFor="let dato of arrayMateriales">
                             {{dato.nombre}}

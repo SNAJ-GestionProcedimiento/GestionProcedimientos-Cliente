@@ -71,13 +71,33 @@
             </div>
         </form>
         <hr>
-        <form>
-            
-        </form>
-    </div>
-    <hr>
-    <div class="mx-auto" style="width: 400px;">
-        <button type="button" class="btn btn-danger" mat-dialog-close>Cancelar</button>
-        <button type="button" class="btn btn-info ml-2" (click)="editarOnclick()">Editar Usuario</button>
+        <div class="container border border-info rounded mt-3" *ngIf="usuario!=null">
+            <div class="mt-3 mb-2">
+                <p class="h5 mt-2">Opciones de seguridad</p>
+                <p>para cambiar la contraseña <button type="button" class="btn btn-link btn-sm" (click)="cambiarOnclick()">presiona aquí</button>.</p>
+                <div class="container" *ngIf="cambioContra">
+                    <form [formGroup]="contraForm">
+                        <!--email del usuario-->
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Nueva contraseña:</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" placeholder="contraseña" formControlName="password">
+                                <div class="errors" *ngIf="this.contraForm.get('password').touched">
+                                    <p *ngIf="contraForm.get('password').errors">*Ingrese la contraseña</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Button cambio de contraseña-->
+                    <button type="button" class="btn btn-info btn-sm" (click)="editarContra()">
+                        Cambiar contraseña
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto mt-3" style="width: 400px;">
+            <button type="button" class="btn btn-danger" mat-dialog-close>Cancelar</button>
+            <button type="button" class="btn btn-info ml-2" (click)="editarOnclick()">Editar Usuario</button>
+        </div>
     </div>
 </div>

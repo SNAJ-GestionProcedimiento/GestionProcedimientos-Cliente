@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from './http.service';
 
 @Injectable()
@@ -16,10 +16,10 @@ export class PacienteService  extends HttpService{
     */
    get(id: string){
      return this.http.get(
-       `${this.apiURL}/${id}`,
-       {
-         headers: this.headers
-       },
-     );
+       `${this.apiURL}/${id}`,{
+        headers:new HttpHeaders({
+          'Authorization':  `Token ${localStorage.getItem('token')}`,
+        })
+        });
    }
 }

@@ -17,7 +17,9 @@ export class UsuarioIdObtenerService extends HttpService{
     */
    getUser(userId:string){
     return this.http.get(`${this.apiURL}/${userId}`,{
-        headers:this.headers
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
       } );
    }
 }

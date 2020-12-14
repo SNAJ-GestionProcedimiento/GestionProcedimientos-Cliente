@@ -17,7 +17,9 @@ export class UsuarioTokenService extends HttpService{
     */
    getUser(userName:string){
     return this.http.get(`${this.apiURL}/${userName}`,{
-        headers:this.headers
-      } );
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
+      });
    }
 }

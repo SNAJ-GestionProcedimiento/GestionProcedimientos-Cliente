@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import swal from 'sweetalert2';
 import { Usuario } from 'src/_models/modelsLogin/usuario.model';
 
 import { AuthService } from 'src/_services/auth.service';
@@ -72,6 +72,7 @@ export class LoginComponent implements OnInit {
       switch(grupo){
         /**Grupo 1:Administrador */
         case "Admin":
+          console.log(res.token);
           this.router.navigateByUrl('admin');
           break;
         /**Grupo 2:Auxiliar de programación */
@@ -80,6 +81,8 @@ export class LoginComponent implements OnInit {
           break;
       }
     } catch (error) {
+      console.log("error");
+      swal.fire('Error', 'Usuario o contraseña incorrectas!', 'error');
     }
   }
 

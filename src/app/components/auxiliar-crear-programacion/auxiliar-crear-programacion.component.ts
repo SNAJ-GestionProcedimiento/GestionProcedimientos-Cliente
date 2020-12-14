@@ -20,6 +20,9 @@ import { Paciente } from 'src/_models/paciente.model';
 import { Acudiente } from 'src/_models/acudiente.model';
 import { Procedimiento } from 'src/_models/procedimiento.model';
 import { Agendamiento } from 'src/_models/agendamiento.models';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -66,7 +69,9 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     private agendaCrearService:AgendaCrearService, 
     private utilityService: UtilityServiceService,
     private editarComponentesService:EditarComponentesService,
-    private numNotificacion: NumeroNotificacionesService
+    private numNotificacion: NumeroNotificacionesService,
+    private router: Router,
+    private dialogo: MatDialog
   ) {
   }
 
@@ -178,5 +183,19 @@ export class AuxiliarCrearProgramacionComponent implements OnInit {
     this.editarComponentesService.cambiarIdProc(this.RcodigoProcedimiento);
     this.editarComponentesService.cambiaridAgendaProc(this.RidAgendaProcedimiento);
     this.editarComponentesService.cambiarObservacion(this.Robservacion);
+  }
+
+  public gestionProcedimientoOnclick() {
+    this.dialogo
+      .open(ConfirmationDialogComponent, {
+        data: `¿Desea salir de la ventana creación de procedimiento?`
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          console.log("entre");
+          this.router.navigateByUrl('/programacion');
+        }
+      });
   }
 }

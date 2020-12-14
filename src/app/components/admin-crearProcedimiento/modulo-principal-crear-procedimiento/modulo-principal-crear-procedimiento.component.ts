@@ -8,6 +8,8 @@ import { ModuloInstrumentoComponent } from '../modulo-instrumento/modulo-instrum
 import { ModuloMaterialComponent } from '../modulo-material/modulo-material.component';
 import { ModuloProcedimientoComponent } from '../modulo-procedimiento/modulo-procedimiento.component';
 import swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-modulo-principal-crear-procedimiento',
@@ -24,32 +26,41 @@ export class ModuloPrincipalCrearProcedimientoComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private crearProcedimiento: ProcedimientoService
-    ) { }
+    private crearProcedimiento: ProcedimientoService,
+    private dialogo: MatDialog
+  ) { }
 
   ngOnInit(): void {
   }
 
-  crearProcedimientoOnClick(){
-    let proced= new CrearProcedimientoAdmin();
-    proced=this.procedimiento.getCrearProcedimiento();
-    proced.documentacionRequerida=this.documentos.getDocumentosRequeridos();
-    proced.materialesRequeridos=this.materiales.getMaterialesRequeridos();
-    proced.equiposRequeridos=this.instrumentos.getInstrumentosRequeridos();
-    proced.especialidadesRequeridas=this.especial.getEspecialidadesRequeridas();
-    //console.log(JSON.stringify(proced));
+  crearProcedimientoOnClick() {
+    let proced = new CrearProcedimientoAdmin();
+    proced = this.procedimiento.getCrearProcedimiento();
+    proced.documentacionRequerida = this.documentos.getDocumentosRequeridos();
+    proced.materialesRequeridos = this.materiales.getMaterialesRequeridos();
+    proced.equiposRequeridos = this.instrumentos.getInstrumentosRequeridos();
+    proced.especialidadesRequeridas = this.especial.getEspecialidadesRequeridas();
     this.crearProcedimiento.crearProcedimiento(proced).subscribe(res => {
       swal.fire('¡Exito!', 'Se creo el procedimiento correctamente!', 'success');
-      this.router.navigateByUrl('admin/procedimiento');
+      this.router.navigateByUrl('/admin');
     },
-    (errorServicio) => {
-      swal.fire('¡Error!', '¡Verifica los datos del procedimiento a crear!', 'error');
-    }
-  );
+      (errorServicio) => {
+        swal.fire('¡Error!', '¡Verifica los datos del procedimiento a crear!', 'error');
+      }
+    );
   }
 
-  gestionProcedimientoOnclick(){
-    this.router.navigateByUrl('admin/procedimiento');
+  public gestionProcedimientoOnclick() {
+    this.dialogo
+      .open(ConfirmationDialogComponent, {
+        data: `¿Desea salir de la ventana creación de procedimiento?`
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          this.router.navigateByUrl('/admin');
+        }
+      });
   }
 
 }

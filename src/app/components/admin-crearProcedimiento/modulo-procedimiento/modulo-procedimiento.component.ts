@@ -109,8 +109,6 @@ export class ModuloProcedimientoComponent implements OnInit {
           (errorServicio) => {
             this.validacionCodigo=false;
             this.procedimiento.codigoProcedimiento=cod;
-            console.log(cod);
-            console.log(this.idModalidad);
           }
         );
         if (cod=="") {
@@ -121,7 +119,6 @@ export class ModuloProcedimientoComponent implements OnInit {
       });
       this.busquedaForm.get('name').valueChanges
       .subscribe(value => {
-        console.log(value);
         this.procedimientoService.existeNombreProc(value).subscribe(res => {
           this.validacionNombre=true;
         },
@@ -139,7 +136,6 @@ export class ModuloProcedimientoComponent implements OnInit {
     this.busquedaForm.get('uciBed').valueChanges
       .subscribe(value => {
         this.camaUCI=value;
-        console.log(this.camaUCI);
       });
     this.busquedaForm.get('bloodBank').valueChanges
       .subscribe(value => {
@@ -155,7 +151,6 @@ export class ModuloProcedimientoComponent implements OnInit {
     proced.idModalidad=parseInt(this.idModalidad);
     proced.camaUCI=this.camaUCI;
     proced.bancoSangre=this.bancoSangre;
-    //console.log(proced);
     return proced;
   }
   

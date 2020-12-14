@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from './http.service';
 
 @Injectable({
@@ -17,10 +17,10 @@ export class EstadoCamaService extends HttpService{
     */
    get(){
     return this.http.get(
-     `${this.apiURL}`,
-     {
-       headers: this.headers
-     }
-    )
+     `${this.apiURL}`,{
+      headers:new HttpHeaders({
+        'Authorization':  `Token ${localStorage.getItem('token')}`,
+      })
+      });
   }
 }

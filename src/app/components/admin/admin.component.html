@@ -3,7 +3,7 @@
 <!-- SideBar -->
 <ng-sidebar-container>
     <!-- Contenido del Sidebar -->
-    <ng-sidebar opened="true" mode="push">
+    <ng-sidebar [(opened)]="_opened" mode="push" [(closeOnClickOutside)]="_desaparecer">
         <div class="container">
             <button type="button" class="btn btn-info mr-auto" (click)="gestionProcedimientoOnclick()">Gestion de procedimientos</button>
             <button type="button" class="btn btn-info mr-auto mt-2" (click)="gestionUsuariosOnclick()">Gestion de usuarios</button>
@@ -11,6 +11,8 @@
     </ng-sidebar>
     <!-- Contenido de la pagina -->
     <div ng-sidebar-content>
+        <button *ngIf="!_opened" style="background-color: transparent; 
+        border: 0px solid;" (click)="_toggleSidebar()" matTooltip="Menú" [matTooltipPosition]="'above'"><i class="material-icons" style="font-size: 20px;">more_vert</i></button>
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
