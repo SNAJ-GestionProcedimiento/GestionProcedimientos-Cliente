@@ -89,6 +89,17 @@ export class AuxiliarEspecialistaComponent implements OnInit {
     this.utilityService.customIdModalidad.subscribe(msg => this.idModalidad = msg);
   }
 
+  //quitar null
+  sinNull(){
+    for (let i = 0; i < this.especialidadAsociada.length; i++) {
+      let vari = this.especialidadAsociada[i].registroMedico.toString();
+      console.log(vari);
+      if(!this.especialidadAsociada[i].registroMedico.toString()){
+        console.log("entro")
+      }
+      
+    }
+  }
 
   //método para en listar los equipos asociados a un procedimiento
   listarEspecialidades() {
@@ -104,6 +115,7 @@ export class AuxiliarEspecialistaComponent implements OnInit {
         this.parrafo = "No hay especialidad asociado al procedimiento";
         this.notificationService.warn('No hay especialistas asociados al procedimiento!');
       }
+      this.sinNull();
       this.dataEspecialidad = new MatTableDataSource(this.especialidadAsociada);
       this.dataEspecialidad.paginator = this.paginator;
     }, (errorServicio) => {

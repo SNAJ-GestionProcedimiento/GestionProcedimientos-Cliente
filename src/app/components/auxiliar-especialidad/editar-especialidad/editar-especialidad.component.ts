@@ -22,13 +22,14 @@ export class EditarEspecialidadComponent implements OnInit {
   especialidadEditable: editarEpecialidadesRequeridas;
   estados: estadoClass[];
   idProcedimiento: number;
-  opcionSeleccionado: string = '0';
+  opcionSeleccionado: string;
   verSeleccion = '';
   registroMedico: string;
   identificacionEspecialista: string;
   nombreEspecialista: string;
 
   listaEstado: estadoClass[] = [];
+  EstadoDefautl: estadoClass;
   mensajeError: string = "";
 
   public especialistaForm: FormGroup;
@@ -50,6 +51,7 @@ export class EditarEspecialidadComponent implements OnInit {
       this.datosEspecialidad = msg;
       this.convertirEstadoLleda(this.datosEspecialidad);
       this.hacerListaEstados();
+      this.opcionSeleccionado=this.EstadoDefautl.valor;
       this.verSeleccion = this.datosEspecialidad.estado;
       this.registroMedico = this.datosEspecialidad.registroMedico;
       this.identificacionEspecialista = this.datosEspecialidad.identificacion;
@@ -61,7 +63,8 @@ export class EditarEspecialidadComponent implements OnInit {
   private buildespecialistaForm() {
     this.especialistaForm = this.formBuilder.group({
       id: ['', [Validators.required]],
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
+      registro: ['', [Validators.required]],
     });
 
     /**Cuando escriba el id del paciente lo busca*/
@@ -72,6 +75,10 @@ export class EditarEspecialidadComponent implements OnInit {
       .subscribe(value => {
         this.identificacionEspecialista = value;
         this.setPaciente();
+      });
+      this.especialistaForm.get("registro").valueChanges
+      .subscribe(value => {
+        this.registroMedico = value;
       });
   }
 
@@ -109,16 +116,17 @@ export class EditarEspecialidadComponent implements OnInit {
   }
 
   editar() {
-    this.datosEspecialidad.estado = this.verSeleccion;
-    let especialistaEnviar = this.convertirEstadoSalida(this.datosEspecialidad);
-    this.datosEspecialidad.registroMedico = this.registroMedico;
-    this.datosEspecialidad.identificacion = this.identificacionEspecialista;
-    this.datosEspecialidad.nombreEspecialista = this.nombreEspecialista;
+    let especialistaEnviar = this.datosEspecialidad;
+    especialistaEnviar.registroMedico = this.registroMedico;
+    console.log(this.registroMedico);
+    especialistaEnviar.identificacion = this.identificacionEspecialista;
+    especialistaEnviar.nombreEspecialista = this.nombreEspecialista;
+    especialistaEnviar.estado=this.verSeleccion;
     this.especialidadEditable = new editarEpecialidadesRequeridas(especialistaEnviar.id, especialistaEnviar.codigoEspecialidad, especialistaEnviar.nombreEspecialidad, especialistaEnviar.registroMedico, especialistaEnviar.identificacion, especialistaEnviar.nombreEspecialista, especialistaEnviar.estado, this.idProcedimiento);
     this.serviceEspecialidadRequerida.editarEspecialidad(this.especialidadEditable).subscribe(
       res => {
         this.especialidadEditable = res;
-        this.notificationService.success('Se edito la especialidad con código: ' + this.datosEspecialidad.codigoEspecialidad.toString());
+        this.notificationService.success('Se edito la especialidad con código: ' + especialistaEnviar.codigoEspecialidad.toString());
         //console.log("cambio");
         this.utilityService.changeEspecialidad(this.datosEspecialidad);
         this.cerrarVentana();
@@ -127,10 +135,10 @@ export class EditarEspecialidadComponent implements OnInit {
         console.log(errorServicio);
         this.mensajeError = JSON.stringify(errorServicio.error.error);
         this.notificationService.success('Error! ' + this.mensajeError);
-        this.convertirEstadoLleda(this.datosEspecialidad);
+        //this.convertirEstadoLleda(this.datosEspecialidad);
       }
     );
-    this.utilityService.changeEspecialidad(this.datosEspecialidad);
+    //this.utilityService.changeEspecialidad(this.datosEspecialidad);
   }
 
 
@@ -141,6 +149,7 @@ export class EditarEspecialidadComponent implements OnInit {
 
   capturar() {
     this.verSeleccion = this.opcionSeleccionado;
+    console.log(this.verSeleccion);
   }
 
   hacerListaEstados() {
@@ -149,6 +158,8 @@ export class EditarEspecialidadComponent implements OnInit {
       if (this.estados[i].contenido != this.datosEspecialidad.estado) {
         //console.log("entro al if de hacer listados con el estado: "+this.estados[i].contenido);
         this.listaEstado.push(this.estados[i]);
+      }else{
+        this.EstadoDefautl=this.estados[i];
       }
     }
   }

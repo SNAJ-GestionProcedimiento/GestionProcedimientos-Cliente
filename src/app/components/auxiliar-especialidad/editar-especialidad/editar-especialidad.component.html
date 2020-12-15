@@ -24,16 +24,16 @@
             <label>{{datosEspecialidad.nombreEspecialidad}}</label>
         </div>
     </div>
-
-    <div class="modal-body row">
-        <div class="col-md-6 ContenedorTitulo">
-            <label>Registro médico: </label>
-        </div>
-        <div class="col-md-6">
-            <input type="text" placeholder="{{datosEspecialidad.registroMedico}}" [(ngModel)]="registroMedico">
-        </div>
-    </div>
     <form [formGroup]="especialistaForm">
+        <div class="modal-body row">
+            <div class="col-md-6 ContenedorTitulo">
+                <label>Registro médico: </label>
+            </div>
+            <div class="col-md-6">
+                <input type="text" placeholder="{{datosEspecialidad.registroMedico}}" formControlName='registro'>
+            </div>
+        </div>
+
         <div class=" modal-body row ">
             <div class="col-md-6 ContenedorTitulo ">
                 <label>Identificación del especialista: </label>
@@ -56,9 +56,9 @@
             <label>Estado: </label>
         </div>
         <div class="col-md-6 ">
-            <select [(ngModel)]="opcionSeleccionado" class="form-control form-control-sm ml-2" (change)="capturar() ">
-                <option value="0" selected>{{datosEspecialidad.estado}}</option>
-                <option *ngFor="let dato of listaEstado ">
+            <select [(ngModel)]="opcionSeleccionado" (change)="capturar() ">
+                <option value="{{EstadoDefautl.valor}}" selected>{{EstadoDefautl.contenido}}</option>
+                <option value="{{dato.valor}}" *ngFor="let dato of listaEstado ">
                     {{dato.contenido}}
                 </option>
                 </select>
